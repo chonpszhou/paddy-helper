@@ -7,8 +7,11 @@ const activities = db.collection('activities')
 const users = db.collection('users')
 const circles = db.collection('circles')
 
-// ★ 订阅消息模板 ID（已配置）
-const SUBSCRIBE_TEMPLATE_ID = 'your-subscribe-template-id'
+// ★ 订阅消息模板 ID：从云函数「配置 → 环境变量」读取 SUBSCRIBE_TEMPLATE_ID
+// 部署前请在云开发控制台 → 云函数 → activity → 配置 → 环境变量 中添加：
+//   SUBSCRIBE_TEMPLATE_ID = 你的模板ID
+// 留空则通知功能停用（当前线上已部署的版本不受影响）
+const SUBSCRIBE_TEMPLATE_ID = process.env.SUBSCRIBE_TEMPLATE_ID || ''
 
 // ★ 模板字段映射：改成你模板里对应的 key（在「我的模板」里能看到，形如 thing1.DATA / time2.DATA）
 // 默认按最常见的「活动名称 thing1 / 活动时间 time2 / 活动地点 thing3」配置

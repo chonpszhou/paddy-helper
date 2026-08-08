@@ -74,7 +74,7 @@ flowchart LR
 git clone https://github.com/chonpszhou/paddy-helper.git
 ```
 
-用 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 导入项目，AppID 使用 `wx0000000000000000`（或替换为你自己的）。
+用 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) 导入项目，AppID 使用你自己的（填入 `project.private.config.json`，该文件已 git 忽略，不会上传）。
 
 > ⚠️ 建议把「调试基础库」设为稳定版，**不要用灰度版**——灰度版有渲染层 bug，会导致按钮点击无响应。
 

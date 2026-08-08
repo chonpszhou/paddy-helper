@@ -2,4 +2,5 @@ node_modules/
 cloudfunctions/**/node_modules/
 miniprogram_npm/
 project.private.config.json
+miniprogram/utils/config.local.js
 .DS_Store

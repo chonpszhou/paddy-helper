@@ -1,6 +1,8 @@
 const store = require('./utils/store')
+const config = require('./utils/config')
 
-const CLOUD_ENV = 'your-cloud-env-id'
+// 云环境 ID 从本机私有配置读取（config.local.js），未配置时使用占位符
+const CLOUD_ENV = config.CLOUD_ENV || 'your-cloud-env-id'
 
 App({
   cloudEnv: CLOUD_ENV,

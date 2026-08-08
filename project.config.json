@@ -35,7 +35,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.4.6",
-  "appid": "wx0000000000000000",
+  "appid": "touristappid",
   "projectname": "paddy-helper",
   "condition": {},
   "editorSetting": {
