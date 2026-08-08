@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/activity/list/list",
+    "pages/activity/create/create",
+    "pages/activity/detail/detail",
+    "pages/activity/manage/manage",
+    "pages/dinner/dinner",
+    "pages/outdoor/outdoor",
+    "pages/group/group",
+    "pages/trip/trip",
+    "pages/login/login",
+    "pages/circle/circle",
+    "pages/agreement/agreement",
+    "pages/poster/poster",
+    "pages/privacy/privacy",
+    "pages/friends/friends",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "Paddy小助手",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F6F8",
+    "backgroundTextStyle": "dark"
+  },
+  "usingComponents": {
+    "aurora-bg": "/components/aurora-bg/index"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于在地图上选择活动地点、好友位置，并计算聚会居中位置"
+    }
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#A6AEBA",
+    "selectedColor": "#07C160",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/activity/create/create",
+        "text": "发起"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

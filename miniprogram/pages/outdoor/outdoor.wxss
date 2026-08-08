@@ -1,0 +1,205 @@
+.head-title {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.head-sub {
+  font-size: 26rpx;
+  color: #9A8F86;
+  margin-top: 10rpx;
+}
+
+.head-loc {
+  color: #4A9EFF;
+}
+
+.head-addr {
+  font-size: 23rpx;
+  color: #B0A79E;
+}
+
+.title-tip {
+  font-size: 22rpx;
+  color: #C4B9AE;
+  font-weight: 400;
+  margin-left: 8rpx;
+}
+
+.me-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.me-btn {
+  flex: 1;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 999rpx;
+  background: #FBF6F0;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6F675F;
+}
+
+.me-btn-on {
+  background: linear-gradient(135deg, #10CE70, #06AD56);
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 20rpx rgba(47, 164, 111, 0.25);
+}
+
+.car {
+  background: #FBF6F0;
+  border-radius: 18rpx;
+  padding: 20rpx 22rpx;
+  margin-bottom: 14rpx;
+}
+
+.car-head {
+  display: flex;
+  align-items: center;
+}
+
+.car-emoji {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 32rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.car-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.car-driver {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.car-seats {
+  font-size: 22rpx;
+  color: #9A8F86;
+  margin-top: 4rpx;
+}
+
+.car-tag {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: #2FA46F;
+  font-weight: 600;
+  background: #E9F7F0;
+  border-radius: 999rpx;
+  padding: 8rpx 16rpx;
+}
+
+.car-full {
+  color: #9A8F86;
+  background: #F0E9E1;
+}
+
+.car-passengers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 14rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx dashed #EADFD3;
+}
+
+.car-passenger {
+  font-size: 23rpx;
+  background: #FFFFFF;
+  border-radius: 999rpx;
+  padding: 6rpx 14rpx;
+}
+
+.warn {
+  font-size: 24rpx;
+  color: #D97706;
+  background: #FFF7E8;
+  border-radius: 14rpx;
+  padding: 14rpx 18rpx;
+}
+
+.gear-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.gear {
+  width: calc((100% - 14rpx) / 2);
+  background: #FBF6F0;
+  border-radius: 18rpx;
+  padding: 18rpx;
+  border: 3rpx solid transparent;
+}
+
+.gear-on {
+  background: #EAF8F1;
+  border-color: #2FA46F;
+}
+
+.gear-name {
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.gear-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12rpx;
+}
+
+.gear-owners {
+  font-size: 22rpx;
+}
+
+.gear-count {
+  font-size: 21rpx;
+  color: #9A8F86;
+}
+
+.add-line {
+  text-align: center;
+  color: #07C160;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 16rpx 0 4rpx;
+}
+
+.weather-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F0F7FF;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.weather-text {
+  font-size: 27rpx;
+  font-weight: 600;
+  color: #2B6CB0;
+}
+
+.weather-refresh {
+  font-size: 24rpx;
+  color: #4A9EFF;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.tip {
+  font-size: 25rpx;
+  color: #6F675F;
+  padding: 8rpx 0;
+}

@@ -1,0 +1,80 @@
+<aurora-bg></aurora-bg>
+<view class="page" wx:if="{{activity}}">
+  <view class="card head">
+    <view class="head-title">🎒 {{activity.title}}</view>
+    <view class="head-sub">🕐 {{timeText}}</view>
+    <view class="head-sub head-loc" bindtap="openLocation">📍 {{activity.location || '地点待定'}}</view>
+    <view class="head-sub head-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">🚗 拼车 <text class="title-tip">开车带人 / 需要搭车</text></view>
+    <view class="me-actions">
+      <view class="me-btn {{isDriver ? 'me-btn-on' : ''}}" bindtap="toggleDriver">{{myCarSeatsText}}</view>
+      <view class="me-btn {{isRider ? 'me-btn-on' : ''}}" bindtap="toggleRider">{{riderBtnText}}</view>
+    </view>
+
+    <view class="car" wx:for="{{cars}}" wx:key="id">
+      <view class="car-head">
+        <view class="car-emoji" style="background:{{item.driverColor}}33">{{item.driverEmoji}}</view>
+        <view class="car-info">
+          <view class="car-driver">{{item.driverName}}{{item.isMine ? '（我）' : ''}}</view>
+          <view class="car-seats">已坐 {{item.assigned.length}} / {{item.seats}} 座</view>
+        </view>
+        <view class="car-tag {{item.seatsLeft === 0 ? 'car-full' : ''}}">{{item.seatsLeft === 0 ? '🈵 已满' : '还有 ' + item.seatsLeft + ' 座'}}</view>
+      </view>
+      <view class="car-passengers" wx:if="{{item.assigned.length}}">
+        <text class="car-passenger" wx:for="{{item.assigned}}" wx:for-item="p" wx:key="friendId">{{p.emoji}} {{p.name}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!cars.length}}">
+      <view class="empty-text">还没有人开车，点上面登记吧</view>
+    </view>
+    <view class="warn" wx:if="{{unassignedCount > 0}}">⚠️ 还有 {{unassignedCount}} 位朋友在等座位，考虑再开一辆车</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">🎒 装备清单 <text class="title-tip">点一下标记"我有"</text></view>
+    <view class="gear-grid">
+      <view
+        class="gear {{item.iOwn ? 'gear-on' : ''}}"
+        wx:for="{{gear}}"
+        wx:key="id"
+        bindtap="toggleGear"
+        data-gear-id="{{item.id}}"
+      >
+        <view class="gear-name">{{item.name}}</view>
+        <view class="gear-foot">
+          <text class="gear-owners">{{item.ownerEmojis || '👀'}}</text>
+          <text class="gear-count">{{item.ownerText}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!gear.length}}">
+      <view class="empty-text">还没有装备清单，先加一件吧</view>
+    </view>
+    <view class="add-line" bindtap="addGear">＋ 加装备</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">⛅ 天气与出行提醒</view>
+    <view class="weather-row">
+      <view class="weather-text" wx:if="{{weatherText}}">☁️ 今天：{{weatherText}}</view>
+      <view class="weather-text" wx:elif="{{weatherLoading}}">天气加载中…</view>
+      <view class="weather-text" wx:else>天气暂时获取失败，按下面提醒准备吧</view>
+      <view class="weather-refresh" bindtap="loadWeather" wx:if="{{!weatherLoading}}">刷新</view>
+    </view>
+    <view class="tip" wx:for="{{tips}}" wx:key="*this">· {{item}}</view>
+    <view class="tip">· 出发前再确认一遍集合时间和地点</view>
+  </view>
+</view>
+
+<view class="page" wx:else>
+  <view class="card empty-state">
+    <view class="empty-state-icon">😵</view>
+    <view class="empty-state-text">页面暂时打不开</view>
+    <view class="empty-state-sub">活动可能已不存在，试试重新打开</view>
+    <view class="back-btn" bindtap="goBack">返回</view>
+  </view>
+</view>

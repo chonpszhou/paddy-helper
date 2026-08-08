@@ -1,0 +1,6 @@
+<view class="aurora">
+  <view class="blob b1"></view>
+  <view class="blob b2"></view>
+  <view class="blob b3"></view>
+  <view class="blob b4"></view>
+</view>

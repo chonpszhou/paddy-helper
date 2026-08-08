@@ -1,0 +1,70 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="circle-banner" wx:if="{{circleName}}">正在「{{circleName}}」圈子中创建 · 圈内朋友都能看到</view>
+  <view class="card">
+    <view class="form-label">🎨 活动类型</view>
+    <view class="type-grid">
+      <view
+        wx:for="{{types}}"
+        wx:key="key"
+        class="type-item {{selectedType === item.key ? 'type-item-active' : ''}}"
+        style="{{selectedType === item.key ? 'border-color:' + item.color : ''}}"
+        bindtap="selectType"
+        data-key="{{item.key}}"
+      >
+        <view class="type-icon" style="background:{{selectedType === item.key ? item.color + '1A' : '#F2F3F5'}}">
+          <image class="type-icon-img" src="{{item.iconUri}}"/>
+        </view>
+        <view class="type-name" style="{{selectedType === item.key ? 'color:' + item.color : ''}}">{{item.name}}</view>
+      </view>
+    </view>
+
+    <view class="form-label" wx:if="{{selectedType === 'dinner'}}">🍽️ 聚餐形式</view>
+    <view class="mode-row" wx:if="{{selectedType === 'dinner'}}">
+      <view class="mode-item {{dinnerMode === 'home' ? 'mode-item-on' : ''}}" bindtap="selectDinnerMode" data-mode="home">
+        <view class="mode-title">🏠 家里聚餐</view>
+        <view class="mode-sub">点菜 · 带菜 · 采购清单</view>
+      </view>
+      <view class="mode-item {{dinnerMode === 'restaurant' ? 'mode-item-on' : ''}}" bindtap="selectDinnerMode" data-mode="restaurant">
+        <view class="mode-title">🍽️ 餐厅聚餐</view>
+        <view class="mode-sub">直接到店，无需带菜采购</view>
+      </view>
+    </view>
+
+    <view class="form-label">🏷️ 活动名称</view>
+    <input class="input" placeholder="{{titlePlaceholder}}" value="{{title}}" bindinput="onTitle" maxlength="30"/>
+
+    <view class="form-label">🕐 时间</view>
+    <view class="picker-row">
+      <picker class="picker-item" mode="date" value="{{date}}" start="{{today}}" bindchange="onDate">
+        <view class="picker-value">📅 {{date}}</view>
+      </picker>
+      <picker class="picker-item" mode="time" value="{{time}}" bindchange="onTime">
+        <view class="picker-value">⏰ {{time}}</view>
+      </picker>
+    </view>
+
+    <view class="form-label">📍 地点</view>
+    <view class="loc-row">
+      <input class="input loc-input" placeholder="{{locationPlaceholder}}" value="{{location}}" bindinput="onLocation" maxlength="50"/>
+      <view class="map-pick" bindtap="pickLocation">🗺️ 地图选点</view>
+    </view>
+    <view class="loc-tip" wx:if="{{locationLat}}">已定位：{{locationAddress || location}}</view>
+
+    <view class="form-label">📝 活动说明</view>
+    <textarea class="textarea" placeholder="{{descriptionPlaceholder}}" value="{{description}}" bindinput="onDescription" maxlength="300"/>
+
+    <view class="ai-trigger" bindtap="aiPlan" hover-class="press-hover">
+      <text class="ai-trigger-icon">✨</text>
+      <view class="ai-trigger-texts">
+        <view class="ai-trigger-title">AI 帮我想活动方案</view>
+        <view class="ai-trigger-sub">一句话主题，自动生成标题、文案和菜单</view>
+      </view>
+      <text class="ai-trigger-go">›</text>
+    </view>
+
+    <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">{{submitting ? '创建中…' : (isEdit ? '保存修改 💾' : '创建活动 🎉')}}</button>
+    <view class="step-text" wx:if="{{stepText}}">{{stepText}}</view>
+  </view>
+  <view class="build-tag">内部版本 {{buildTag}}</view>
+</view>

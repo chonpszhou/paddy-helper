@@ -1,0 +1,136 @@
+.me-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.me-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.me-avatar {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06AD56, #07C160);
+  color: #FFFFFF;
+  font-size: 48rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.me-avatar-img {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+  background: #F5EFE8;
+}
+
+.me-name {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.me-intro {
+  font-size: 24rpx;
+  color: #9A8F86;
+  margin-top: 8rpx;
+}
+
+.me-authed {
+  font-size: 22rpx;
+  color: #2FA46F;
+  font-weight: 600;
+}
+
+.me-edit {
+  font-size: 25rpx;
+  color: #07C160;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.row-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 28rpx;
+}
+
+.row-label {
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.row-value {
+  font-size: 25rpx;
+  color: #9A8F86;
+}
+
+.mine {
+  margin-bottom: 20rpx;
+}
+
+.mine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.type-badge {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+  font-weight: 600;
+}
+
+.tag-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
+}
+
+.mine-status {
+  font-size: 24rpx;
+  color: #9A8F86;
+}
+
+.mine-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  margin: 14rpx 0 8rpx;
+}
+
+.mine-meta {
+  font-size: 25rpx;
+  color: #6F675F;
+}
+
+.about {
+  text-align: center;
+  padding: 40rpx 0 20rpx;
+}
+
+.about-line {
+  font-size: 24rpx;
+  color: #C4B9AE;
+  margin-bottom: 8rpx;
+}
+
+.reset-link {
+  font-size: 24rpx;
+  color: #B0A79E;
+  text-decoration: underline;
+  margin-top: 20rpx;
+}

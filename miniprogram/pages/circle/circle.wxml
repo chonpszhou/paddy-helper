@@ -1,0 +1,68 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="intro">
+    <view class="intro-emoji">🫧</view>
+    <view class="intro-title">每个圈子都是独立的小世界</view>
+    <view class="intro-sub">圈子之间互不可见，活动、好友资料都只在圈内共享</view>
+  </view>
+
+  <view class="home-row">
+    <view class="home-btn" bindtap="goHome" hover-class="press-hover">🏠 回首页</view>
+  </view>
+
+  <view class="card success-card" wx:if="{{created}}">
+    <view class="success-emoji">🎉</view>
+    <view class="success-title">「{{createdName}}」创建成功！</view>
+    <view class="success-tip">把通行码发给想邀请的朋友，凭码加入：</view>
+    <view class="success-code" user-select>{{createdCode}}</view>
+    <view class="success-login" wx:if="{{!loggedIn}}">还没登录，登录后活动才能和圈友同步</view>
+    <view class="success-actions">
+      <button class="primary-btn copy-btn" bindtap="copyCode">📋 复制通行码</button>
+      <button class="ghost-btn enter-btn" bindtap="enterCircle">进入圈子 →</button>
+    </view>
+    <button class="primary-btn login-btn" bindtap="goLogin" wx:if="{{!loggedIn}}">先登录（微信头像昵称）</button>
+  </view>
+
+  <view class="card section" wx:if="{{myCircles.length}}">
+    <view class="section-title">🔄 我的圈子</view>
+    <view class="section-tip">点一下即可切换当前圈子</view>
+    <view class="circle-list">
+      <view class="circle-item" wx:for="{{myCircles}}" wx:key="id" bindtap="switchCircle" data-id="{{item.id}}">
+        <view class="circle-item-main">
+          <view class="circle-item-name">{{item.name}}</view>
+          <view class="circle-item-code" wx:if="{{item.code}}">🔑 通行码 {{item.code}}</view>
+        </view>
+        <view class="circle-item-state {{item.id === currentCircleId ? 'on' : ''}}">{{item.id === currentCircleId ? '当前 ✓' : '切换 ›'}}</view>
+        <view class="circle-item-copy" catchtap="copyCircleCode" data-code="{{item.code}}">复制码</view>
+        <view class="circle-item-leave" catchtap="manageCircle" data-id="{{item.id}}">退出</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card section">
+    <view class="section-title">🔑 加入已有圈子</view>
+    <view class="section-tip">输入朋友给你的圈子通行码</view>
+    <input
+      class="input"
+      placeholder="输入朋友给你的 8 位通行码，比如 K7M2PQX9"
+      value="{{joinCode}}"
+      bindinput="onJoinInput"
+      maxlength="20"
+      confirm-type="done"
+      bindconfirm="doJoin"
+    />
+    <button class="primary-btn action-btn" bindtap="doJoin" loading="{{joinLoading}}" disabled="{{joinLoading}}">{{joinLoading ? '加入中…' : '加入圈子 🎈'}}</button>
+    <view class="err-text" wx:if="{{error}}">{{error}}</view>
+  </view>
+
+  <view class="card section">
+    <view class="section-title">✨ 创建新圈子</view>
+    <view class="section-tip">给自己和朋友建一个私密空间，通行码会自动生成</view>
+    <view class="form-label">圈子名称</view>
+    <input class="input" placeholder="比如：周末干饭局" value="{{newName}}" bindinput="onNameInput" maxlength="20"/>
+    <button class="primary-btn action-btn" bindtap="doCreate" loading="{{createLoading}}" disabled="{{createLoading}}">{{createLoading ? '创建中…' : '创建圈子 🏡'}}</button>
+    <view class="err-text" wx:if="{{error}}">{{error}}</view>
+  </view>
+
+  <view class="foot-tip">创建或加入圈子后，这里只显示当前圈子的活动</view>
+</view>

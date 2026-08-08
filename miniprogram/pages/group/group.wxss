@@ -1,0 +1,199 @@
+.head-title {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.head-sub {
+  font-size: 26rpx;
+  color: #9A8F86;
+  margin-top: 10rpx;
+}
+
+.head-loc {
+  color: #4A9EFF;
+}
+
+.head-addr {
+  font-size: 23rpx;
+  color: #B0A79E;
+}
+
+.final-banner {
+  margin-top: 18rpx;
+  background: #EAF8F1;
+  color: #1F8A58;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 14rpx;
+  padding: 14rpx 18rpx;
+}
+
+.title-tip {
+  font-size: 22rpx;
+  color: #C4B9AE;
+  font-weight: 400;
+  margin-left: 8rpx;
+}
+
+.map {
+  width: 100%;
+  height: 420rpx;
+  border-radius: 18rpx;
+  overflow: hidden;
+}
+
+.map-legend {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 16rpx;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #9A8F86;
+}
+
+.legend-dot {
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  margin-right: 8rpx;
+}
+
+.legend-star {
+  background: #E8483F;
+  border-radius: 4rpx;
+  transform: rotate(45deg);
+}
+
+.legend-org {
+  background: #07C160;
+}
+
+.legend-purple {
+  background: #8B6CF6;
+}
+
+.center-text {
+  font-size: 25rpx;
+  color: #6F675F;
+  margin-top: 16rpx;
+}
+
+.center-coord {
+  color: #E8483F;
+  font-weight: 700;
+}
+
+.warn-card {
+  background: #FFF7E8;
+}
+
+.warn {
+  font-size: 24rpx;
+  color: #D97706;
+  line-height: 1.6;
+}
+
+.venue {
+  background: #FBF6F0;
+  border-radius: 18rpx;
+  padding: 20rpx 22rpx;
+  margin-bottom: 16rpx;
+}
+
+.venue-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.venue-info {
+  flex: 1;
+  min-width: 0;
+  margin-right: 16rpx;
+}
+
+.venue-name {
+  font-size: 29rpx;
+  font-weight: 700;
+}
+
+.venue-final {
+  color: #1F8A58;
+  font-size: 24rpx;
+}
+
+.venue-address {
+  font-size: 23rpx;
+  color: #9A8F86;
+  margin-top: 6rpx;
+}
+
+.venue-voters {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.venue-voters-text {
+  font-size: 22rpx;
+  margin-right: 12rpx;
+}
+
+.venue-count {
+  font-size: 22rpx;
+  color: #9A8F86;
+}
+
+.venue-vote {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #9A8F86;
+  border: 2rpx solid #E4D8CC;
+  border-radius: 999rpx;
+  padding: 8rpx 22rpx;
+}
+
+.venue-vote-on {
+  background: linear-gradient(135deg, #9C85F9, #7C5CFC);
+  color: #FFFFFF;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.venue-actions {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 16rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx dashed #EADFD3;
+}
+
+.venue-action {
+  font-size: 23rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+}
+
+.venue-action-final {
+  background: #FFFFFF;
+  color: #8B6CF6;
+  border: 2rpx solid #D8CCFB;
+  font-weight: 600;
+}
+
+.venue-action-del {
+  color: #FF4D4F;
+  border: 2rpx solid #FFD6D6;
+}
+
+.add-line {
+  text-align: center;
+  color: #07C160;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 16rpx 0 4rpx;
+}

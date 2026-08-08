@@ -1,0 +1,77 @@
+<aurora-bg></aurora-bg>
+<view class="page" wx:if="{{activity}}">
+  <view class="card head">
+    <view class="head-title">🎲 {{activity.title}}</view>
+    <view class="head-sub">🕐 {{timeText}}</view>
+    <view class="head-sub head-loc" bindtap="openLocation">📍 {{activity.location || '地点待定'}}</view>
+    <view class="head-sub head-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
+    <view class="final-banner" wx:if="{{hasFinal}}">✅ 已选定场馆：{{finalName}}</view>
+  </view>
+
+  <view class="ai-trigger" bindtap="aiGroup" hover-class="press-hover">
+    <text class="ai-trigger-icon">✨</text>
+    <view class="ai-trigger-texts">
+      <view class="ai-trigger-title">AI 推荐玩法</view>
+      <view class="ai-trigger-sub">输入人数和偏好，推荐剧本杀、桌游、狼人杀方案</view>
+    </view>
+    <text class="ai-trigger-go">›</text>
+  </view>
+
+  <view class="card" wx:if="{{center}}">
+    <view class="card-title">🗺️ 居中地点</view>
+    <map class="map" latitude="{{mapLat}}" longitude="{{mapLng}}" markers="{{markers}}" scale="12"/>
+    <view class="map-legend">
+      <view class="legend-item"><view class="legend-dot legend-star"></view>居中点</view>
+      <view class="legend-item"><view class="legend-dot legend-org"></view>参加者</view>
+      <view class="legend-item"><view class="legend-dot legend-purple"></view>候选场馆</view>
+    </view>
+    <view class="center-text">根据 {{locatedCount}} 位参加者的位置，居中点约在 <text class="center-coord">{{centerText}}</text></view>
+  </view>
+
+  <view class="card" wx:else>
+    <view class="card-title">🗺️ 居中地点</view>
+    <view class="empty">
+      <view class="empty-icon">📍</view>
+      <view class="empty-text">设置好参加者的位置后，这里会自动算出最居中的地点</view>
+    </view>
+  </view>
+
+  <view class="card warn-card" wx:if="{{missingNames.length}}">
+    <view class="warn">⚠️ 还有 {{missingNames.length}} 位朋友没设置位置（{{missingNamesText}}），居中点会不太准</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">🏟️ 候选场馆 <text class="title-tip">按距居中点远近排序</text></view>
+    <view class="venue" wx:for="{{venues}}" wx:key="id">
+      <view class="venue-main" bindtap="toggleVote" data-venue-id="{{item.id}}">
+        <view class="venue-info">
+          <view class="venue-name">{{item.name}}<text class="venue-final" wx:if="{{item.isFinal}}"> ✅ 已选定</text></view>
+          <view class="venue-address">📍 {{item.address || '地址待补充'}} · 距居中点 {{item.distanceText || '未计算'}}</view>
+          <view class="venue-voters">
+            <text class="venue-voters-text">{{item.votersText}}</text>
+            <text class="venue-count">{{item.voteCount}} 人想去</text>
+          </view>
+        </view>
+        <view class="venue-vote {{item.voted ? 'venue-vote-on' : ''}}">{{item.voted ? '✓ 想去' : '想去'}}</view>
+      </view>
+      <view class="venue-actions">
+        <view class="venue-action venue-action-final" bindtap="setFinal" data-venue-id="{{item.id}}">{{item.isFinal ? '取消选定' : '定这家'}}</view>
+        <view class="venue-action venue-action-del" wx:if="{{item.isMine}}" catchtap="removeVenue" data-venue-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!venues.length}}">
+      <view class="empty-icon">🏟️</view>
+      <view class="empty-text">还没有候选场馆，添加一个吧</view>
+    </view>
+    <view class="add-line" bindtap="addVenue">＋ 添加候选场馆（地图选点）</view>
+  </view>
+</view>
+
+<view class="page" wx:else>
+  <view class="card empty-state">
+    <view class="empty-state-icon">😵</view>
+    <view class="empty-state-text">页面暂时打不开</view>
+    <view class="empty-state-sub">活动可能已不存在，试试重新打开</view>
+    <view class="back-btn" bindtap="goBack">返回</view>
+  </view>
+</view>

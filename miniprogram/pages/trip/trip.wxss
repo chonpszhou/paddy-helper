@@ -1,0 +1,255 @@
+.head-title {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.head-sub {
+  font-size: 26rpx;
+  color: #9A8F86;
+  margin-top: 10rpx;
+}
+
+.head-loc {
+  color: #4A9EFF;
+}
+
+.head-addr {
+  font-size: 23rpx;
+  color: #B0A79E;
+}
+
+.title-tip {
+  font-size: 22rpx;
+  color: #C4B9AE;
+  font-weight: 400;
+  margin-left: 8rpx;
+}
+
+.day {
+  background: #FBF6F0;
+  border-radius: 18rpx;
+  padding: 20rpx 22rpx;
+  margin-bottom: 16rpx;
+}
+
+.day-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.day-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #07C160;
+}
+
+.day-add {
+  font-size: 24rpx;
+  color: #07C160;
+  font-weight: 600;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.item-time {
+  flex-shrink: 0;
+  font-size: 23rpx;
+  color: #8B6CF6;
+  font-weight: 700;
+  background: #EFEAFE;
+  border-radius: 10rpx;
+  padding: 4rpx 12rpx;
+  margin-right: 16rpx;
+}
+
+.item-content {
+  flex: 1;
+  min-width: 0;
+  font-size: 27rpx;
+}
+
+.item-del {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: #C4B9AE;
+  padding: 4rpx 10rpx;
+}
+
+.empty-mini {
+  font-size: 24rpx;
+  color: #C4B9AE;
+  text-align: center;
+  padding: 12rpx 0;
+}
+
+.add-line {
+  text-align: center;
+  color: #07C160;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 16rpx 0 4rpx;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FBF6F0;
+  border-radius: 16rpx;
+  padding: 18rpx 22rpx;
+  margin-bottom: 12rpx;
+}
+
+.task-name {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.task-status {
+  font-size: 23rpx;
+  color: #9A8F86;
+}
+
+.task-status-mine {
+  color: #1F8A58;
+  font-weight: 700;
+}
+
+.task-status-todo {
+  color: #D99A2B;
+  font-weight: 600;
+}
+
+.stay {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid #F7F1EA;
+}
+
+.stay:last-of-type {
+  border-bottom: none;
+}
+
+.stay-emoji {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 50%;
+  background: #EFEAFE;
+  text-align: center;
+  font-size: 32rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.stay-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stay-name {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.stay-meta {
+  font-size: 23rpx;
+  color: #9A8F86;
+  margin-top: 4rpx;
+}
+
+.expense {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid #F7F1EA;
+}
+
+.expense:last-of-type {
+  border-bottom: none;
+}
+
+.expense-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.expense-item {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.expense-payer {
+  font-size: 22rpx;
+  color: #9A8F86;
+  margin-top: 4rpx;
+}
+
+.expense-amount {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #07C160;
+  margin: 0 14rpx;
+}
+
+.expense-sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF4EC;
+  border-radius: 16rpx;
+  padding: 18rpx 22rpx;
+  margin-top: 16rpx;
+}
+
+.sum-total {
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.sum-per {
+  font-size: 24rpx;
+  color: #07C160;
+  font-weight: 700;
+}
+
+.form-row {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 14rpx;
+}
+
+.form-input {
+  flex: 1;
+  min-width: 0;
+  background: #FBF6F0;
+  border-radius: 14rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+}
+
+.form-input-wide {
+  flex: none;
+  width: 100%;
+}
+
+.form-btn {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #36B9F5, #0EA5E9);
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: 600;
+  height: 76rpx;
+  line-height: 76rpx;
+  padding: 0 30rpx;
+  border-radius: 14rpx;
+}

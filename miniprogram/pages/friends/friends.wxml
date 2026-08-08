@@ -1,0 +1,52 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="head-row">
+    <view class="head-title">我的好友（{{friends.length}}）</view>
+    <view class="add-btn" bindtap="toggleAdd">{{showAdd ? '收起' : '＋ 添加'}}</view>
+  </view>
+
+  <view class="card add-card" wx:if="{{showAdd}}">
+    <view class="form-label">✏️ 名字</view>
+    <input class="input" placeholder="朋友的名字" value="{{newName}}" bindinput="onNewName" maxlength="10"/>
+    <view class="form-label">🖼️ 头像（可选）</view>
+    <view class="avatar-row">
+      <button class="avatar-pick" open-type="chooseAvatar" bindchooseavatar="onFriendAvatar">
+        <image wx:if="{{newAvatar}}" class="avatar-pick-img" src="{{newAvatar}}" mode="aspectFill"/>
+        <view wx:else class="avatar-pick-placeholder">🎭</view>
+      </button>
+      <view class="avatar-pick-tip">点左边按钮选微信头像；不选的话用下面的表情当头像</view>
+    </view>
+    <view class="form-label">📍 所在位置</view>
+    <view class="loc-row">
+      <input class="input loc-input" placeholder="比如：通州区（用于算居中地点）" value="{{newLocation}}" bindinput="onNewLocation" maxlength="20"/>
+      <view class="map-pick" bindtap="pickLocation">🗺️ 选点</view>
+    </view>
+    <view class="form-label">选个头像</view>
+    <view class="emoji-grid">
+      <view
+        wx:for="{{presets}}"
+        wx:key="emoji"
+        class="emoji-item {{selectedEmoji === item.emoji ? 'emoji-item-active' : ''}}"
+        bindtap="selectEmoji"
+        data-index="{{index}}"
+        style="background:{{item.color}}33"
+      >{{item.emoji}}</view>
+    </view>
+    <button class="primary-btn save-btn" bindtap="saveFriend">保存好友</button>
+  </view>
+
+  <view class="card friend" wx:for="{{friends}}" wx:key="id" bindtap="manageFriend" data-id="{{item.id}}">
+    <image wx:if="{{item.avatar}}" class="friend-avatar-img" src="{{item.avatar}}" mode="aspectFill"/>
+    <view wx:else class="friend-emoji" style="background:{{item.color}}33">{{item.emoji}}</view>
+    <view class="friend-info">
+      <view class="friend-name">{{item.name}}</view>
+      <view class="friend-location">📍 {{item.location || '位置未设置'}}</view>
+    </view>
+    <view class="friend-more">›</view>
+  </view>
+
+  <view class="empty" wx:if="{{!friends.length}}">
+    <view class="empty-icon">🫂</view>
+    <view class="empty-text">还没有好友，点右上角添加吧</view>
+  </view>
+</view>

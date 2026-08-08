@@ -1,0 +1,274 @@
+.form-label {
+  font-size: 28rpx;
+  font-weight: 700;
+  margin: 28rpx 0 16rpx;
+}
+
+.page {
+  padding-bottom: 280rpx;
+}
+
+.build-tag {
+  text-align: center;
+  font-size: 22rpx;
+  color: #C4CBD4;
+  margin-top: 8rpx;
+}
+
+.circle-banner {
+  margin-bottom: 20rpx;
+  padding: 20rpx 28rpx;
+  background: rgba(139, 92, 246, 0.12);
+  color: #7C3AED;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 20rpx;
+}
+
+.ai-trigger {
+  display: flex;
+  align-items: center;
+  margin-top: 28rpx;
+  padding: 24rpx 26rpx;
+  border-radius: 22rpx;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.10), rgba(14, 165, 233, 0.10));
+  border: 1rpx solid rgba(139, 92, 246, 0.18);
+}
+
+.ai-trigger-icon {
+  font-size: 44rpx;
+  margin-right: 18rpx;
+}
+
+.ai-trigger-texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-trigger-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0E1116;
+}
+
+.ai-trigger-sub {
+  font-size: 22rpx;
+  color: #9A8F86;
+  margin-top: 6rpx;
+}
+
+.ai-trigger-go {
+  font-size: 34rpx;
+  color: #8B5CF6;
+  font-weight: 600;
+}
+
+.form-label:first-child {
+  margin-top: 0;
+}
+
+.type-grid {
+  display: flex;
+  gap: 16rpx;
+}
+
+.type-item {
+  flex: 1;
+  border: 3rpx solid transparent;
+  border-radius: 20rpx;
+  padding: 20rpx 0 16rpx;
+  text-align: center;
+  background: #FBF6F0;
+}
+
+.type-item-active {
+  background: #FFF4EC;
+}
+
+.type-icon {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10rpx;
+}
+
+.type-icon-img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.type-name {
+  font-size: 26rpx;
+  color: #6F675F;
+  font-weight: 600;
+}
+
+.mode-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.mode-item {
+  flex: 1;
+  border: 3rpx solid transparent;
+  border-radius: 20rpx;
+  padding: 22rpx 0;
+  text-align: center;
+  background: #FBF6F0;
+}
+
+.mode-item-on {
+  background: #FFF4EC;
+  border-color: #07C160;
+}
+
+.mode-title {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.mode-sub {
+  font-size: 21rpx;
+  color: #9A8F86;
+  margin-top: 8rpx;
+}
+
+.input {
+  background: #FBF6F0;
+  border-radius: 16rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+.loc-row {
+  display: flex;
+  gap: 14rpx;
+}
+
+.loc-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-pick {
+  width: 168rpx;
+  text-align: center;
+  height: 84rpx;
+  line-height: 84rpx;
+  background: #FFF4EC;
+  color: #07C160;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.loc-tip {
+  font-size: 22rpx;
+  color: #9A8F86;
+  margin-top: 10rpx;
+}
+
+.picker-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.picker-item {
+  flex: 1;
+  background: #FBF6F0;
+  border-radius: 16rpx;
+}
+
+.picker-value {
+  height: 84rpx;
+  line-height: 84rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 160rpx;
+  background: #FBF6F0;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+}
+
+.friend-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 12rpx;
+}
+
+.invite-link {
+  font-size: 24rpx;
+  color: #07C160;
+  font-weight: 600;
+  padding: 4rpx 8rpx;
+}
+
+.friend-chip {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  background: #FBF6F0;
+  border: 3rpx solid transparent;
+  border-radius: 999rpx;
+  padding: 10rpx 22rpx 10rpx 12rpx;
+}
+
+.friend-chip-active {
+  background: #FFF4EC;
+  border-color: #07C160;
+}
+
+.friend-emoji {
+  width: 52rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.friend-name {
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.form-tip {
+  font-size: 24rpx;
+  color: #B0A79E;
+  margin-top: 12rpx;
+}
+
+.submit-btn {
+  margin-top: 48rpx;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.step-text {
+  margin-top: 18rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #8B5CF6;
+  font-weight: 600;
+}

@@ -1,0 +1,37 @@
+.page {
+  padding: 32rpx 28rpx 80rpx;
+}
+
+.doc-head {
+  text-align: center;
+  margin-bottom: 28rpx;
+}
+
+.doc-title {
+  font-size: 34rpx;
+  font-weight: 800;
+  color: #0E1116;
+}
+
+.doc-sub {
+  font-size: 23rpx;
+  color: #9A8F86;
+  margin-top: 8rpx;
+}
+
+.doc-card {
+  text-align: left;
+}
+
+.doc-card .doc-title {
+  font-size: 29rpx;
+  font-weight: 700;
+  margin-bottom: 14rpx;
+}
+
+.doc-item {
+  font-size: 25rpx;
+  color: #3D4450;
+  line-height: 1.7;
+  margin-bottom: 12rpx;
+}

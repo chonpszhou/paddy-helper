@@ -1,0 +1,141 @@
+<aurora-bg></aurora-bg>
+<view class="page detail-page" wx:if="{{activity}}">
+  <view class="hero" style="background:{{meta.grad}}">
+    <view class="hero-ball hb1"></view>
+    <view class="hero-ball hb2"></view>
+    <view class="hero-ball hb3"></view>
+    <view class="hero-top">
+      <view class="hero-tag"><image class="hero-tag-icon" src="{{typeIconW}}"/>{{meta.name}}</view>
+      <view class="hero-status" wx:if="{{activity.status === 'ended'}}">已结束</view>
+    </view>
+    <view class="hero-title">{{activity.title}}</view>
+    <view class="hero-meta">
+      <view class="hm"><image class="mi-w" src="{{icons.clockW}}"/>{{timeText}}</view>
+      <view class="hm" bindtap="openLocation"><image class="mi-w" src="{{icons.pinW}}"/>{{activity.location || '地点待定'}}</view>
+      <view class="hm hm-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
+    </view>
+    <view class="hero-desc" wx:if="{{activity.description}}">{{activity.description}}</view>
+  </view>
+
+  <view class="float-card">
+    <view class="float-stats">
+      <view class="fs">
+        <text class="fs-n" style="color: #07C160">{{confirmed}}</text>
+        <text class="fs-l">参加</text>
+      </view>
+      <view class="fs-div"></view>
+      <view class="fs">
+        <text class="fs-n" style="color: #8B5CF6">{{maybe}}</text>
+        <text class="fs-l">待定</text>
+      </view>
+      <view class="fs-div"></view>
+      <view class="fs">
+        <text class="fs-n" style="color: #0EA5E9">{{members}}</text>
+        <text class="fs-l">成员</text>
+      </view>
+    </view>
+    <view class="signup-btns">
+      <view
+        wx:for="{{signupOptions}}"
+        wx:key="key"
+        class="signup-btn {{myStatus === item.key ? 'signup-btn-active' : ''}}"
+        bindtap="chooseStatus"
+        data-status="{{item.key}}"
+        hover-class="press-hover"
+      >{{item.icon}} {{item.label}}</view>
+    </view>
+    <view wx:if="{{myStatus === 'yes'}}" class="note-row">
+      <input class="note-input" placeholder="留句话，比如：我带蛋糕 🎂" value="{{myNote}}" bindinput="onNote"/>
+    </view>
+  </view>
+
+  <view class="group" wx:if="{{special}}">
+    <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>{{special.title}}</view>
+    <view class="inset">
+      <view class="inset-row inset-row-center">
+        <text class="inset-text">{{special.text}}</text>
+        <view class="inset-btn" bindtap="goSpecial" hover-class="press-hover">{{special.actionText || '进入 ›'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="ai-trigger" bindtap="aiSummary" hover-class="press-hover">
+    <text class="ai-trigger-icon">✨</text>
+    <view class="ai-trigger-texts">
+      <view class="ai-trigger-title">AI 活动小记</view>
+      <view class="ai-trigger-sub">根据活动、留言和照片，生成一段温暖总结</view>
+    </view>
+    <text class="ai-trigger-go">›</text>
+  </view>
+
+  <view class="group">
+    <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>成员名单<text class="group-count">{{members}}</text></view>
+    <view class="inset">
+      <view class="inset-row" wx:for="{{membersList}}" wx:key="id">
+        <view class="member-emoji" style="background:{{item.color}}33">{{item.emoji}}</view>
+        <view class="member-info">
+          <view class="member-name">{{item.name}}{{item.isMe ? '（我）' : ''}}</view>
+          <view class="member-note" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
+        <view class="member-status" style="color:{{item.statusColor}}">{{item.statusText}}</view>
+      </view>
+      <view class="empty-mini" wx:if="{{!membersList.length}}">🪑 还没有人报名</view>
+    </view>
+  </view>
+
+  <view class="group">
+    <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>活动相册<text class="group-count">{{photos.length}} 张</text></view>
+    <view class="inset inset-pad">
+      <view class="photo-grid">
+        <view class="photo-item" wx:for="{{photos}}" wx:key="id">
+          <view class="photo-wrap">
+            <image class="photo-img" src="{{item.src}}" mode="aspectFill" bindtap="previewPhoto" data-index="{{index}}"/>
+            <view class="photo-rank" wx:if="{{item.rank}}">{{item.rank}}</view>
+          </view>
+          <view class="photo-actions">
+            <view class="photo-vote {{item.liked ? 'photo-vote-on' : ''}}" bindtap="togglePhotoVote" data-id="{{item.id}}" data-type="like">👍 {{item.likeCount}}</view>
+            <view class="photo-vote {{item.disliked ? 'photo-vote-on-bad' : ''}}" bindtap="togglePhotoVote" data-id="{{item.id}}" data-type="dislike">👎 {{item.dislikeCount}}</view>
+            <text class="photo-score">{{item.scoreText}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-mini" wx:if="{{!photos.length}}">📸 还没有照片</view>
+      <view class="photo-upload" bindtap="uploadPhotos" hover-class="press-hover">📷 上传照片（匿名）</view>
+    </view>
+  </view>
+
+  <view class="group" id="comments">
+    <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>留言<text class="group-count">{{comments.length}}</text></view>
+    <view class="inset">
+      <view class="comment" wx:for="{{comments}}" wx:key="id">
+        <view class="comment-head">
+          <text class="comment-name">{{item.author}}</text>
+          <text class="comment-time">{{item.timeText}}</text>
+        </view>
+        <view class="comment-text">{{item.text}}</view>
+      </view>
+      <view class="empty-mini" wx:if="{{!comments.length}}">💬 还没有留言</view>
+      <view class="comment-input-row">
+        <input class="comment-input" placeholder="说点什么…" value="{{commentText}}" bindinput="onComment" confirm-type="send" bindconfirm="sendComment"/>
+        <view class="comment-send" bindtap="sendComment" hover-class="press-hover">发送</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="page" wx:else>
+  <view class="card empty-state">
+    <view class="empty-state-icon">😵</view>
+    <view class="empty-state-text">页面暂时打不开</view>
+    <view class="empty-state-sub">{{errorMsg}}</view>
+    <view class="back-btn" bindtap="goBack">返回首页</view>
+  </view>
+</view>
+
+<view class="bottom-bar" wx:if="{{activity}}">
+  <view class="bb-btn bb-ghost" bindtap="goEdit" hover-class="press-hover" wx:if="{{isCreator}}"><image class="mi" src="{{icons.edit}}"/> 编辑</view>
+  <view class="bb-btn bb-ghost" bindtap="scrollToComments" hover-class="press-hover"><image class="mi" src="{{icons.comment}}"/> 留言</view>
+  <view class="bb-btn bb-ghost" bindtap="goPoster" hover-class="press-hover"><image class="mi" src="{{icons.camera}}"/> 海报</view>
+  <view class="bb-btn bb-primary" bindtap="goSpecial" hover-class="press-hover" wx:if="{{special && special.goUrl}}">进入筹备 ›</view>
+  <view class="bb-btn bb-primary" bindtap="goBack" hover-class="press-hover" wx:else>返回</view>
+</view>

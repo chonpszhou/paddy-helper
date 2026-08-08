@@ -1,0 +1,42 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="hero">
+    <view class="hero-emoji">🫧</view>
+    <view class="hero-title">Paddy 小助手</view>
+    <view class="hero-sub">和朋友们一起，把周末过得热气腾腾</view>
+  </view>
+
+  <view class="card login-card">
+    <view class="login-title">你好呀 👋</view>
+    <view class="login-sub">选个头像、填个昵称，朋友们就能认出你</view>
+
+    <view class="avatar-wrap">
+      <view class="avatar-box">
+        <view class="avatar-visual">
+          <image wx:if="{{avatar}}" class="avatar-img" src="{{avatar}}" mode="aspectFill"/>
+          <view wx:else class="avatar-placeholder">
+            <image class="avatar-cam" src="{{camIcon}}"/>
+          </view>
+        </view>
+        <button class="avatar-hit" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar"></button>
+      </view>
+      <view class="avatar-tip">{{avatar ? '换一个头像' : '点击选择微信头像'}}</view>
+    </view>
+
+    <view class="form-label">昵称</view>
+    <view class="input-row">
+      <text class="input-icon">👤</text>
+      <input class="input" type="nickname" placeholder="输入微信昵称" value="{{nickname}}" bindinput="onNickname" maxlength="20"/>
+    </view>
+
+    <button class="primary-btn login-btn" bindtap="confirm" hover-class="btn-hover">登录 🎉</button>
+    <view class="agree-row">
+      <view class="agree-box {{agreed ? 'agree-box-on' : ''}}" bindtap="toggleAgree">{{agreed ? '✓' : ''}}</view>
+      <view class="agree-text">我已阅读并同意
+        <text class="agree-link" catchtap="goAgreement">《用户服务协议》</text>和
+        <text class="agree-link" catchtap="goPrivacy">《隐私政策》</text>
+      </view>
+    </view>
+    <view class="login-note">头像昵称仅用于活动展示，随时可在「我的」修改</view>
+  </view>
+</view>

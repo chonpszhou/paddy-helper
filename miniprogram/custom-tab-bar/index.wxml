@@ -1,0 +1,16 @@
+<view class="tabbar-wrap">
+  <view class="tabbar">
+    <view
+      class="tb {{selected === index ? 'on' : ''}} {{index === 1 && spin ? 'spin' : ''}}"
+      wx:for="{{list}}"
+      wx:key="pagePath"
+      data-path="{{item.pagePath}}"
+      data-index="{{index}}"
+      bindtap="switchTab"
+      hover-class="press-hover"
+    >
+      <image class="tb-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"/>
+      <text class="tb-text">{{item.text}}</text>
+    </view>
+  </view>
+</view>

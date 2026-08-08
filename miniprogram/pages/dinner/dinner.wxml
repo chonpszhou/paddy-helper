@@ -1,0 +1,126 @@
+<aurora-bg></aurora-bg>
+<view class="page" wx:if="{{activity}}">
+  <view class="card head">
+    <view class="head-title">🍲 {{activity.title}}</view>
+    <view class="head-sub">🕐 {{timeText}}</view>
+    <view class="head-sub head-loc" bindtap="openLocation">📍 {{activity.location || '地点待定'}}</view>
+    <view class="head-sub head-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
+  </view>
+
+  <view class="secret-card" wx:if="{{isPaddyHome && homeDinner}}">
+    <view class="secret-head">
+      <view class="secret-seal"><text class="seal-line">私房</text><text class="seal-line">菜</text></view>
+      <view class="secret-titles">
+        <view class="secret-title">🥘 周鹏私房菜</view>
+        <view class="secret-sub">隐藏彩蛋解锁 · {{menuCount}} 道北方风味</view>
+      </view>
+      <view class="secret-star">✨</view>
+    </view>
+    <view class="secret-desc">鄂尔多斯蒙式 + 巴彦淖尔河套 + 东北硬菜，只有来周鹏家才有的待遇 🎁</view>
+    <view class="secret-cat" wx:for="{{privateMenu}}" wx:key="cat" wx:for-item="cat">
+      <view class="secret-cat-title">{{cat.icon}} {{cat.cat}}<text class="secret-cat-count">{{cat.dishes.length}} 道</text></view>
+      <view class="secret-grid">
+        <view class="secret-dish" wx:for="{{cat.dishes}}" wx:for-item="dish" wx:key="name">
+          <image wx:if="{{dish.img}}" class="secret-dish-img" src="{{dish.img}}" mode="aspectFill"/>
+          <view wx:else class="secret-dish-img secret-dish-img-ph">{{cat.icon}}</view>
+          <text class="secret-dish-name">{{dish.name}}</text>
+          <text class="secret-dish-spicy" wx:if="{{dish.spicy}}">🌶️</text>
+        </view>
+      </view>
+    </view>
+    <view class="secret-add" bindtap="addPrivateMenu">{{privateMenuAdded ? '✅ 已全部加入点菜清单' : '✨ 一键加入点菜清单（' + menuCount + ' 道）'}}</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">🕐 时间投票 <text class="title-tip">点一下选择你合适的时间</text></view>
+    <view class="slot" wx:for="{{slots}}" wx:key="id" bindtap="toggleTime" data-slot-id="{{item.id}}">
+      <view class="slot-left">
+        <view class="slot-label">{{item.label}}</view>
+        <view class="slot-voters">
+          <text class="slot-voter" wx:for="{{item.voters}}" wx:for-item="v" wx:key="*this">{{v}}</text>
+          <text class="slot-count">{{item.votedCount}} 人可选</text>
+        </view>
+      </view>
+      <view class="slot-check {{item.voted ? 'slot-check-on' : ''}}">{{item.voted ? '✓ 我选' : '选这个'}}</view>
+    </view>
+    <view class="empty" wx:if="{{!slots.length}}">
+      <view class="empty-text">还没有时间段，添加一个吧</view>
+    </view>
+    <view class="add-line" bindtap="addTimeSlot">＋ 添加时间段</view>
+  </view>
+
+  <view class="card restaurant-tip-card" wx:if="{{!homeDinner}}">
+    <view class="card-title">🍽️ 本次为餐厅聚餐</view>
+    <view class="restaurant-tip">不用点菜、带菜和采购，直接到店开吃～到齐了看上面的时间投票就行</view>
+  </view>
+
+  <view class="card" wx:if="{{homeDinner}}">
+    <view class="card-title">🥢 点菜 <text class="title-tip">点你想吃的菜</text></view>
+    <view class="dish-grid">
+      <view
+        class="dish {{item.wanted ? 'dish-on' : ''}}"
+        wx:for="{{dishes}}"
+        wx:key="id"
+        bindtap="toggleDish"
+        data-dish-id="{{item.id}}"
+      >
+        <view class="dish-name">{{item.name}}</view>
+        <view class="dish-foot">
+          <text class="dish-count">{{item.wantCount}} 人想吃</text>
+          <text class="dish-mark" wx:if="{{item.covered}}">✓ 有人带</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!dishes.length}}">
+      <view class="empty-text">还没有菜单，先加一道菜吧</view>
+    </view>
+    <view class="add-line" bindtap="addDish">＋ 加菜</view>
+  </view>
+
+  <view class="card" wx:if="{{homeDinner}}">
+    <view class="card-title">🎁 带菜登记 <text class="title-tip">谁带什么，写清楚不重复</text></view>
+    <view class="bring" wx:for="{{bringItems}}" wx:key="id">
+      <view class="bring-emoji" style="background:{{item.color}}33">{{item.emoji}}</view>
+      <view class="bring-info">
+        <view class="bring-name">{{item.name}}</view>
+        <view class="bring-item">{{item.item}}</view>
+      </view>
+      <view class="bring-remove" wx:if="{{item.isMine}}" catchtap="removeBring" data-item-id="{{item.id}}">取消</view>
+    </view>
+    <view class="empty" wx:if="{{!bringItems.length}}">
+      <view class="empty-icon">🎁</view>
+      <view class="empty-text">还没有人登记带菜</view>
+    </view>
+    <view class="bring-input-row">
+      <input class="bring-input" placeholder="我带：比如 自家卤味 🍗" value="{{myBringItem}}" bindinput="onBringInput" confirm-type="done" bindconfirm="addBring"/>
+      <view class="bring-add" bindtap="addBring">登记</view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{homeDinner}}">
+    <view class="card-title">🛒 采购清单 <text class="title-tip">没人带的菜，我来买</text></view>
+    <view class="shop-item" wx:for="{{shoppingList}}" wx:key="id">
+      <text class="shop-name">· {{item.name}}</text>
+      <text class="shop-count">{{item.wantCount}} 人想吃</text>
+    </view>
+    <view class="empty" wx:if="{{!shoppingList.length}}">
+      <block wx:if="{{!dishes.length}}">
+        <view class="empty-icon">🥢</view>
+        <view class="empty-text">还没有人点菜，先在“点菜”里加菜，采购清单会自动生成</view>
+      </block>
+      <block wx:else>
+        <view class="empty-icon">🎉</view>
+        <view class="empty-text">太棒了，所有菜都有人带了！</view>
+      </block>
+    </view>
+  </view>
+</view>
+
+<view class="page" wx:else>
+  <view class="card empty-state">
+    <view class="empty-state-icon">😵</view>
+    <view class="empty-state-text">页面暂时打不开</view>
+    <view class="empty-state-sub">活动可能已不存在，试试重新打开</view>
+    <view class="back-btn" bindtap="goBack">返回</view>
+  </view>
+</view>

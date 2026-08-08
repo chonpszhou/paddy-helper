@@ -1,0 +1,173 @@
+.head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8rpx 4rpx 24rpx;
+}
+
+.head-title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #06AD56, #07C160);
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 12rpx 28rpx;
+  border-radius: 999rpx;
+  box-shadow: 0 6rpx 16rpx rgba(7, 193, 96, 0.25);
+}
+
+.form-label {
+  font-size: 27rpx;
+  font-weight: 700;
+  margin: 20rpx 0 12rpx;
+}
+
+.form-label:first-child {
+  margin-top: 0;
+}
+
+.input {
+  background: #FBF6F0;
+  border-radius: 14rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 22rpx;
+  font-size: 27rpx;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.avatar-pick {
+  width: 108rpx;
+  height: 108rpx;
+  padding: 0;
+  background: #FBF6F0;
+  border-radius: 50%;
+  line-height: normal;
+  flex-shrink: 0;
+}
+
+.avatar-pick-img {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+}
+
+.avatar-pick-placeholder {
+  width: 108rpx;
+  height: 108rpx;
+  line-height: 108rpx;
+  font-size: 44rpx;
+}
+
+.avatar-pick-tip {
+  flex: 1;
+  font-size: 22rpx;
+  color: #B0A79E;
+  line-height: 1.6;
+}
+
+.loc-row {
+  display: flex;
+  gap: 14rpx;
+}
+
+.loc-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-pick {
+  width: 130rpx;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #FFF4EC;
+  color: #07C160;
+  border-radius: 14rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.emoji-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.emoji-item {
+  width: 72rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 34rpx;
+  border: 3rpx solid transparent;
+}
+
+.emoji-item-active {
+  border-color: #07C160;
+}
+
+.save-btn {
+  margin-top: 32rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.friend-emoji {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.friend-avatar-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  background: #F5EFE8;
+}
+
+.friend-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-name {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.friend-location {
+  font-size: 24rpx;
+  color: #9A8F86;
+  margin-top: 4rpx;
+}
+
+.friend-more {
+  font-size: 34rpx;
+  color: #C4B9AE;
+  padding: 0 10rpx;
+}

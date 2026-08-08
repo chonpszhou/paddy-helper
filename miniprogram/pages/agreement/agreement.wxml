@@ -1,0 +1,11 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="doc-head">
+    <view class="doc-title">Paddy小助手 · 用户服务协议</view>
+    <view class="doc-sub">更新日期：2026年8月</view>
+  </view>
+  <view class="card doc-card" wx:for="{{sections}}" wx:key="title">
+    <view class="doc-title">{{item.title}}</view>
+    <view class="doc-item" wx:for="{{item.items}}" wx:for-item="it" wx:key="*this">{{it}}</view>
+  </view>
+</view>

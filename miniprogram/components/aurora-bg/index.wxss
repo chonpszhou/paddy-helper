@@ -1,0 +1,61 @@
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(160deg, #f3fbf6 0%, #eef6ff 55%, #f6f1ff 100%);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+.b1 {
+  width: 640rpx;
+  height: 640rpx;
+  left: -140rpx;
+  top: -160rpx;
+  background: radial-gradient(circle, #7ef0c0, transparent 70%);
+}
+
+.b2 {
+  width: 580rpx;
+  height: 580rpx;
+  right: -160rpx;
+  top: 160rpx;
+  background: radial-gradient(circle, #8fd0ff, transparent 70%);
+  animation-delay: -7s;
+}
+
+.b3 {
+  width: 700rpx;
+  height: 700rpx;
+  left: 220rpx;
+  bottom: -240rpx;
+  background: radial-gradient(circle, #c8a8ff, transparent 70%);
+  animation-delay: -13s;
+}
+
+.b4 {
+  width: 420rpx;
+  height: 420rpx;
+  right: 120rpx;
+  bottom: 80rpx;
+  background: radial-gradient(circle, #ffd6a8, transparent 70%);
+  animation-delay: -4s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(60rpx, 44rpx) scale(1.12);
+  }
+}

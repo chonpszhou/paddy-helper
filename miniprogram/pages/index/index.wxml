@@ -1,0 +1,84 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="hero-greet rise">
+    <view class="hi">👋 嗨，{{profile.name}}</view>
+    <view class="name">这周末，约起来</view>
+    <view class="circle-chip" wx:if="{{circleName}}">{{circleName}}</view>
+  </view>
+
+  <view class="overview-card rise" hover-class="press-hover">
+    <view class="ov">
+      <view class="ov-n" style="color: #07C160">{{stats.upcoming}}</view>
+      <view class="ov-l">进行中</view>
+    </view>
+    <view class="ov-div"></view>
+    <view class="ov">
+      <view class="ov-n" style="color: #8B5CF6">{{stats.joined}}</view>
+      <view class="ov-l">已参加</view>
+    </view>
+    <view class="ov-div"></view>
+    <view class="ov">
+      <view class="ov-n" style="color: #0EA5E9">{{stats.types}}</view>
+      <view class="ov-l">类型数</view>
+    </view>
+  </view>
+
+  <view class="circle-banner rise" wx:if="{{noCircle}}" bindtap="goCircle" hover-class="press-hover">
+    <view class="circle-banner-icon">🫧</view>
+    <view class="circle-banner-texts">
+      <view class="circle-banner-title">先加入圈子，活动都在圈子里</view>
+      <view class="circle-banner-sub">创建或加入圈子后，就能看到朋友们的活动了</view>
+    </view>
+    <view class="circle-banner-go">去创建 ›</view>
+  </view>
+
+  <view class="chips rise">
+    <view class="chip {{filter === 'all' ? 'on' : ''}}" bindtap="setFilter" data-filter="all">全部</view>
+    <view class="chip {{filter === 'dinner' ? 'on' : ''}}" bindtap="setFilter" data-filter="dinner">聚餐</view>
+    <view class="chip {{filter === 'outdoor' ? 'on' : ''}}" bindtap="setFilter" data-filter="outdoor">户外</view>
+    <view class="chip {{filter === 'group' ? 'on' : ''}}" bindtap="setFilter" data-filter="group">团体</view>
+    <view class="chip {{filter === 'trip' ? 'on' : ''}}" bindtap="setFilter" data-filter="trip">旅行</view>
+  </view>
+
+  <view class="feature rise" wx:if="{{feature}}" bindtap="goDetail" data-id="{{feature.id}}" hover-class="press-hover">
+    <view class="cover" style="background:{{feature.grad}}">
+      <view class="cover-ball cb1"></view>
+      <view class="cover-ball cb2"></view>
+      <view class="cover-top">
+        <view class="cover-tag"><image class="cover-tag-icon" src="{{feature.typeIconW}}"/>{{feature.typeName}}</view>
+        <view class="cover-badge" wx:if="{{feature.myStatusText}}">{{feature.myStatusText}}</view>
+      </view>
+      <view class="cover-title">{{feature.title}}</view>
+      <view class="cover-meta">
+        <view class="cm"><image class="mi-w" src="{{icons.clock}}"/> {{feature.timeText}}</view>
+        <view class="cm"><image class="mi-w" src="{{icons.pin}}"/> {{feature.location || '地点待定'}}</view>
+      </view>
+    </view>
+    <view class="feature-foot">
+      <view class="avatars">
+        <view class="av" wx:for="{{feature.avatars}}" wx:key="k" style="background:{{item.color}}; z-index:{{10 - index}}">{{item.letter}}</view>
+        <view class="av av-more" wx:if="{{feature.avatarMore}}">+{{feature.avatarMore}}</view>
+      </view>
+      <view class="feature-join">{{feature.confirmed}} 人参加 <image class="mi" src="{{icons.chevR}}"/></view>
+    </view>
+  </view>
+
+  <view class="sec-head rise" wx:if="{{others.length}}">
+    <text class="sec-title">其他活动</text>
+    <text class="sec-more" bindtap="goList">查看全部 ›</text>
+  </view>
+  <view class="row-card rise" wx:for="{{others}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" hover-class="press-hover" style="animation-delay: {{index * 50}}ms">
+    <view class="row-dot" style="background:{{item.color}}"></view>
+    <view class="row-main">
+      <view class="row-title">{{item.title}}</view>
+      <view class="row-meta"><image class="mi" src="{{icons.clock}}"/> {{item.timeText}}</view>
+    </view>
+    <view class="row-tag" style="background:{{item.color}}1F;color:{{item.color}}"><image class="mi sm" src="{{item.typeIcon}}"/> {{item.typeName}}</view>
+  </view>
+
+  <view class="empty" wx:if="{{!feature && !others.length}}">
+    <view class="empty-icon">🍃</view>
+    <view class="empty-text">这个分类还没有活动，点下方「发起」按钮发起一个吧</view>
+  </view>
+
+</view>
