@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3fbf6"/>
+      <stop offset="50%" stop-color="#eef6ff"/>
+      <stop offset="100%" stop-color="#f6f1ff"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <filter id="blur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="46"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="360" rx="36" fill="url(#bg)"/>
+  <circle cx="150" cy="60" r="130" fill="#7ef0c0" opacity="0.35" filter="url(#blur)"/>
+  <circle cx="1080" cy="120" r="150" fill="#8fd0ff" opacity="0.32" filter="url(#blur)"/>
+  <circle cx="620" cy="330" r="160" fill="#c8a8ff" opacity="0.28" filter="url(#blur)"/>
+
+  <text x="80" y="150" font-family="-apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif" font-size="72" font-weight="800" fill="#0E1116">Paddy小助手</text>
+  <text x="82" y="205" font-family="-apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif" font-size="30" font-weight="600" fill="#5B6472">和朋友们一起，把每个周末过得热气腾腾 🔥</text>
+
+  <g font-size="34">
+    <text x="82" y="278">🍲 聚餐</text>
+    <text x="210" y="278">⛺ 户外</text>
+    <text x="338" y="278">🎲 团体</text>
+    <text x="466" y="278">✈️ 旅行</text>
+  </g>
+
+  <rect x="880" y="128" width="240" height="92" rx="46" fill="url(#btn)"/>
+  <text x="1000" y="184" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="30" font-weight="700" fill="#FFFFFF" text-anchor="middle">周末约起来 ⭐</text>
+</svg>
