@@ -11,12 +11,15 @@
   <a href="#-功能亮点"><img src="https://img.shields.io/badge/功能-亮点-07C160" alt="功能"/></a>
   <a href="#-快速开始"><img src="https://img.shields.io/badge/快速开始-5分钟-0EA5E9" alt="快速开始"/></a>
   <a href="#-架构"><img src="https://img.shields.io/badge/架构-云开发-8B5CF6" alt="架构"/></a>
+  <a href="https://chonpszhou.github.io/paddy-helper/"><img src="https://img.shields.io/badge/官网-在线预览-34D399" alt="官网"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-3D4450" alt="License"/></a>
 </p>
 
 <p align="center">
   <img src="docs/mockup.svg" width="300" alt="界面预览"/>
 </p>
+
+> 🌐 **在线体验官网**：[chonpszhou.github.io/paddy-helper](https://chonpszhou.github.io/paddy-helper/) — 极光玻璃拟态动效落地页
 
 ---
 

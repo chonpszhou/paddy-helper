@@ -4,3 +4,5 @@ miniprogram_npm/
 project.private.config.json
 miniprogram/utils/config.local.js
 .DS_Store
+.playwright-cli/
+output/
