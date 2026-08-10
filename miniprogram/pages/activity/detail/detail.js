@@ -42,14 +42,19 @@ Page({
     ],
     myStatus: '',
     myNote: '',
+    comments: [],
     membersList: [],
     special: null,
     isCreator: false,
+    photos: [],
+    photoUrls: [],
     typeIconW: '',
+    commentText: '',
     errorMsg: '',
     icons: {
       clockW: icons.icon('clock', '#FFFFFF'),
       pinW: icons.icon('pin', '#FFFFFF'),
+      comment: icons.icon('share', '#0E1116'),
       edit: icons.icon('edit', '#0E1116'),
       camera: icons.icon('camera', '#0E1116')
     }
@@ -97,6 +102,11 @@ Page({
       const profile = store.getProfile()
       const uid = store.currentUid()
       const isCreator = activity.creatorId === uid || (!!activity.creatorOpenid && activity.creatorOpenid === profile.openid)
+      const comments = (activity.comments || []).map(function (c) {
+        return Object.assign({}, c, {
+          timeText: helpers.formatDateTime(c.at)
+        })
+      })
     const membersList = (activity.signups || []).map(function (s) {
       let friend = null
       if (s.friendId === store.currentUid()) {
@@ -120,6 +130,30 @@ Page({
         }
       }).filter(function (x) { return x !== null })
         .sort(function (a, b) { return a.sortIndex - b.sortIndex })
+
+      const photos = (activity.photos || []).map(function (p) {
+        const likes = p.likes || []
+        const dislikes = p.dislikes || []
+        const uid = store.currentUid()
+        const score = likes.length - dislikes.length
+        return {
+          id: p.id,
+          src: p.src,
+          likeCount: likes.length,
+          dislikeCount: dislikes.length,
+          liked: likes.indexOf(uid) >= 0,
+          disliked: dislikes.indexOf(uid) >= 0,
+          score: score,
+          scoreText: score > 0 ? '+' + score : '' + score
+        }
+      }).sort(function (a, b) {
+        if (b.score !== a.score) return b.score - a.score
+        return a.id < b.id ? -1 : 1
+      })
+      photos.forEach(function (p, i) {
+        p.rank = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''
+      })
+      const photoUrls = photos.map(function (p) { return p.src })
 
       let special = SPECIAL[activity.type] || null
       if (special && special.goUrl && activity.type === 'dinner') {
@@ -167,6 +201,7 @@ Page({
       this.setData({
         activity: activity,
         typeIconW: icons.typeIcon(activity.type, '#FFFFFF'),
+        comments: comments,
         meta: meta,
         creatorName: activity.creatorName || profile.name,
         timeText: helpers.formatDateTime(activity.startTime),
@@ -178,6 +213,8 @@ Page({
         membersList: membersList,
         special: special,
         isCreator: isCreator,
+        photos: photos,
+        photoUrls: photoUrls,
         errorMsg: ''
       })
     } catch (e) {
@@ -203,6 +240,26 @@ Page({
 
   onNote(e) {
     this.setData({ myNote: e.detail.value })
+  },
+
+  onComment(e) {
+    this.setData({ commentText: e.detail.value })
+  },
+
+  sendComment() {
+    const self = this
+    if (!this.data.commentText.trim()) {
+      wx.showToast({ title: '写点内容再发吧', icon: 'none' })
+      return
+    }
+    store.requireLogin(function (okLogin) {
+      if (!okLogin) return
+      const ok = store.addComment(self.data.id, self.data.commentText)
+      if (ok) {
+        self.setData({ commentText: '' })
+        self.refresh()
+      }
+    })
   },
 
   goSpecial() {
@@ -231,13 +288,20 @@ Page({
     if (!activity) return
     const self = this
     const names = (this.data.membersList || []).slice(0, 8).map(function (m) { return m.name }).join('、')
+    const comments = (activity.comments || []).slice(-5).map(function (c) { return c.author + '：' + c.text }).join('；')
+    const photos = this.data.photos || []
+    const photoInfo = photos.length
+      ? '共 ' + photos.length + ' 张照片，前三名：' + photos.slice(0, 3).map(function (p) { return (p.rank || '') + ' ' + p.scoreText }).join('，')
+      : '暂无照片'
     wx.showLoading({ title: 'AI 写小记中…', mask: true })
     store.aiCall('summary', {
       title: activity.title,
       type: activity.type,
       time: this.data.timeText,
       location: activity.location || '地点待定',
-      participants: names || '还没人报名'
+      participants: names || '还没人报名',
+      comments: comments || '暂无留言',
+      photoInfo: photoInfo
     }, function (ok, data, error) {
       wx.hideLoading()
       if (!ok) {
@@ -267,6 +331,55 @@ Page({
   openLocation() {
     const a = this.data.activity
     helpers.openMap(a.title, a.location, a.locationLat, a.locationLng)
+  },
+
+  uploadPhotos() {
+    const self = this
+    store.requireLogin(function (ok) {
+      if (!ok) return
+      wx.chooseMedia({
+        count: 9,
+        mediaType: ['image'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          const files = res.tempFiles || []
+          if (!files.length) return
+          wx.showLoading({ title: '上传中…', mask: true })
+          let done = 0
+          files.forEach(function (f) {
+            helpers.persistPhoto(f.tempFilePath, self.data.id, function (src) {
+              store.addPhoto(self.data.id, src)
+              done++
+              if (done >= files.length) {
+                wx.hideLoading()
+                self.refresh()
+                wx.showToast({ title: '已上传 ' + files.length + ' 张', icon: 'success' })
+              }
+            })
+          })
+        }
+      })
+    })
+  },
+
+  togglePhotoVote(e) {
+    store.togglePhotoVote(this.data.id, e.currentTarget.dataset.id, e.currentTarget.dataset.type)
+    this.refresh()
+  },
+
+  previewPhoto(e) {
+    const urls = this.data.photoUrls
+    wx.previewImage({
+      urls: urls,
+      current: urls[e.currentTarget.dataset.index] || urls[0]
+    })
+  },
+
+  scrollToComments() {
+    wx.pageScrollTo({
+      selector: '#comments',
+      duration: 300
+    })
   },
 
   goBack() {
