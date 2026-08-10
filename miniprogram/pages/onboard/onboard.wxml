@@ -1,0 +1,136 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="skip-top" bindtap="skip" wx:if="{{current < total - 1}}">跳过 ›</view>
+
+  <swiper
+    class="guide-swiper"
+    current="{{current}}"
+    bindchange="onSwiper"
+    duration="320"
+  >
+    <!-- 1. 欢迎 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji hero-emoji">🫧</view>
+        <view class="slide-title">欢迎来到 Paddy 小助手</view>
+        <view class="slide-desc">和朋友们一起，把每个周末过得热气腾腾</view>
+        <view class="slide-mini">左滑看看这里都能做什么 👇</view>
+      </view>
+    </swiper-item>
+
+    <!-- 2. 圈子 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji">🔐</view>
+        <view class="slide-title">私密小圈子</view>
+        <view class="slide-desc">创建圈子自动生成通行码，朋友们凭码加入；圈子之间互不可见，活动和好友资料只在圈内共享</view>
+        <view class="slide-tip">🫧 一个圈子，就是你们的小世界</view>
+      </view>
+    </swiper-item>
+
+    <!-- 3. 四类活动 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji">📅</view>
+        <view class="slide-title">四种活动，一键发起</view>
+        <view class="slide-desc">聚餐、户外、团体、旅行，各有各的玩法</view>
+        <view class="type-grid">
+          <view class="type-mini" style="border-color:rgba(255,122,69,0.35)">
+            <view class="type-mini-icon">🍲</view>
+            <view class="type-mini-name">聚餐</view>
+            <view class="type-mini-sub">点菜 · 带菜 · 采购</view>
+          </view>
+          <view class="type-mini" style="border-color:rgba(16,185,129,0.35)">
+            <view class="type-mini-icon">⛺</view>
+            <view class="type-mini-name">户外</view>
+            <view class="type-mini-sub">拼车 · 装备 · 天气</view>
+          </view>
+          <view class="type-mini" style="border-color:rgba(139,92,246,0.35)">
+            <view class="type-mini-icon">🎲</view>
+            <view class="type-mini-name">团体</view>
+            <view class="type-mini-sub">场地投票 · 居中地点</view>
+          </view>
+          <view class="type-mini" style="border-color:rgba(14,165,233,0.35)">
+            <view class="type-mini-icon">✈️</view>
+            <view class="type-mini-name">旅行</view>
+            <view class="type-mini-sub">行程 · 分工 · AA</view>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- 4. 智能筹备 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji">🛠️</view>
+        <view class="slide-title">筹备，一起动手</view>
+        <view class="slide-desc">每个环节都有小工具帮忙</view>
+        <view class="feature-list">
+          <view class="feature-row">
+            <view class="feature-icon">🥢</view>
+            <view class="feature-text">菜单大家投票，没人带的菜自动进采购清单</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">🚗</view>
+            <view class="feature-text">户外拼车、装备认领，天气不合适自动提醒</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">🗺️</view>
+            <view class="feature-text">团体活动按大家位置自动算居中地点，候选场馆投票</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">💰</view>
+            <view class="feature-text">旅行行程、任务分工、预算 AA 一目了然</view>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- 5. 记录与分享 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji">📸</view>
+        <view class="slide-title">记录高光，分享快乐</view>
+        <view class="slide-desc">活动结束后，回忆也留得下来</view>
+        <view class="feature-list">
+          <view class="feature-row">
+            <view class="feature-icon">📷</view>
+            <view class="feature-text">活动相册：匿名上传照片，大家 👍👎 投票，前三名自动上榜</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">🖼️</view>
+            <view class="feature-text">一键生成精美长图海报，保存到相册发给朋友</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">🔔</view>
+            <view class="feature-text">开启订阅消息，活动提醒第一时间收到</view>
+          </view>
+          <view class="feature-row">
+            <view class="feature-icon">📊</view>
+            <view class="feature-text">个人统计：组织、参加、待定一目了然</view>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- 6. 开始 -->
+    <swiper-item>
+      <view class="slide">
+        <view class="slide-emoji hero-emoji">🎉</view>
+        <view class="slide-title">准备好了吗？</view>
+        <view class="slide-desc">登录后创建第一个圈子，把朋友们拉进来，周末就从这里开始</view>
+        <view class="slide-mini">点下面「开始使用」出发 🚀</view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view class="nav-row">
+    <view class="nav-back {{current > 0 ? '' : 'nav-hidden'}}" bindtap="prev">‹ 上一步</view>
+    <view class="dots">
+      <view class="dot {{current === index ? 'dot-on' : ''}}" wx:for="{{pages}}" wx:key="*this"></view>
+    </view>
+    <view class="nav-next" bindtap="next">{{current === total - 1 ? '开始使用 🎉' : '下一步 ›'}}</view>
+  </view>
+
+  <view class="skip-bottom" bindtap="skip" wx:if="{{current === total - 1}}">先随便逛逛 ›</view>
+</view>

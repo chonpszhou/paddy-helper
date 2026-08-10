@@ -28,6 +28,7 @@ Page({
     aiMenu: [],
     submitting: false,
     stepText: '',
+    smartTip: '',
     placeholders: {
       dinner: {
         title: '比如：周末家宴·火锅局',
@@ -62,6 +63,47 @@ Page({
       locationPlaceholder: ph.location,
       descriptionPlaceholder: ph.description
     })
+    this.refreshSmartTip()
+  },
+
+  refreshSmartTip() {
+    const type = this.data.selectedType
+    const location = (this.data.location || '').trim()
+    let tip = ''
+    if (type === 'dinner') {
+      if (location && store.isPaddyHome(location)) {
+        tip = '🎁 选在 Paddy 家会解锁隐藏彩蛋「周鹏私房菜」，菜单自动加入点菜清单'
+      } else if (this.data.dinnerMode === 'home') {
+        tip = '🏠 家里开锅，记得让大家投票选菜单、登记带菜，采购清单会自动生成'
+      } else {
+        tip = '🍽️ 餐厅聚餐不用带菜和采购，发起后大家投个时间就行'
+      }
+    } else if (type === 'outdoor') {
+      tip = '⛰️ 户外活动出发前记得看天气，筹备页会给出行提醒'
+    } else if (type === 'group') {
+      const located = (store.getFriends() || []).filter(function (f) { return f.lat && f.lng })
+      if (located.length >= 2) {
+        const freq = {}
+        located.forEach(function (f) {
+          const key = (f.location || '').replace(/[区县市]$/, '') || '附近'
+          freq[key] = (freq[key] || 0) + 1
+        })
+        let best = '附近'
+        let bestN = 0
+        Object.keys(freq).forEach(function (k) {
+          if (freq[k] > bestN) {
+            best = k
+            bestN = freq[k]
+          }
+        })
+        tip = '📍 多数朋友在「' + best + '」附近，推荐场馆选在这个区域（筹备页会自动算居中点）'
+      } else {
+        tip = '🎲 发起后大家可以推荐场馆，筹备页会根据大家的位置自动算居中地点'
+      }
+    } else if (type === 'trip') {
+      tip = '✈️ 旅行筹备支持行程安排、任务分工和 AA 记账，发起后慢慢完善'
+    }
+    this.setData({ smartTip: tip })
   },
 
   onLoad(options) {
@@ -121,6 +163,7 @@ Page({
     this.setData({
       dinnerMode: e.currentTarget.dataset.mode
     })
+    this.refreshSmartTip()
   },
 
   onTitle(e) {
@@ -137,6 +180,7 @@ Page({
 
   onLocation(e) {
     this.setData({ location: e.detail.value })
+    this.refreshSmartTip()
   },
 
   pickLocation() {
@@ -148,6 +192,7 @@ Page({
         locationLat: loc.lat,
         locationLng: loc.lng
       })
+      self.refreshSmartTip()
     })
   },
 

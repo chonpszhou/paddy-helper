@@ -18,6 +18,35 @@
   color: #B0A79E;
 }
 
+.hot-card {
+  background: linear-gradient(135deg, rgba(255, 138, 91, 0.1), rgba(255, 196, 113, 0.14));
+  border: 1rpx solid rgba(255, 160, 100, 0.35);
+}
+
+.hot-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14rpx;
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  color: #6F4A2E;
+  line-height: 1.5;
+}
+
+.hot-row:first-of-type {
+  margin-top: 20rpx;
+}
+
+.hot-emoji {
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+
+.hot-strong {
+  font-weight: 800;
+  color: #E2642A;
+}
+
 .secret-card {
   background: linear-gradient(150deg, #6E2F12, #A44A1E 55%, #7A3415);
   border: 2rpx solid rgba(255, 215, 150, 0.55);
@@ -118,6 +147,31 @@
   font-size: 26rpx;
   color: #FFF4E2;
   padding: 10rpx 16rpx 10rpx 0;
+}
+
+.secret-hint {
+  font-size: 22rpx;
+  color: rgba(255, 232, 200, 0.72);
+  margin-top: 8rpx;
+}
+
+.secret-dish-added {
+  opacity: 0.85;
+}
+
+.secret-dish-tag {
+  flex-shrink: 0;
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 50%;
+  background: #FFD9A0;
+  color: #7A3415;
+  font-size: 22rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rpx;
 }
 
 .secret-dish-img {

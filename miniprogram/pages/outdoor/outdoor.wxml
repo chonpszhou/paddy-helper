@@ -65,6 +65,7 @@
       <view class="weather-text" wx:else>天气暂时获取失败，按下面提醒准备吧</view>
       <view class="weather-refresh" bindtap="loadWeather" wx:if="{{!weatherLoading}}">刷新</view>
     </view>
+    <view class="weather-advice" wx:if="{{weatherAdvice}}">💡 {{weatherAdvice}}</view>
     <view class="tip" wx:for="{{tips}}" wx:key="*this">· {{item}}</view>
     <view class="tip">· 出发前再确认一遍集合时间和地点</view>
   </view>

@@ -4,19 +4,22 @@ const icons = require('../../../utils/icons')
 
 function decorate(activity) {
   const meta = store.TYPE_META[activity.type] || { name: '活动', icon: '📌', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
+  const parts = helpers.countdownParts(activity.startTime)
   return Object.assign({}, activity, {
     typeName: meta.name,
     typeIcon: icons.typeIcon(activity.type, meta.color),
     color: meta.color,
     grad: meta.grad,
     timeText: helpers.formatDateTime(activity.startTime),
+    countdownText: helpers.countdownText(activity.startTime),
+    countdownKind: parts ? parts.kind : '',
     confirmed: store.countConfirmed(activity)
   })
 }
 
 Page({
   data: {
-    tab: 'ongoing',
+    tab: 'all',
     activities: []
   },
 
@@ -25,7 +28,12 @@ Page({
   },
 
   refresh() {
-    const list = this.data.tab === 'ongoing' ? store.getUpcoming() : store.getEnded()
+    let list
+    if (this.data.tab === 'all') {
+      list = store.getUpcoming().concat(store.getEnded())
+    } else {
+      list = this.data.tab === 'ongoing' ? store.getUpcoming() : store.getEnded()
+    }
     this.setData({
       activities: list.map(decorate)
     })
@@ -40,6 +48,12 @@ Page({
   goDetail(e) {
     wx.navigateTo({
       url: '/pages/activity/detail/detail?id=' + e.currentTarget.dataset.id
+    })
+  },
+
+  goCreate() {
+    wx.switchTab({
+      url: '/pages/activity/create/create'
     })
   }
 })

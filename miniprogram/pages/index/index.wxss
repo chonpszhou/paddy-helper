@@ -227,6 +227,20 @@
   border-radius: 999rpx;
 }
 
+.cover-right {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.cover-countdown {
+  font-size: 22rpx;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.26);
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+}
+
 .cover-title {
   position: relative;
   font-size: 42rpx;
@@ -371,6 +385,27 @@
   font-size: 23rpx;
   color: #6B7480;
   margin-top: 6rpx;
+}
+
+.row-count {
+  display: inline-block;
+  margin-left: 10rpx;
+  font-size: 21rpx;
+  font-weight: 700;
+  padding: 2rpx 12rpx;
+  border-radius: 999rpx;
+  background: rgba(7, 193, 96, 0.12);
+  color: #07C160;
+}
+
+.row-count.ended {
+  background: rgba(154, 160, 175, 0.14);
+  color: #8A919E;
+}
+
+.row-count.live {
+  background: rgba(255, 92, 122, 0.12);
+  color: #FF5C7A;
 }
 
 .row-tag {

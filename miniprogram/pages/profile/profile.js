@@ -8,6 +8,7 @@ Page({
     profile: {},
     avatarLetter: '',
     myActivities: [],
+    stats: { created: 0, joined: 0, maybe: 0, upcoming: 0 },
     manageCount: 0,
     version: 'v1.0'
   },
@@ -26,6 +27,7 @@ Page({
     const myActivities = store.getMySignups().map(function (a) {
       const meta = store.TYPE_META[a.type] || { name: '活动', icon: '📌', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
       const my = store.mySignup(a)
+      const parts = helpers.countdownParts(a.startTime)
       return {
         id: a.id,
         title: a.title,
@@ -34,14 +36,18 @@ Page({
         color: meta.color,
         grad: meta.grad,
         timeText: helpers.formatDateTime(a.startTime),
+        countdownText: helpers.countdownText(a.startTime),
+        countdownKind: parts ? parts.kind : '',
         myStatusText: store.SIGNUP_META[my.status] ? store.SIGNUP_META[my.status].icon + ' ' + store.SIGNUP_META[my.status].label : ''
       }
     })
     this.setData({
       profile: profile,
+      displayName: profile.name || '朋友',
       circleName: circle ? circle.name : '',
       avatarLetter: profile.name ? profile.name.charAt(0) : 'P',
       manageCount: manageCount,
+      stats: store.countMyStats(),
       myActivities: myActivities
     })
   },

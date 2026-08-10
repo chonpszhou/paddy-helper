@@ -33,7 +33,7 @@ Page({
     const profile = store.getProfile()
 
     const nameOf = function (fid) {
-      if (fid === store.currentUid()) return profile.name
+      if (fid === store.currentUid()) return profile.name || '朋友'
       const f = store.getFriend(fid) || store.getCachedUser(fid)
       return f ? f.name : '朋友'
     }
@@ -85,16 +85,40 @@ Page({
 
     const home = store.isPaddyHome(activity.location)
     const homeDinner = activity.dinnerMode !== 'restaurant'
-    let menuAdded = false
-    if (home) {
-      const names = {}
-      ;(dinner.dishes || []).forEach(function (x) { names[x.name] = true })
-      menuAdded = privateMenu.PRIVATE_MENU.every(function (cat) {
-        return cat.dishes.every(function (dish) { return names[dish.name] })
-      })
-    }
     let menuCount = 0
     privateMenu.PRIVATE_MENU.forEach(function (cat) { menuCount += cat.dishes.length })
+    const names = {}
+    ;(dinner.dishes || []).forEach(function (x) { names[x.name] = true })
+    let menuAddedCount = 0
+    privateMenu.PRIVATE_MENU.forEach(function (cat) {
+      cat.dishes.forEach(function (dish) {
+        if (names[dish.name]) menuAddedCount++
+      })
+    })
+    const menuAdded = menuAddedCount === menuCount
+    const menuDishes = home ? privateMenu.PRIVATE_MENU.map(function (cat) {
+      return {
+        icon: cat.icon,
+        cat: cat.cat,
+        dishes: cat.dishes.map(function (dish) {
+          return Object.assign({}, dish, { added: !!names[dish.name] })
+        })
+      }
+    }) : []
+
+    // 🔥 人气推荐：最受欢迎的时间段 + 人气菜品（纯数据统计）
+    let hotSlot = ''
+    let hotSlotCount = 0
+    dinner.timeSlots.forEach(function (s) {
+      if (s.votes.length > hotSlotCount) {
+        hotSlotCount = s.votes.length
+        hotSlot = s.label
+      }
+    })
+    const hotDishes = dinner.dishes.slice()
+      .sort(function (a, b) { return b.voters.length - a.voters.length })
+      .slice(0, 3)
+      .map(function (d) { return d.name })
 
     this.setData({
       activity: activity,
@@ -105,9 +129,13 @@ Page({
       homeDinner: homeDinner,
       shoppingList: dishes.filter(function (d) { return !d.covered }),
       isPaddyHome: home,
-      privateMenu: home ? privateMenu.PRIVATE_MENU : [],
+      privateMenu: menuDishes,
       menuCount: menuCount,
-      privateMenuAdded: menuAdded
+      privateMenuAdded: menuAdded,
+      privateMenuRemaining: Math.max(0, menuCount - menuAddedCount),
+      hotSlotText: hotSlot,
+      hotSlotCount: hotSlotCount,
+      hotDishText: hotDishes.join(' · ')
     })
   },
 
@@ -174,6 +202,17 @@ Page({
       title: added > 0 ? '菜单已加入点菜，快选想吃的 🎉' : '菜单已经在点菜清单里啦',
       icon: 'none'
     })
+  },
+
+  togglePrivateDish(e) {
+    const name = (e.currentTarget.dataset.name || '').trim()
+    if (!name) return
+    if (store.addPrivateDish(this.data.id, name)) {
+      this.refresh()
+      wx.showToast({ title: '「' + name + '」已加入菜单 🎉', icon: 'none' })
+    } else {
+      wx.showToast({ title: '这道菜已经在菜单里啦', icon: 'none' })
+    }
   },
 
   removeBring(e) {

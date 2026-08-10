@@ -332,8 +332,8 @@
           toast('云开发 SDK 加载失败，请检查网络')
           return Promise.reject(new Error('sdk missing'))
         }
-        app = cloudbase.init({ env: ENV_ID })
-        return app.auth({ persistence: 'local' }).anonymousAuthProvider().signIn()
+        app = cloudbase.init({ env: ENV_ID, timeout: 120000 })
+        return app.auth({ persistence: 'local' }).signInAnonymously()
           .then(function () {
             authed = true
           })

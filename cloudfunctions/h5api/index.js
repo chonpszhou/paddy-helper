@@ -66,8 +66,11 @@ async function getExtras(activityId) {
 }
 
 async function saveExtras(activityId, data) {
+  await ensureExtrasCollection()
+  var clean = Object.assign({}, data)
+  delete clean._id
   await extras.doc(activityId).set({
-    data: Object.assign({}, data, { activityId: activityId, updatedAt: db.serverDate() })
+    data: Object.assign({}, clean, { activityId: activityId, updatedAt: db.serverDate() })
   })
 }
 

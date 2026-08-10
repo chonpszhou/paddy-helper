@@ -6,12 +6,13 @@ function decorate(activity) {
   const meta = store.TYPE_META[activity.type] || { name: '活动', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
   const profile = store.getProfile()
   const uid = store.currentUid()
+  const parts = helpers.countdownParts(activity.startTime)
   const avatars = (activity.signups || [])
     .filter(function (s) { return s.status === 'yes' })
     .map(function (s) {
       let f = null
       if (s.friendId === uid) {
-        f = { name: profile.name, color: '#07C160' }
+        f = { name: profile.name || '朋友', color: '#07C160' }
       } else {
         f = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
       }
@@ -26,6 +27,8 @@ function decorate(activity) {
     color: meta.color,
     grad: meta.grad,
     timeText: helpers.formatDateTime(activity.startTime),
+    countdownText: helpers.countdownText(activity.startTime),
+    countdownKind: parts ? parts.kind : '',
     confirmed: store.countConfirmed(activity),
     myStatusText: store.myStatusText(activity),
     avatars: avatars.slice(0, 5).map(function (a, i) { return Object.assign({ k: i }, a) }),
@@ -97,6 +100,7 @@ Page({
     this.setData({
       greeting: helpers.greeting(),
       profile: profile,
+      displayName: profile.name || '朋友',
       noCircle: !profile.currentCircleId,
       stats: stats,
       feature: decorated[0] || null,

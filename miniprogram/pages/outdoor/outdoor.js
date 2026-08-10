@@ -27,7 +27,8 @@ Page({
     tips: [],
     weatherText: '',
     weatherLoading: false,
-    weatherLoaded: false
+    weatherLoaded: false,
+    weatherAdvice: ''
   },
 
   onLoad(options) {
@@ -48,7 +49,7 @@ Page({
     const profile = store.getProfile()
 
     const nameOf = function (fid) {
-      if (fid === store.currentUid()) return profile.name
+      if (fid === store.currentUid()) return profile.name || '朋友'
       const f = store.getFriend(fid) || store.getCachedUser(fid)
       return f ? f.name : '朋友'
     }
@@ -178,7 +179,8 @@ Page({
       self.setData({
         weatherText: text && text !== 'Unknown location' ? text : '',
         weatherLoading: false,
-        weatherLoaded: true
+        weatherLoaded: true,
+        weatherAdvice: self.buildWeatherAdvice(text)
       })
     }
     if (wx.cloud && wx.cloud.callFunction) {
@@ -192,6 +194,17 @@ Page({
     } else {
       self.weatherFallback(done)
     }
+  },
+
+  buildWeatherAdvice(text) {
+    const t = String(text || '')
+    if (!t || t === 'Unknown location') return ''
+    if (t.indexOf('雨') >= 0) return '🌧️ 有雨，记得带伞和防水装备，山路注意防滑'
+    if (t.indexOf('雪') >= 0) return '❄️ 有雪，注意保暖防滑，装备选防水的'
+    if (t.indexOf('雷') >= 0) return '⛈️ 有雷雨，建议调整行程或备好应急预案'
+    if (t.indexOf('☀') >= 0 || t.indexOf('晴') >= 0) return '☀️ 天气不错，适合出发，记得防晒补水'
+    if (t.indexOf('多云') >= 0 || t.indexOf('阴') >= 0) return '⛅ 多云天气，体感舒适，正常出发没问题'
+    return '🌤️ 按预报情况准备，出发前再刷新一次天气'
   },
 
   weatherFallback(done) {

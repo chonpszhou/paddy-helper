@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'paddy_helper_data_v1'
+const ONBOARD_KEY = 'paddy_onboard_done'
 const privateMenu = require('./private-menu')
 
 const TYPE_META = {
@@ -172,14 +173,14 @@ function seedData() {
       intro: '和朋友们一起，把每个周末过得热气腾腾 🔥'
     },
     friends: [
-      { id: 'f1', name: '白敏', location: '通州区', lat: 39.909, lng: 116.656, color: '#FF8FA3', emoji: '🌸' },
-      { id: 'f2', name: '阿凯', location: '朝阳区', lat: 39.921, lng: 116.443, color: '#7BD3EA', emoji: '🐧' },
-      { id: 'f3', name: '小鹿', location: '海淀区', lat: 39.959, lng: 116.298, color: '#B9A7F0', emoji: '🦌' },
-      { id: 'f4', name: '大飞', location: '东城区', lat: 39.928, lng: 116.416, color: '#F5C76B', emoji: '🦅' },
-      { id: 'f5', name: 'Momo', location: '西城区', lat: 39.915, lng: 116.366, color: '#F0A8A0', emoji: '🐱' },
-      { id: 'f6', name: '老沈', location: '丰台区', lat: 39.858, lng: 116.287, color: '#8FBF9F', emoji: '🍵' },
-      { id: 'f7', name: '西西', location: '昌平区', lat: 40.220, lng: 116.231, color: '#A5C9F0', emoji: '🐰' },
-      { id: 'f8', name: '阿哲', location: '顺义区', lat: 40.130, lng: 116.654, color: '#D6B58F', emoji: '🌿' }
+      { id: 'f1', name: '鄂鄂', location: '通州区', lat: 39.909, lng: 116.656, color: '#FF8FA3', emoji: '🌸' },
+      { id: 'f2', name: '尔尔', location: '朝阳区', lat: 39.921, lng: 116.443, color: '#7BD3EA', emoji: '🐧' },
+      { id: 'f3', name: '多多', location: '海淀区', lat: 39.959, lng: 116.298, color: '#B9A7F0', emoji: '🦌' },
+      { id: 'f4', name: '斯斯', location: '东城区', lat: 39.928, lng: 116.416, color: '#F5C76B', emoji: '🦅' },
+      { id: 'f5', name: '准准', location: '西城区', lat: 39.915, lng: 116.366, color: '#F0A8A0', emoji: '🐱' },
+      { id: 'f6', name: '格格', location: '丰台区', lat: 39.858, lng: 116.287, color: '#8FBF9F', emoji: '🍵' },
+      { id: 'f7', name: '尔尔', location: '昌平区', lat: 40.220, lng: 116.231, color: '#A5C9F0', emoji: '🐰' },
+      { id: 'f8', name: '旗旗', location: '顺义区', lat: 40.130, lng: 116.654, color: '#D6B58F', emoji: '🌿' }
     ],
     activities: [
       {
@@ -308,6 +309,19 @@ function seedData() {
   }
 }
 
+function emptyData() {
+  return {
+    usersCache: {},
+    profile: {
+      name: '',
+      location: '',
+      intro: '和朋友们一起，把每个周末过得热气腾腾 🔥'
+    },
+    friends: [],
+    activities: []
+  }
+}
+
 function load() {
   return wx.getStorageSync(STORAGE_KEY) || null
 }
@@ -323,6 +337,7 @@ function save(data, activityId) {
 function ensureSeed() {
   const data = load()
   if (!data) {
+    // 新用户保留示例活动与示例好友，方便先看看这个应用能做什么
     save(seedData())
     return
   }
@@ -539,6 +554,7 @@ function createActivity(info) {
     description: info.description || '',
     invitedOpenids: info.invitedOpenids || [],
     dinner: info.type === 'dinner' ? { timeSlots: [], dishes: [], bringItems: [] } : null,
+    photos: [],
     creatorId: currentUid(),
     status: 'ongoing',
     createdAt: Date.now(),
@@ -570,6 +586,112 @@ function removeActivity(activityId) {
     return true
   }
   return false
+}
+
+function markEnded(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  activity.status = 'ended'
+  save(d, activityId)
+  return true
+}
+
+function countMyStats() {
+  const d = getData()
+  const uid = currentUid()
+  const openid = (d.profile && d.profile.openid) || ''
+  const deleted = d.deletedActivityIds || []
+  const list = d.activities.filter(function (a) { return deleted.indexOf(a.id) < 0 })
+  let created = 0
+  let joined = 0
+  let maybe = 0
+  let upcoming = 0
+  list.forEach(function (a) {
+    const isCreator = a.creatorId === uid || (!!a.creatorOpenid && a.creatorOpenid === openid)
+    if (isCreator) created++
+    const my = mySignup(a)
+    if (!my) return
+    if (my.status === 'yes') joined++
+    if (my.status === 'maybe') maybe++
+    if (a.status === 'ongoing') upcoming++
+  })
+  return { created: created, joined: joined, maybe: maybe, upcoming: upcoming }
+}
+
+function uniqueId(prefix) {
+  return prefix + Date.now() + '-' + Math.random().toString(36).slice(2, 8)
+}
+
+// “再来一场”：复制活动配置生成新活动（时间顺延一周，报名清空，保留菜单/行程/场馆结构）
+function duplicateActivity(activityId) {
+  const d = getData()
+  const src = d.activities.find(function (a) { return a.id === activityId })
+  if (!src) return null
+  const id = 'a' + Date.now()
+  const uid = currentUid()
+  const week = 7 * 24 * 3600000
+  const base = (src.startTime ? src.startTime + week : Date.now() + week)
+  const clone = {
+    id: id,
+    type: src.type,
+    title: src.title,
+    circleId: d.currentCircleId || src.circleId || '',
+    dinnerMode: src.dinnerMode || 'home',
+    location: src.location || '',
+    locationAddress: src.locationAddress || '',
+    locationLat: src.locationLat || null,
+    locationLng: src.locationLng || null,
+    startTime: base,
+    description: src.description || '',
+    invitedOpenids: [],
+    creatorId: uid,
+    status: 'ongoing',
+    createdAt: Date.now(),
+    signups: [
+      { friendId: uid, status: 'yes', note: '发起人 🎉', signedAt: Date.now() }
+    ]
+  }
+  if (src.type === 'dinner') {
+    clone.dinner = {
+      timeSlots: (src.dinner && src.dinner.timeSlots || []).map(function (s) {
+        return { id: uniqueId('ts'), label: s.label, votes: [uid] }
+      }),
+      dishes: (src.dinner && src.dinner.dishes || []).map(function (x) {
+        return { id: uniqueId('d'), name: x.name, voters: [uid] }
+      }),
+      bringItems: []
+    }
+  } else if (src.type === 'outdoor') {
+    clone.outdoor = {
+      cars: (src.outdoor && src.outdoor.cars || []).map(function (c) {
+        return { id: uniqueId('car'), driverId: uid, seats: c.seats || 3, note: '' }
+      }),
+      riders: [],
+      gear: (src.outdoor && src.outdoor.gear || []).map(function (g) {
+        return { id: uniqueId('g'), name: g.name, ownerIds: [uid] }
+      })
+    }
+  } else if (src.type === 'group') {
+    clone.group = {
+      finalVenueId: null,
+      venues: (src.group && src.group.venues || []).map(function (v) {
+        return Object.assign({}, v, { id: uniqueId('v'), votes: [uid], creatorId: uid })
+      })
+    }
+  } else if (src.type === 'trip') {
+    clone.trip = {
+      days: JSON.parse(JSON.stringify((src.trip && src.trip.days) || [])),
+      tasks: (src.trip && src.trip.tasks || []).map(function (t) {
+        return { id: uniqueId('t'), name: t.name, ownerId: null }
+      }),
+      stays: JSON.parse(JSON.stringify((src.trip && src.trip.stays) || [])),
+      expenses: []
+    }
+  }
+  d.activities.unshift(clone)
+  save(d, id)
+  return id
 }
 
 function updateActivity(activityId, info) {
@@ -1037,6 +1159,19 @@ function addPrivateMenuToDinner(activityId) {
   return added
 }
 
+// 私房菜单单道菜加入点菜清单（不自动投票，保持与一键加入一致）
+function addPrivateDish(activityId, name) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !name || !name.trim()) return false
+  const dinner = getDinner(activity)
+  const key = name.trim()
+  if (dinner.dishes.some(function (x) { return x.name === key })) return false
+  dinner.dishes.push({ id: 'd' + Date.now() + '-' + Math.random().toString(36).slice(2, 7), name: key, voters: [] })
+  save(d, activityId)
+  return true
+}
+
 function countConfirmed(activity) {
   return (activity.signups || []).filter(function (s) { return s.status === 'yes' }).length
 }
@@ -1060,7 +1195,15 @@ function getMySignups() {
 
 function resetDemo() {
   wx.removeStorageSync(STORAGE_KEY)
-  ensureSeed()
+  save(seedData())
+}
+
+function isOnboardDone() {
+  return !!wx.getStorageSync(ONBOARD_KEY)
+}
+
+function markOnboardDone() {
+  wx.setStorageSync(ONBOARD_KEY, true)
 }
 
 function currentUid() {
@@ -1089,7 +1232,7 @@ function cloudPushActivity(activity) {
   delete payload.cloudId
   payload.localId = activity.id
   payload.creatorOpenid = payload.creatorOpenid || profile.openid
-  payload.creatorName = payload.creatorName || profile.name
+  payload.creatorName = payload.creatorName || profile.name || '朋友'
   wx.cloud.callFunction({
     name: 'activity',
     // 优先用活动自己的圈子，避免跨圈子查看/互动时把活动推错圈子
@@ -1885,6 +2028,8 @@ function checkCloud(callback) {
 module.exports = {
   currentUid: currentUid,
   getCachedUser: getCachedUser,
+  isOnboardDone: isOnboardDone,
+  markOnboardDone: markOnboardDone,
   pullActivities: pullActivities,
   pullUsers: pullUsers,
   syncLocalToCloud: syncLocalToCloud,
@@ -1905,6 +2050,7 @@ module.exports = {
   checkCloud: checkCloud,
   isPaddyHome: isPaddyHome,
   addPrivateMenuToDinner: addPrivateMenuToDinner,
+  addPrivateDish: addPrivateDish,
   TYPE_META: TYPE_META,
   SIGNUP_META: SIGNUP_META,
   ensureSeed: ensureSeed,
@@ -1922,6 +2068,9 @@ module.exports = {
   getEnded: getEnded,
   createActivity: createActivity,
   removeActivity: removeActivity,
+  markEnded: markEnded,
+  countMyStats: countMyStats,
+  duplicateActivity: duplicateActivity,
   updateActivity: updateActivity,
   addPhoto: addPhoto,
   togglePhotoVote: togglePhotoVote,

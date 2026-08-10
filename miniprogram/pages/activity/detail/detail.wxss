@@ -208,6 +208,54 @@
   margin-top: 18rpx;
 }
 
+.countdown-card {
+  position: relative;
+  z-index: 2;
+  margin: 24rpx 28rpx 0;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.85);
+  border-radius: 30rpx;
+  padding: 26rpx 28rpx;
+  box-shadow: 0 12rpx 36rpx rgba(16, 24, 40, 0.08);
+  animation: riseIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.countdown-icon {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38rpx;
+  background: linear-gradient(135deg, #10B981, #0EA5E9);
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 20rpx rgba(14, 165, 233, 0.28);
+  flex-shrink: 0;
+}
+
+.countdown-card.ended .countdown-icon {
+  background: linear-gradient(135deg, #9AA3AF, #C6CCD4);
+  box-shadow: 0 8rpx 20rpx rgba(100, 116, 139, 0.2);
+}
+
+.countdown-card.live .countdown-icon {
+  background: linear-gradient(135deg, #FF8A5B, #FF5C7A);
+  box-shadow: 0 8rpx 20rpx rgba(255, 92, 122, 0.28);
+}
+
+.countdown-text {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #0E1116;
+  line-height: 1.45;
+}
+
 .note-input {
   background: #F2F3F5;
   border-radius: 999rpx;
@@ -257,6 +305,81 @@
 
 .inset-pad {
   padding: 24rpx;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.photo-item {
+  width: calc((100% - 32rpx) / 3);
+}
+
+.photo-wrap {
+  position: relative;
+}
+
+.photo-img {
+  width: 100%;
+  height: 190rpx;
+  border-radius: 18rpx;
+  background: #EEF0F3;
+}
+
+.photo-rank {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  font-size: 34rpx;
+  line-height: 1;
+  text-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.25);
+}
+
+.photo-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10rpx;
+}
+
+.photo-vote {
+  font-size: 21rpx;
+  color: #6B7480;
+  background: #F2F3F5;
+  border-radius: 999rpx;
+  padding: 6rpx 12rpx;
+}
+
+.photo-vote-on {
+  background: rgba(7, 193, 96, 0.14);
+  color: #07C160;
+  font-weight: 600;
+}
+
+.photo-vote-on-bad {
+  background: rgba(15, 23, 42, 0.07);
+  color: #3A4250;
+  font-weight: 600;
+}
+
+.photo-score {
+  font-size: 21rpx;
+  color: #9AA3AF;
+}
+
+.photo-upload {
+  text-align: center;
+  margin-top: 22rpx;
+  background: #07C160;
+  color: #FFFFFF;
+  border-radius: 999rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.22);
 }
 
 .inset-row {

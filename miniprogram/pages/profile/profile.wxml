@@ -5,7 +5,7 @@
       <image wx:if="{{profile.avatar}}" class="me-avatar-img" src="{{profile.avatar}}" mode="aspectFill"/>
       <view wx:else class="me-avatar">{{avatarLetter}}</view>
       <view class="me-texts">
-        <view class="me-name">{{profile.name}}<text class="me-authed" wx:if="{{profile.wechatAuthed}}"> 已登录</text></view>
+        <view class="me-name">{{displayName}}<text class="me-authed" wx:if="{{profile.wechatAuthed}}"> 已登录</text></view>
         <view class="me-intro">{{profile.intro}}</view>
       </view>
     </view>
@@ -15,6 +15,28 @@
   <view class="card row-card" bindtap="editLocation">
     <text class="row-label">📍 我的位置</text>
     <text class="row-value">{{profile.location || '设置我的位置'}} ›</text>
+  </view>
+
+  <view class="card stats-card">
+    <view class="st">
+      <text class="st-n" style="color: #07C160">{{stats.created}}</text>
+      <text class="st-l">组织</text>
+    </view>
+    <view class="st-div"></view>
+    <view class="st">
+      <text class="st-n" style="color: #8B5CF6">{{stats.joined}}</text>
+      <text class="st-l">参加</text>
+    </view>
+    <view class="st-div"></view>
+    <view class="st">
+      <text class="st-n" style="color: #D99A2B">{{stats.maybe}}</text>
+      <text class="st-l">待定</text>
+    </view>
+    <view class="st-div"></view>
+    <view class="st">
+      <text class="st-n" style="color: #0EA5E9">{{stats.upcoming}}</text>
+      <text class="st-l">即将</text>
+    </view>
   </view>
 
   <view class="card row-card" bindtap="manageCircle">
@@ -52,7 +74,7 @@
       <view class="mine-status">{{item.myStatusText}}</view>
     </view>
     <view class="mine-title">{{item.title}}</view>
-    <view class="mine-meta">🕐 {{item.timeText}}</view>
+    <view class="mine-meta">🕐 {{item.timeText}} <text class="mine-count {{item.countdownKind}}">{{item.countdownText}}</text></view>
   </view>
 
   <view class="empty" wx:if="{{!myActivities.length}}">

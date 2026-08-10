@@ -1,7 +1,7 @@
 <aurora-bg></aurora-bg>
 <view class="page">
   <view class="hero-greet rise">
-    <view class="hi">👋 嗨，{{profile.name}}</view>
+    <view class="hi">👋 嗨，{{displayName}}</view>
     <view class="name">这周末，约起来</view>
     <view class="circle-chip" wx:if="{{circleName}}">{{circleName}}</view>
   </view>
@@ -46,7 +46,10 @@
       <view class="cover-ball cb2"></view>
       <view class="cover-top">
         <view class="cover-tag"><image class="cover-tag-icon" src="{{feature.typeIconW}}"/>{{feature.typeName}}</view>
-        <view class="cover-badge" wx:if="{{feature.myStatusText}}">{{feature.myStatusText}}</view>
+        <view class="cover-right">
+          <view class="cover-countdown" wx:if="{{feature.countdownText}}">⏳ {{feature.countdownText}}</view>
+          <view class="cover-badge" wx:if="{{feature.myStatusText}}">{{feature.myStatusText}}</view>
+        </view>
       </view>
       <view class="cover-title">{{feature.title}}</view>
       <view class="cover-meta">
@@ -71,7 +74,7 @@
     <view class="row-dot" style="background:{{item.color}}"></view>
     <view class="row-main">
       <view class="row-title">{{item.title}}</view>
-      <view class="row-meta"><image class="mi" src="{{icons.clock}}"/> {{item.timeText}}</view>
+      <view class="row-meta"><image class="mi" src="{{icons.clock}}"/> {{item.timeText}} <text class="row-count {{item.countdownKind}}">{{item.countdownText}}</text></view>
     </view>
     <view class="row-tag" style="background:{{item.color}}1F;color:{{item.color}}"><image class="mi sm" src="{{item.typeIcon}}"/> {{item.typeName}}</view>
   </view>

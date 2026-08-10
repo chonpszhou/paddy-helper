@@ -62,6 +62,7 @@
       </view>
       <text class="ai-trigger-go">›</text>
     </view>
+    <view class="smart-tip" wx:if="{{smartTip}}">💡 {{smartTip}}</view>
 
     <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">{{submitting ? '创建中…' : (isEdit ? '保存修改 💾' : '创建活动 🎉')}}</button>
     <view class="step-text" wx:if="{{stepText}}">{{stepText}}</view>

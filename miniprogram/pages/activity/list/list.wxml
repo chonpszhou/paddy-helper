@@ -1,6 +1,7 @@
 <aurora-bg></aurora-bg>
 <view class="page">
   <view class="tabs">
+    <view class="tab {{tab === 'all' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
     <view class="tab {{tab === 'ongoing' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="ongoing">进行中</view>
     <view class="tab {{tab === 'ended' ? 'tab-active' : ''}}" bindtap="switchTab" data-tab="ended">已结束</view>
   </view>
@@ -10,7 +11,7 @@
       <view class="act-title">{{item.title}}</view>
       <view class="type-badge" style="background:{{item.color}}1F;color:{{item.color}}"><image class="tag-icon" src="{{item.typeIcon}}"/> {{item.typeName}}</view>
     </view>
-    <view class="act-meta">🕐 {{item.timeText}}</view>
+    <view class="act-meta">🕐 {{item.timeText}} <text class="act-count {{item.countdownKind}}">{{item.countdownText}}</text></view>
     <view class="act-meta">📍 {{item.location || '地点待定'}}</view>
     <view class="act-foot">
       <text class="act-join">👥 {{item.confirmed}} 人参加</text>
@@ -20,6 +21,8 @@
 
   <view class="empty" wx:if="{{!activities.length}}">
     <view class="empty-icon">🗂️</view>
-    <view class="empty-text">{{tab === 'ongoing' ? '还没有进行中的活动' : '还没有已结束的活动'}}</view>
+    <view class="empty-text">{{tab === 'all' ? '还没有任何活动' : (tab === 'ongoing' ? '还没有进行中的活动' : '还没有已结束的活动')}}</view>
   </view>
+
+  <view class="add-line" bindtap="goCreate">＋ 发起新活动</view>
 </view>

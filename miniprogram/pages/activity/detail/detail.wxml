@@ -7,6 +7,8 @@
     <view class="hero-top">
       <view class="hero-tag"><image class="hero-tag-icon" src="{{typeIconW}}"/>{{meta.name}}</view>
       <view class="hero-status" wx:if="{{activity.status === 'ended'}}">已结束</view>
+      <view class="hero-status" wx:elif="{{countdown.kind === 'live'}}">🔥 进行中</view>
+      <view class="hero-status" wx:elif="{{countdown.kind === 'upcoming' && countdown.days === 0}}">⏳ 今天 {{countdown.hm}}</view>
     </view>
     <view class="hero-title">{{activity.title}}</view>
     <view class="hero-meta">
@@ -47,6 +49,11 @@
     <view wx:if="{{myStatus === 'yes'}}" class="note-row">
       <input class="note-input" placeholder="留句话，比如：我带蛋糕 🎂" value="{{myNote}}" bindinput="onNote"/>
     </view>
+  </view>
+
+  <view class="countdown-card {{countdown.kind}}" wx:if="{{countdown.text}}">
+    <view class="countdown-icon">{{countdown.kind === 'ended' ? '🎉' : (countdown.kind === 'live' ? '🔥' : '⏳')}}</view>
+    <view class="countdown-text">{{countdown.text}}</view>
   </view>
 
   <view class="group" wx:if="{{special}}">
