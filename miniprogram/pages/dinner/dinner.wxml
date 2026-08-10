@@ -7,6 +7,18 @@
     <view class="head-sub head-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
   </view>
 
+  <view class="card hot-card" wx:if="{{hotSlotText || hotDishText}}">
+    <view class="card-title">🔥 人气推荐 <text class="title-tip">根据大家的选择实时计算</text></view>
+    <view class="hot-row" wx:if="{{hotSlotText}}">
+      <text class="hot-emoji">🕐</text>
+      <text class="hot-text">最方便的时间：<text class="hot-strong">{{hotSlotText}}</text>（{{hotSlotCount}} 人可选）</text>
+    </view>
+    <view class="hot-row" wx:if="{{hotDishText}}">
+      <text class="hot-emoji">🥢</text>
+      <text class="hot-text">人气菜：<text class="hot-strong">{{hotDishText}}</text></text>
+    </view>
+  </view>
+
   <view class="secret-card" wx:if="{{isPaddyHome && homeDinner}}">
     <view class="secret-head">
       <view class="secret-seal"><text class="seal-line">私房</text><text class="seal-line">菜</text></view>

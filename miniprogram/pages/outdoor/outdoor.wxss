@@ -198,6 +198,18 @@
   flex-shrink: 0;
 }
 
+.weather-advice {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(94, 234, 212, 0.14));
+  border: 1rpx solid rgba(16, 185, 129, 0.3);
+  border-radius: 18rpx;
+  padding: 18rpx 22rpx;
+  margin-bottom: 16rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #137A5C;
+}
+
 .tip {
   font-size: 25rpx;
   color: #6F675F;

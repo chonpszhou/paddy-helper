@@ -96,6 +96,20 @@ Page({
     let menuCount = 0
     privateMenu.PRIVATE_MENU.forEach(function (cat) { menuCount += cat.dishes.length })
 
+    // 🔥 人气推荐：最受欢迎的时间段 + 人气菜品（纯数据统计）
+    let hotSlot = ''
+    let hotSlotCount = 0
+    dinner.timeSlots.forEach(function (s) {
+      if (s.votes.length > hotSlotCount) {
+        hotSlotCount = s.votes.length
+        hotSlot = s.label
+      }
+    })
+    const hotDishes = dinner.dishes.slice()
+      .sort(function (a, b) { return b.voters.length - a.voters.length })
+      .slice(0, 3)
+      .map(function (d) { return d.name })
+
     this.setData({
       activity: activity,
       timeText: helpers.formatDateTime(activity.startTime),
@@ -107,7 +121,10 @@ Page({
       isPaddyHome: home,
       privateMenu: home ? privateMenu.PRIVATE_MENU : [],
       menuCount: menuCount,
-      privateMenuAdded: menuAdded
+      privateMenuAdded: menuAdded,
+      hotSlotText: hotSlot,
+      hotSlotCount: hotSlotCount,
+      hotDishText: hotDishes.join(' · ')
     })
   },
 
