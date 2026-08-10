@@ -51,7 +51,10 @@
       confirm-type="done"
       bindconfirm="doJoin"
     />
-    <button class="primary-btn action-btn" bindtap="doJoin" loading="{{joinLoading}}" disabled="{{joinLoading}}">{{joinLoading ? '加入中…' : '加入圈子 🎈'}}</button>
+    <button class="primary-btn action-btn" bindtap="doJoin" disabled="{{joinLoading}}">
+      <view class="btn-state" wx:if="{{joinLoading}}"><view class="spinner"></view>加入中…</view>
+      <view class="btn-state" wx:else>加入圈子 🎈</view>
+    </button>
     <view class="err-text" wx:if="{{error}}">{{error}}</view>
   </view>
 
@@ -60,7 +63,10 @@
     <view class="section-tip">给自己和朋友建一个私密空间，通行码会自动生成</view>
     <view class="form-label">圈子名称</view>
     <input class="input" placeholder="比如：周末干饭局" value="{{newName}}" bindinput="onNameInput" maxlength="20"/>
-    <button class="primary-btn action-btn" bindtap="doCreate" loading="{{createLoading}}" disabled="{{createLoading}}">{{createLoading ? '创建中…' : '创建圈子 🏡'}}</button>
+    <button class="primary-btn action-btn" bindtap="doCreate" disabled="{{createLoading}}">
+      <view class="btn-state" wx:if="{{createLoading}}"><view class="spinner"></view>创建中…</view>
+      <view class="btn-state" wx:else>创建圈子 🏡</view>
+    </button>
     <view class="err-text" wx:if="{{error}}">{{error}}</view>
   </view>
 

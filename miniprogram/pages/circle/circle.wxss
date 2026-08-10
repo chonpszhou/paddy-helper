@@ -71,6 +71,28 @@
   line-height: 1;
 }
 
+.btn-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.spinner {
+  width: 26rpx;
+  height: 26rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .foot-tip {
   text-align: center;
   font-size: 22rpx;
