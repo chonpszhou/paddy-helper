@@ -313,8 +313,8 @@ function save(data, activityId) {
 function ensureSeed() {
   const data = load()
   if (!data) {
-    // 新用户从干净状态开始，由新手引导带入门；演示数据仅通过「恢复演示数据」触发
-    save(emptyData())
+    // 新用户保留示例活动与示例好友，方便先看看这个应用能做什么
+    save(seedData())
     return
   }
   if (upgradeData(data)) {
