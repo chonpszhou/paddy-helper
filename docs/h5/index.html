@@ -196,6 +196,18 @@
       <input id="code-input" class="input" style="margin-top:20px;" placeholder="8 位通行码，比如 K7M2PQX9" maxlength="20" />
       <button id="code-btn" class="btn btn-primary" style="margin-top:16px;">进入圈子</button>
       <p id="code-err" class="muted" style="margin-top:12px; color:#e11d48; text-align:center;"></p>
+      <div style="text-align:center; margin-top:16px;">
+        <a id="toggle-create" style="color:#2563eb; font-size:14px; cursor:pointer;">还没有圈子？点这里创建一个 →</a>
+      </div>
+      <div id="create-form" class="hidden" style="margin-top:18px;">
+        <div class="form-label" style="font-size:14px; font-weight:700; margin-bottom:8px;">✨ 创建新圈子</div>
+        <input id="create-name" class="input" placeholder="圈子名称，比如：周末干饭局" maxlength="20" />
+        <div style="display:flex; gap:10px; margin-top:12px;">
+          <button id="create-btn" class="btn btn-primary" style="flex:1; height:46px; font-size:15px;">创建</button>
+          <button id="create-cancel" class="btn btn-ghost" style="flex:1; height:46px; font-size:15px;">取消</button>
+        </div>
+        <p id="create-err" class="muted" style="margin-top:10px; color:#e11d48; text-align:center;"></p>
+      </div>
     </section>
 
     <!-- 视图 2：活动列表 -->
@@ -362,6 +374,33 @@
             $('code-btn').disabled = false
             $('code-btn').textContent = '进入圈子'
           })
+        })
+      }
+
+      function toggleCreate(show) {
+        $('create-form').classList.toggle('hidden', !show)
+        $('create-err').textContent = ''
+      }
+
+      function doCreate() {
+        var name = $('create-name').value.trim()
+        if (!name) { $('create-err').textContent = '先给圈子起个名字'; return }
+        $('create-btn').disabled = true
+        $('create-btn').innerHTML = '<span class="spin"></span>创建中…'
+        initCloud().then(function () {
+          return callFn({ action: 'createCircle', name: name, uid: getUid() })
+        }).then(function (r) {
+          state.circle = r.circle
+          state.code = r.circle.code
+          localStorage.setItem('paddy_h5_code', r.circle.code)
+          $('create-btn').disabled = false
+          $('create-btn').textContent = '创建'
+          toast('圈子「' + r.circle.name + '」创建成功 🎉')
+          setTimeout(function () { loadList() }, 500)
+        }).catch(function (e) {
+          $('create-btn').disabled = false
+          $('create-btn').textContent = '创建'
+          $('create-err').textContent = e.message || '创建失败'
         })
       }
 
@@ -613,6 +652,12 @@
       // ===== 事件绑定 =====
       function bindEvents() {
         bindPasscode()
+        $('toggle-create').addEventListener('click', function () { toggleCreate(true) })
+        $('create-cancel').addEventListener('click', function () { toggleCreate(false) })
+        $('create-btn').addEventListener('click', doCreate)
+        $('create-name').addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') doCreate()
+        })
         $('exit-btn').addEventListener('click', function () {
           localStorage.removeItem('paddy_h5_code')
           state.code = ''

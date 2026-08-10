@@ -13,6 +13,16 @@ const circles = db.collection('circles')
 const activities = db.collection('activities')
 const extras = db.collection('h5_extras')
 
+const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
+
+function genCircleCode() {
+  let code = ''
+  for (let i = 0; i < 8; i++) {
+    code += CODE_CHARS.charAt(Math.floor(Math.random() * CODE_CHARS.length))
+  }
+  return code
+}
+
 async function ensureExtrasCollection() {
   try {
     await extras.limit(1).get()
@@ -86,6 +96,33 @@ exports.main = async (event) => {
       const circle = await getCircleByCode(code)
       if (!circle) return { ok: false, error: '圈子不存在，通行码不对哦' }
       return { ok: true, circle: { _id: circle._id, name: circle.name, code: circle.code } }
+    }
+
+    // 1.5 网页版创建圈子（没有通行码也能开始用）
+    if (action === 'createCircle') {
+      const name = String(event.name || '').trim().slice(0, 20)
+      if (!name) return { ok: false, error: '给圈子起个名字吧' }
+      const uid = String(event.uid || '').slice(0, 64)
+      if (!uid) return { ok: false, error: '缺少身份标识' }
+      let newCode = ''
+      for (let i = 0; i < 5; i++) {
+        newCode = genCircleCode()
+        const exist = await circles.where({ code: newCode }).limit(1).get()
+        if (!exist.data.length) break
+        newCode = ''
+      }
+      if (!newCode) return { ok: false, error: '生成通行码失败，请重试' }
+      const add = await circles.add({
+        data: {
+          name: name,
+          code: newCode,
+          creatorUid: uid,
+          memberUids: [uid],
+          memberOpenids: [],
+          createdAt: db.serverDate()
+        }
+      })
+      return { ok: true, circle: { _id: add._id, name: name, code: newCode } }
     }
 
     // 2. 圈子活动列表
