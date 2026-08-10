@@ -1,0 +1,9 @@
+{
+  "name": "h5api",
+  "version": "1.0.0",
+  "description": "网页版完整功能接口：相册 / 留言 / AI（独立于小程序审核范围）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
