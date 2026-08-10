@@ -68,7 +68,7 @@
         <view class="feature-list">
           <view class="feature-row">
             <view class="feature-icon">🥢</view>
-            <view class="feature-text">菜单大家投票，没人带的菜自动进采购清单；选 Paddy 家还能解锁「周鹏私房菜」</view>
+            <view class="feature-text">菜单大家投票，没人带的菜自动进采购清单</view>
           </view>
           <view class="feature-row">
             <view class="feature-icon">🚗</view>

@@ -11,7 +11,7 @@
 .skip-top {
   position: absolute;
   top: calc(env(safe-area-inset-top) + 46rpx);
-  right: 36rpx;
+  left: 36rpx;
   font-size: 25rpx;
   color: #5B6472;
   background: rgba(255, 255, 255, 0.62);
