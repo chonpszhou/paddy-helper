@@ -129,6 +129,10 @@
   font-size: 32rpx;
 }
 
+.start-btn:active {
+  transform: scale(0.96);
+}
+
 .skip {
   text-align: center;
   margin-top: 28rpx;
