@@ -164,14 +164,14 @@ function seedData() {
       intro: '和朋友们一起，把每个周末过得热气腾腾 🔥'
     },
     friends: [
-      { id: 'f1', name: '白敏', location: '通州区', lat: 39.909, lng: 116.656, color: '#FF8FA3', emoji: '🌸' },
-      { id: 'f2', name: '阿凯', location: '朝阳区', lat: 39.921, lng: 116.443, color: '#7BD3EA', emoji: '🐧' },
-      { id: 'f3', name: '小鹿', location: '海淀区', lat: 39.959, lng: 116.298, color: '#B9A7F0', emoji: '🦌' },
-      { id: 'f4', name: '大飞', location: '东城区', lat: 39.928, lng: 116.416, color: '#F5C76B', emoji: '🦅' },
-      { id: 'f5', name: 'Momo', location: '西城区', lat: 39.915, lng: 116.366, color: '#F0A8A0', emoji: '🐱' },
-      { id: 'f6', name: '老沈', location: '丰台区', lat: 39.858, lng: 116.287, color: '#8FBF9F', emoji: '🍵' },
-      { id: 'f7', name: '西西', location: '昌平区', lat: 40.220, lng: 116.231, color: '#A5C9F0', emoji: '🐰' },
-      { id: 'f8', name: '阿哲', location: '顺义区', lat: 40.130, lng: 116.654, color: '#D6B58F', emoji: '🌿' }
+      { id: 'f1', name: '鄂鄂', location: '通州区', lat: 39.909, lng: 116.656, color: '#FF8FA3', emoji: '🌸' },
+      { id: 'f2', name: '尔尔', location: '朝阳区', lat: 39.921, lng: 116.443, color: '#7BD3EA', emoji: '🐧' },
+      { id: 'f3', name: '多多', location: '海淀区', lat: 39.959, lng: 116.298, color: '#B9A7F0', emoji: '🦌' },
+      { id: 'f4', name: '斯斯', location: '东城区', lat: 39.928, lng: 116.416, color: '#F5C76B', emoji: '🦅' },
+      { id: 'f5', name: '准准', location: '西城区', lat: 39.915, lng: 116.366, color: '#F0A8A0', emoji: '🐱' },
+      { id: 'f6', name: '格格', location: '丰台区', lat: 39.858, lng: 116.287, color: '#8FBF9F', emoji: '🍵' },
+      { id: 'f7', name: '尔尔', location: '昌平区', lat: 40.220, lng: 116.231, color: '#A5C9F0', emoji: '🐰' },
+      { id: 'f8', name: '旗旗', location: '顺义区', lat: 40.130, lng: 116.654, color: '#D6B58F', emoji: '🌿' }
     ],
     activities: [
       {
