@@ -7,6 +7,14 @@
     <view class="head-sub head-addr" wx:if="{{activity.locationAddress && activity.locationAddress !== activity.location}}">{{activity.locationAddress}}</view>
   </view>
 
+  <view class="ai-trigger" bindtap="aiTrip" hover-class="press-hover">
+    <text class="ai-trigger-icon">✨</text>
+    <view class="ai-trigger-texts">
+      <view class="ai-trigger-title">AI 生成行程</view>
+      <view class="ai-trigger-sub">输入目的地和天数，自动规划每日安排和预算</view>
+    </view>
+    <text class="ai-trigger-go">›</text>
+  </view>
 
   <view class="card">
     <view class="card-title">🗓️ 行程规划</view>

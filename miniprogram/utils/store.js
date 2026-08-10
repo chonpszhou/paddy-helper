@@ -518,6 +518,12 @@ function createActivity(info) {
       { friendId: currentUid(), status: 'yes', note: '发起人 🎉', signedAt: Date.now() }
     ]
   }
+  ;(info.aiMenu || []).forEach(function (name) {
+    if (!activity.dinner) return
+    if (!activity.dinner.dishes.some(function (x) { return x.name === name })) {
+      activity.dinner.dishes.push({ id: 'd' + Date.now() + Math.floor(Math.random() * 1000), name: name, voters: [] })
+    }
+  })
   d.activities.unshift(activity)
   save(d, id)
   return id
@@ -877,6 +883,32 @@ function addExpense(activityId, info) {
     payerId: currentUid()
   })
   save(d, activityId)
+}
+
+// AI 助手：调用 ai 云函数（活动策划 / 行程 / 小记 / 团体推荐）
+function aiCall(action, payload, callback) {
+  const done = function (ok, data, error) {
+    if (callback) callback(ok, data, error)
+  }
+  if (!wx.cloud || !wx.cloud.callFunction) {
+    done(false, null, '需要联网才能使用 AI')
+    return
+  }
+  wx.cloud.callFunction({
+    name: 'ai',
+    data: Object.assign({ action: action }, payload || {})
+  })
+    .then(function (res) {
+      const r = res.result || {}
+      if (r.ok) {
+        done(true, r.data)
+      } else {
+        done(false, null, r.error || 'AI 生成失败')
+      }
+    })
+    .catch(function (e) {
+      done(false, null, ((e && (e.errMsg || e.message)) || '网络异常'))
+    })
 }
 
 function removeExpense(activityId, expenseId) {
@@ -1818,5 +1850,6 @@ module.exports = {
   removeStay: removeStay,
   addExpense: addExpense,
   removeExpense: removeExpense,
+  aiCall: aiCall,
   resetDemo: resetDemo
 }

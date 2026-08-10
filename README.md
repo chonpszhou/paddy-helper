@@ -35,7 +35,9 @@
 | ⛺ **户外** | 拼车登记与座位自动安排、装备清单认领、天气与出行提醒 |
 | 🎲 **团体活动** | 按参加者位置**自动计算居中地点**并在地图上展示，候选场馆投票与选定 |
 | ✈️ **旅行** | 多日行程规划、分工认领、住宿登记、AA 预算记账 |
-| 🎨 **海报** | 苹果风极光主题长图海报一键生成，分享给朋友点开直达活动 |
+| 📸 **相册** | 匿名上传照片，👍/👎 投票，自动排出前三名 🥇🥈🥉 |
+| 🎨 **海报** | 苹果风长图海报一键生成，**AI 生图背景**可选（极光/山野/美食/星空/自定义） |
+| 🤖 **AI 助手** | 活动文案、生成行程、推荐玩法、写活动小记——用微信「成长计划」免费额度，无需 API Key |
 | 🔔 **通知** | 订阅消息：创建活动自动提醒圈内好友，点击直达详情 |
 | 👥 **好友** | 登录过的朋友自动同步，手动添加的好友可绑定真实账号 |
 | 📤 **分享** | 活动/圈子（自动携带通行码）/海报均可转发，朋友点开直达 |
@@ -46,6 +48,7 @@
 
 - **前端**：微信原生小程序（WXML / WXSS / JS），玻璃拟态 + 极光背景 + SVG 线性图标
 - **后端**：微信云开发（云函数 / 云数据库 / 云存储），无需自建服务器
+- **AI**：微信小程序成长计划（Hy3 大模型 + 混元生图），官方 SDK 调用
 - **安全**：文本内容安全校验（`msgSecCheck`）、订阅消息、位置权限声明
 
 ---
@@ -55,9 +58,10 @@
 ```mermaid
 flowchart LR
   U[微信用户] --> MP[小程序端]
-  MP -->|wx.cloud.callFunction| CF[云函数 login/activity/weather]
+  MP -->|wx.cloud.callFunction| CF[云函数 login/activity/ai/weather]
   CF --> DB[(云数据库<br/>users / activities / circles)]
-  CF --> ST[(云存储<br/>头像 / 海报)]
+  CF --> ST[(云存储<br/>头像 / 照片 / 海报)]
+  CF --> AI[微信成长计划<br/>Hy3 大模型 + 混元生图]
   CF --> MSG[订阅消息通知]
 ```
 
@@ -85,6 +89,7 @@ git clone https://github.com/chonpszhou/paddy-helper.git
 | --- | --- |
 | `login` | 登录、用户资料、圈子（创建/加入/退出/解散） |
 | `activity` | 活动同步、订阅消息、内容安全 |
+| `ai` | AI 文案 + AI 生图海报（依赖 `wx-server-sdk ^4.0.2`） |
 | `weather` | 天气转发（避免生产环境域名限制） |
 
 ### 3. 数据库集合
@@ -93,6 +98,7 @@ git clone https://github.com/chonpszhou/paddy-helper.git
 
 ### 4. 配置项
 
+- ai 云函数超时调到 **300 秒**，开启「AI → 生图模型」
 - 订阅消息模板 ID 已配置，字段为 `thing1 / time2 / thing3`
 
 ---
@@ -100,7 +106,7 @@ git clone https://github.com/chonpszhou/paddy-helper.git
 ## 🧭 目录结构
 
 ```
-├── cloudfunctions/          # 微信云函数（login/activity/weather）
+├── cloudfunctions/          # 微信云函数（login/activity/ai/weather）
 ├── miniprogram/
 │   ├── components/          # 极光背景组件
 │   ├── custom-tab-bar/      # 玻璃胶囊自定义底栏
@@ -118,8 +124,8 @@ git clone https://github.com/chonpszhou/paddy-helper.git
 **Q：为什么没有服务器也能用？**
 A：全栈跑在微信云开发上——云函数即后端、云数据库即存储、云存储管图片，个人开发者零运维成本。
 
-**Q：小程序是什么服务类目？**
-A：以「工具 > 预约/报名」类目上线，面向个人主体开放，聚焦活动报名与筹备协作。
+**Q：AI 功能收费吗？**
+A：使用微信「小程序成长计划」免费额度（10 亿 Token / 6 个月 + 10 万张生图），代码里无需配置任何 API Key。
 
 **Q：圈子数据真的隔离吗？**
 A：隔离在**云端**而非仅前端——云函数每次请求都校验请求者是否圈子成员，非成员直接拒绝。

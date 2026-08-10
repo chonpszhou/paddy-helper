@@ -42,7 +42,19 @@ Page({
     generating: true,
     error: '',
     saving: false,
-    shareTitle: ''
+    shareTitle: '',
+    styles: [
+      { key: 'aurora', name: '极光', prompt: '薄荷绿与天青色极光光晕，梦幻通透' },
+      { key: 'mountain', name: '山野', prompt: '竹林晨雾，远山层叠，清新自然的徒步风景' },
+      { key: 'food', name: '美食', prompt: '温暖的餐桌插画，火锅蒸汽与暖黄灯光，烟火气' },
+      { key: 'star', name: '星空', prompt: '静谧夜空星河，露营帐篷剪影，深蓝紫色调' },
+      { key: 'custom', name: '自定义', prompt: '' }
+    ],
+    selectedStyle: 'aurora',
+    customPrompt: '',
+    aiGenerating: false,
+    aiBgPath: '',
+    useAiBg: false
   },
 
   onLoad(options) {
@@ -109,6 +121,7 @@ Page({
       canvas.height = H * dpr
       ctx.scale(dpr, dpr)
 
+      const aiBg = self.data.aiBgPath
       const finish = function () {
         wx.canvasToTempFilePath({
           canvas: canvas,
@@ -121,9 +134,87 @@ Page({
         })
       }
 
-      drawAurora(ctx, H)
-      drawContent(ctx, H, titleLines, descLines, participants, yTitle, yDesc, meta, accent, circle, timeText, location, host, false)
-      finish()
+      if (aiBg) {
+        const img = canvas.createImage()
+        img.onload = function () {
+          const iw = img.width || 1024
+          const ih = img.height || 1024
+          const scale = Math.max(W / iw, H / ih)
+          const dw = iw * scale
+          const dh = ih * scale
+          ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh)
+          // 轻微提亮，保证文字可读
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.06)'
+          ctx.fillRect(0, 0, W, H)
+          drawContent(ctx, H, titleLines, descLines, participants, yTitle, yDesc, meta, accent, circle, timeText, location, host, true)
+          finish()
+        }
+        img.onerror = function () {
+          drawAurora(ctx, H)
+          drawContent(ctx, H, titleLines, descLines, participants, yTitle, yDesc, meta, accent, circle, timeText, location, host, false)
+          finish()
+        }
+        img.src = aiBg
+      } else {
+        drawAurora(ctx, H)
+        drawContent(ctx, H, titleLines, descLines, participants, yTitle, yDesc, meta, accent, circle, timeText, location, host, false)
+        finish()
+      }
+    })
+  },
+
+  selectStyle(e) {
+    this.setData({
+      selectedStyle: e.currentTarget.dataset.key,
+      customPrompt: ''
+    })
+  },
+
+  onAiPrompt(e) {
+    this.setData({ customPrompt: e.detail.value })
+  },
+
+  genAiBg() {
+    if (this.data.aiGenerating) return
+    const self = this
+    const style = this.data.styles.find(function (s) { return s.key === self.data.selectedStyle })
+    const prompt = this.data.selectedStyle === 'custom'
+      ? this.data.customPrompt.trim()
+      : (style ? style.prompt : '')
+    if (!prompt) {
+      wx.showToast({ title: '先描述一下想要的背景吧', icon: 'none' })
+      return
+    }
+    this.setData({ aiGenerating: true })
+    store.aiCall('image', { prompt: prompt }, function (ok, data, error) {
+      if (!ok) {
+        self.setData({ aiGenerating: false })
+        wx.showToast({ title: error || '生图失败，请重试', icon: 'none' })
+        return
+      }
+      const fileID = data && data.fileID
+      if (!fileID || !wx.cloud || !wx.cloud.downloadFile) {
+        self.setData({ aiGenerating: false })
+        wx.showToast({ title: '生图成功，但下载失败，请重试', icon: 'none' })
+        return
+      }
+      wx.cloud.downloadFile({
+        fileID: fileID,
+        success(res) {
+          self.setData({
+            aiGenerating: false,
+            aiBgPath: res.tempFilePath,
+            useAiBg: true,
+            error: ''
+          })
+          wx.showToast({ title: '背景已生成 🎨', icon: 'success' })
+          self.draw()
+        },
+        fail() {
+          self.setData({ aiGenerating: false })
+          wx.showToast({ title: '图片下载失败，请重试', icon: 'none' })
+        }
+      })
     })
   },
 

@@ -12,6 +12,31 @@
     </view>
   </view>
 
+  <view class="ai-style-card">
+    <view class="ai-style-title">✨ AI 风格海报</view>
+    <view class="style-chips">
+      <view
+        class="style-chip {{selectedStyle === item.key ? 'style-chip-on' : ''}}"
+        wx:for="{{styles}}"
+        wx:key="key"
+        bindtap="selectStyle"
+        data-key="{{item.key}}"
+      >{{item.name}}</view>
+    </view>
+    <input
+      wx:if="{{selectedStyle === 'custom'}}"
+      class="ai-prompt-input"
+      placeholder="描述想要的背景，比如：秋日银杏、暖阳"
+      value="{{customPrompt}}"
+      bindinput="onAiPrompt"
+      maxlength="60"
+    />
+    <button class="ai-gen-btn" bindtap="genAiBg" loading="{{aiGenerating}}" disabled="{{aiGenerating}}">
+      {{aiGenerating ? 'AI 生成中，约 10~30 秒…' : (useAiBg ? '🎨 换一张背景' : '🎨 生成 AI 背景')}}
+    </button>
+    <view class="ai-style-tip">AI 生成背景，文字仍由本地排版，保证清晰</view>
+  </view>
+
   <view class="actions" wx:if="{{posterPath}}">
     <button class="primary-btn save-btn" bindtap="savePoster" loading="{{saving}}">📸 保存到相册</button>
     <button class="ghost-btn share-btn" open-type="share">分享给朋友 ↗</button>

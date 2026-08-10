@@ -54,6 +54,14 @@
     <view class="form-label">📝 活动说明</view>
     <textarea class="textarea" placeholder="{{descriptionPlaceholder}}" value="{{description}}" bindinput="onDescription" maxlength="300"/>
 
+    <view class="ai-trigger" bindtap="aiPlan" hover-class="press-hover">
+      <text class="ai-trigger-icon">✨</text>
+      <view class="ai-trigger-texts">
+        <view class="ai-trigger-title">AI 帮我想活动方案</view>
+        <view class="ai-trigger-sub">一句话主题，自动生成标题、文案和菜单</view>
+      </view>
+      <text class="ai-trigger-go">›</text>
+    </view>
 
     <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">{{submitting ? '创建中…' : (isEdit ? '保存修改 💾' : '创建活动 🎉')}}</button>
     <view class="step-text" wx:if="{{stepText}}">{{stepText}}</view>

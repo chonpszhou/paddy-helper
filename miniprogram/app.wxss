@@ -49,6 +49,45 @@ view, text, input, textarea, button {
   box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.24);
 }
 
+.ai-trigger {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding: 24rpx 26rpx;
+  border-radius: 22rpx;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.10), rgba(14, 165, 233, 0.10));
+  border: 1rpx solid rgba(139, 92, 246, 0.18);
+  box-shadow: 0 6rpx 18rpx rgba(139, 92, 246, 0.08);
+}
+
+.ai-trigger-icon {
+  font-size: 44rpx;
+  margin-right: 18rpx;
+}
+
+.ai-trigger-texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-trigger-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0E1116;
+}
+
+.ai-trigger-sub {
+  font-size: 22rpx;
+  color: #9A8F86;
+  margin-top: 6rpx;
+}
+
+.ai-trigger-go {
+  font-size: 34rpx;
+  color: #8B5CF6;
+  font-weight: 600;
+}
+
 .press-hover {
   transform: scale(0.96);
   opacity: 0.9;

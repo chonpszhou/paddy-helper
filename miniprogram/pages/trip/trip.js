@@ -28,6 +28,59 @@ Page({
     this.refresh()
   },
 
+  aiTrip() {
+    const self = this
+    wx.showModal({
+      title: '✨ AI 生成行程',
+      editable: true,
+      placeholderText: '比如：古北水镇 2 天，想徒步、住民宿',
+      success(res) {
+        if (!res.confirm) return
+        const topic = (res.content || '').trim()
+        if (!topic) {
+          wx.showToast({ title: '说说目的地和天数吧', icon: 'none' })
+          return
+        }
+        wx.showLoading({ title: 'AI 规划行程中…', mask: true })
+        store.aiCall('trip', { topic: topic }, function (ok, data, error) {
+          wx.hideLoading()
+          if (!ok) {
+            wx.showToast({ title: error || 'AI 生成失败', icon: 'none' })
+            return
+          }
+          const days = data.itinerary || []
+          wx.showModal({
+            title: '✨ 行程已生成',
+            content: 'AI 规划了 ' + days.length + ' 天行程，共 ' + (data.budget || []).length + ' 笔预算估算，要填入活动筹备吗？',
+            confirmText: '填入行程',
+            cancelText: '再看看',
+            success(r) {
+              if (!r.confirm) return
+              const id = self.data.id
+              days.forEach(function (day) {
+                const dayId = store.addTripDay(id, day.title || ('Day ' + day.day))
+                ;(day.items || []).forEach(function (it) {
+                  store.addTripItem(id, dayId, it.time || '全天', it.content)
+                })
+              })
+              ;(data.budget || []).forEach(function (b) {
+                store.addExpense(id, { item: b.item, amount: Number(b.amount) || 0 })
+              })
+              self.refresh()
+              let tips = (data.tips || []).map(function (t) { return '· ' + t }).join('\n')
+              wx.showModal({
+                title: '✅ 已填入行程',
+                content: tips || '行程已填入，可以再手动微调',
+                showCancel: false,
+                confirmText: '好的'
+              })
+            }
+          })
+        })
+      }
+    })
+  },
+
   refresh() {
     const activity = store.getActivity(this.data.id)
     if (!activity) return
