@@ -66,5 +66,4 @@
     <button class="primary-btn submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">{{submitting ? '创建中…' : (isEdit ? '保存修改 💾' : '创建活动 🎉')}}</button>
     <view class="step-text" wx:if="{{stepText}}">{{stepText}}</view>
   </view>
-  <view class="build-tag">内部版本 {{buildTag}}</view>
 </view>

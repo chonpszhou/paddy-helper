@@ -28,7 +28,6 @@ Page({
     aiMenu: [],
     submitting: false,
     stepText: '',
-    buildTag: 'v1.1.7',
     placeholders: {
       dinner: {
         title: '比如：周末家宴·火锅局',

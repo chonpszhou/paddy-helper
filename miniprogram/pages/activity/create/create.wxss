@@ -8,13 +8,6 @@
   padding-bottom: 280rpx;
 }
 
-.build-tag {
-  text-align: center;
-  font-size: 22rpx;
-  color: #C4CBD4;
-  margin-top: 8rpx;
-}
-
 .circle-banner {
   margin-bottom: 20rpx;
   padding: 20rpx 28rpx;
