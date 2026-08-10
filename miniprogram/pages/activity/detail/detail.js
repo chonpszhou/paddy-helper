@@ -43,6 +43,8 @@ Page({
     myStatus: '',
     myNote: '',
     membersList: [],
+    photos: [],
+    photoUrls: [],
     special: null,
     isCreator: false,
     typeIconW: '',
@@ -133,6 +135,30 @@ Page({
       }).filter(function (x) { return x !== null })
         .sort(function (a, b) { return a.sortIndex - b.sortIndex })
 
+      const photos = (activity.photos || []).map(function (p) {
+        const likes = p.likes || []
+        const dislikes = p.dislikes || []
+        const uid = store.currentUid()
+        const score = likes.length - dislikes.length
+        return {
+          id: p.id,
+          src: p.src,
+          likeCount: likes.length,
+          dislikeCount: dislikes.length,
+          liked: likes.indexOf(uid) >= 0,
+          disliked: dislikes.indexOf(uid) >= 0,
+          score: score,
+          scoreText: score > 0 ? '+' + score : '' + score
+        }
+      }).sort(function (a, b) {
+        if (b.score !== a.score) return b.score - a.score
+        return a.id < b.id ? -1 : 1
+      })
+      photos.forEach(function (p, i) {
+        p.rank = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : ''
+      })
+      const photoUrls = photos.map(function (p) { return p.src })
+
       let special = SPECIAL[activity.type] || null
       if (special && special.goUrl && activity.type === 'dinner') {
         const dinner = activity.dinner || {}
@@ -188,6 +214,8 @@ Page({
         myStatus: my ? my.status : '',
         myNote: my ? my.note : '',
         membersList: membersList,
+        photos: photos,
+        photoUrls: photoUrls,
         special: special,
         isCreator: isCreator,
         errorMsg: ''
@@ -254,6 +282,48 @@ Page({
   goPoster() {
     wx.navigateTo({
       url: '/pages/poster/poster?id=' + this.data.id
+    })
+  },
+
+  uploadPhotos() {
+    const self = this
+    store.requireLogin(function (ok) {
+      if (!ok) return
+      wx.chooseMedia({
+        count: 9,
+        mediaType: ['image'],
+        sourceType: ['album', 'camera'],
+        success(res) {
+          const files = res.tempFiles || []
+          if (!files.length) return
+          wx.showLoading({ title: '上传中…', mask: true })
+          let done = 0
+          files.forEach(function (f) {
+            helpers.persistPhoto(f.tempFilePath, self.data.id, function (src) {
+              store.addPhoto(self.data.id, src)
+              done++
+              if (done >= files.length) {
+                wx.hideLoading()
+                self.refresh()
+                wx.showToast({ title: '已上传 ' + files.length + ' 张', icon: 'success' })
+              }
+            })
+          })
+        }
+      })
+    })
+  },
+
+  togglePhotoVote(e) {
+    store.togglePhotoVote(this.data.id, e.currentTarget.dataset.id, e.currentTarget.dataset.type)
+    this.refresh()
+  },
+
+  previewPhoto(e) {
+    const urls = this.data.photoUrls
+    wx.previewImage({
+      urls: urls,
+      current: urls[e.currentTarget.dataset.index] || urls[0]
     })
   },
 

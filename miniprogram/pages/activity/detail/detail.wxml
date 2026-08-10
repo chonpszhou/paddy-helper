@@ -81,6 +81,27 @@
     </view>
   </view>
 
+  <view class="group">
+    <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>活动相册<text class="group-count">{{photos.length}} 张</text></view>
+    <view class="inset inset-pad">
+      <view class="photo-grid">
+        <view class="photo-item" wx:for="{{photos}}" wx:key="id">
+          <view class="photo-wrap">
+            <image class="photo-img" src="{{item.src}}" mode="aspectFill" bindtap="previewPhoto" data-index="{{index}}"/>
+            <view class="photo-rank" wx:if="{{item.rank}}">{{item.rank}}</view>
+          </view>
+          <view class="photo-actions">
+            <view class="photo-vote {{item.liked ? 'photo-vote-on' : ''}}" bindtap="togglePhotoVote" data-id="{{item.id}}" data-type="like">👍 {{item.likeCount}}</view>
+            <view class="photo-vote {{item.disliked ? 'photo-vote-on-bad' : ''}}" bindtap="togglePhotoVote" data-id="{{item.id}}" data-type="dislike">👎 {{item.dislikeCount}}</view>
+            <text class="photo-score">{{item.scoreText}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-mini" wx:if="{{!photos.length}}">📸 还没有照片</view>
+      <view class="photo-upload" bindtap="uploadPhotos" hover-class="press-hover">📷 上传照片（匿名）</view>
+    </view>
+  </view>
+
 </view>
 
 <view class="page" wx:else>

@@ -168,6 +168,39 @@ function persistAvatar(tempFilePath, callback) {
   }
 }
 
+function persistPhoto(tempFilePath, folder, callback) {
+  const fallback = function () {
+    try {
+      const fs = wx.getFileSystemManager()
+      fs.saveFile({
+        tempFilePath: tempFilePath,
+        success(res) {
+          callback(res.savedFilePath)
+        },
+        fail() {
+          callback(tempFilePath)
+        }
+      })
+    } catch (e) {
+      callback(tempFilePath)
+    }
+  }
+  if (wx.cloud && wx.cloud.uploadFile) {
+    const extMatch = String(tempFilePath).match(/\.(\w+)$/)
+    const ext = extMatch ? extMatch[1] : 'jpg'
+    wx.cloud.uploadFile({
+      cloudPath: 'photos/' + folder + '/' + Date.now() + '-' + Math.floor(Math.random() * 10000) + '.' + ext,
+      filePath: tempFilePath
+    }).then(function (res) {
+      callback(res.fileID)
+    }).catch(function () {
+      fallback()
+    })
+  } else {
+    fallback()
+  }
+}
+
 module.exports = {
   formatDateTime,
   formatDate,
@@ -183,5 +216,6 @@ module.exports = {
   openMap,
   distanceKm,
   distanceText,
-  persistAvatar
+  persistAvatar,
+  persistPhoto
 }

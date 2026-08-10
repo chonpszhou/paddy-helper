@@ -511,6 +511,7 @@ function createActivity(info) {
     description: info.description || '',
     invitedOpenids: info.invitedOpenids || [],
     dinner: info.type === 'dinner' ? { timeSlots: [], dishes: [], bringItems: [] } : null,
+    photos: [],
     creatorId: currentUid(),
     status: 'ongoing',
     createdAt: Date.now(),
@@ -673,6 +674,52 @@ function signup(activityId, status, note) {
     activity.signups[idx] = record
   } else {
     activity.signups.push(record)
+  }
+  save(d, activityId)
+}
+
+function addPhoto(activityId, src) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !src) return
+  if (!activity.photos) activity.photos = []
+  activity.photos.push({
+    id: 'p' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+    src: src,
+    likes: [],
+    dislikes: [],
+    createdAt: Date.now()
+  })
+  save(d, activityId)
+}
+
+function togglePhotoVote(activityId, photoId, type) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return
+  const photo = (activity.photos || []).find(function (p) { return p.id === photoId })
+  if (!photo) return
+  if (!photo.likes) photo.likes = []
+  if (!photo.dislikes) photo.dislikes = []
+  const uid = currentUid()
+  if (type === 'like') {
+    const i = photo.likes.indexOf(uid)
+    if (i >= 0) {
+      photo.likes.splice(i, 1)
+    } else {
+      photo.likes.push(uid)
+      const j = photo.dislikes.indexOf(uid)
+      if (j >= 0) photo.dislikes.splice(j, 1)
+    }
+  } else {
+    const i = photo.dislikes.indexOf(uid)
+    if (i >= 0) {
+      photo.dislikes.splice(i, 1)
+    } else {
+      photo.dislikes.push(uid)
+      const j = photo.likes.indexOf(uid)
+      if (j >= 0) photo.likes.splice(j, 1)
+    }
   }
   save(d, activityId)
 }
@@ -1912,6 +1959,8 @@ module.exports = {
   duplicateActivity: duplicateActivity,
   updateActivity: updateActivity,
   signup: signup,
+  addPhoto: addPhoto,
+  togglePhotoVote: togglePhotoVote,
   mySignup: mySignup,
   countConfirmed: countConfirmed,
   countMaybe: countMaybe,
