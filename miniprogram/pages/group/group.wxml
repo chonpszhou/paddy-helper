@@ -8,14 +8,6 @@
     <view class="final-banner" wx:if="{{hasFinal}}">✅ 已选定场馆：{{finalName}}</view>
   </view>
 
-  <view class="ai-trigger" bindtap="aiGroup" hover-class="press-hover">
-    <text class="ai-trigger-icon">✨</text>
-    <view class="ai-trigger-texts">
-      <view class="ai-trigger-title">AI 推荐玩法</view>
-      <view class="ai-trigger-sub">输入人数和偏好，推荐剧本杀、桌游、狼人杀方案</view>
-    </view>
-    <text class="ai-trigger-go">›</text>
-  </view>
 
   <view class="card" wx:if="{{center}}">
     <view class="card-title">🗺️ 居中地点</view>

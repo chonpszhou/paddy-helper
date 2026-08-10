@@ -59,15 +59,6 @@
     </view>
   </view>
 
-  <view class="ai-trigger" bindtap="aiSummary" hover-class="press-hover">
-    <text class="ai-trigger-icon">✨</text>
-    <view class="ai-trigger-texts">
-      <view class="ai-trigger-title">AI 活动小记</view>
-      <view class="ai-trigger-sub">根据活动信息，生成一段温暖总结</view>
-    </view>
-    <text class="ai-trigger-go">›</text>
-  </view>
-
   <view class="group">
     <view class="group-head"><view class="dot" style="background:{{meta.color}}"></view>成员名单<text class="group-count">{{members}}</text></view>
     <view class="inset">

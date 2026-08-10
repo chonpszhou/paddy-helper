@@ -226,44 +226,6 @@ Page({
     })
   },
 
-  aiSummary() {
-    const activity = this.data.activity
-    if (!activity) return
-    const self = this
-    const names = (this.data.membersList || []).slice(0, 8).map(function (m) { return m.name }).join('、')
-    wx.showLoading({ title: 'AI 写小记中…', mask: true })
-    store.aiCall('summary', {
-      title: activity.title,
-      type: activity.type,
-      time: this.data.timeText,
-      location: activity.location || '地点待定',
-      participants: names || '还没人报名'
-    }, function (ok, data, error) {
-      wx.hideLoading()
-      if (!ok) {
-        wx.showToast({ title: error || 'AI 生成失败', icon: 'none' })
-        return
-      }
-      const text = (data && data.text) || ''
-      wx.showModal({
-        title: '✨ AI 活动小记',
-        content: text || 'AI 没写出来，再试一次',
-        confirmText: '复制文案',
-        cancelText: '关闭',
-        success(r) {
-          if (r.confirm && text) {
-            wx.setClipboardData({
-              data: text,
-              success() {
-                wx.showToast({ title: '已复制 ✨', icon: 'success' })
-              }
-            })
-          }
-        }
-      })
-    })
-  },
-
   openLocation() {
     const a = this.data.activity
     helpers.openMap(a.title, a.location, a.locationLat, a.locationLng)

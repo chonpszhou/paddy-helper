@@ -27,46 +27,6 @@ Page({
     this.refresh()
   },
 
-  aiGroup() {
-    const self = this
-    wx.showModal({
-      title: '✨ AI 推荐玩法',
-      editable: true,
-      placeholderText: '比如：6 人，想玩推理类的',
-      success(res) {
-        if (!res.confirm) return
-        const topic = (res.content || '').trim()
-        if (!topic) {
-          wx.showToast({ title: '说说人数和偏好吧', icon: 'none' })
-          return
-        }
-        wx.showLoading({ title: 'AI 推荐中…', mask: true })
-        store.aiCall('group', { topic: topic }, function (ok, data, error) {
-          wx.hideLoading()
-          if (!ok) {
-            wx.showToast({ title: error || 'AI 生成失败', icon: 'none' })
-            return
-          }
-          const s = data.suggestions || []
-          let content = s.map(function (x, i) {
-            return (i + 1) + '. ' + x.name + '（' + (x.category || '') + '）\n' +
-              '   ⏱ ' + (x.duration || '待定') + ' · 💰 ' + (x.budget || '待定') + '\n' +
-              '   💡 ' + (x.reason || '')
-          }).join('\n\n')
-          if ((data.tips || []).length) {
-            content += '\n\n组织建议：\n' + data.tips.map(function (t) { return '· ' + t }).join('\n')
-          }
-          wx.showModal({
-            title: '✨ 推荐方案',
-            content: content || 'AI 没有生成推荐，换个说法试试',
-            showCancel: false,
-            confirmText: '好的'
-          })
-        })
-      }
-    })
-  },
-
   refresh() {
     const activity = store.getActivity(this.data.id)
     if (!activity) return

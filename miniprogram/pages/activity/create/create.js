@@ -25,7 +25,6 @@ Page({
     circleName: '',
     isEdit: false,
     editId: '',
-    aiMenu: [],
     submitting: false,
     stepText: '',
     placeholders: {
@@ -153,66 +152,6 @@ Page({
 
   onDescription(e) {
     this.setData({ description: e.detail.value })
-  },
-
-  aiPlan() {
-    const self = this
-    wx.showModal({
-      title: '✨ AI 帮我想',
-      editable: true,
-      placeholderText: '比如：周末 8 人聚餐，一半人不吃辣',
-      success(res) {
-        if (!res.confirm) return
-        const topic = (res.content || '').trim()
-        if (!topic) {
-          wx.showToast({ title: '说点想法吧', icon: 'none' })
-          return
-        }
-        wx.showLoading({ title: 'AI 想方案中…', mask: true })
-        store.aiCall('plan', {
-          type: self.data.selectedType,
-          topic: topic,
-          menuList: self.data.selectedType === 'dinner' ? privateMenu.allPrivateDishes() : []
-        }, function (ok, data, error) {
-          wx.hideLoading()
-          if (!ok) {
-            wx.showToast({ title: error || 'AI 生成失败', icon: 'none' })
-            return
-          }
-          const patch = {}
-          if (data.title) patch.title = data.title
-          if (data.description) patch.description = data.description
-          self.setData(patch)
-
-          const tips = (data.tips || []).map(function (t) { return '· ' + t }).join('\n')
-          const menu = data.menu || []
-          let content = ''
-          if (menu.length) {
-            content = 'AI 推荐菜单：\n' + menu.map(function (m, i) { return (i + 1) + '. ' + m }).join('\n')
-          }
-          if (tips) {
-            content += (content ? '\n\n' : '') + '准备建议：\n' + tips
-          }
-          wx.showModal({
-            title: '✨ 方案已生成',
-            content: content || '已帮你填好标题和说明，检查一下就可以发布了',
-            confirmText: menu.length ? '采纳菜单' : '好的',
-            cancelText: menu.length ? '只要文字' : '返回',
-            success(r) {
-              if (r.confirm && menu.length) {
-                if (self.data.isEdit) {
-                  menu.forEach(function (name) { store.addDish(self.data.editId, name) })
-                  wx.showToast({ title: '菜单已加入 🎉', icon: 'success' })
-                } else {
-                  self.setData({ aiMenu: menu })
-                  wx.showToast({ title: '菜单已选好，创建时生效 🎉', icon: 'success' })
-                }
-              }
-            }
-          })
-        })
-      }
-    })
   },
 
   submit() {
@@ -343,7 +282,6 @@ Page({
       locationLng: this.data.locationLng,
       startTime: startTime,
       description: this.data.description.trim(),
-      aiMenu: this.data.aiMenu,
     })
     const isEasterEgg = this.data.selectedType === 'dinner' && store.isPaddyHome(this.data.location)
     const goDetail = function () {
@@ -381,7 +319,6 @@ Page({
       date: helpers.today(),
       selectedType: this.data.selectedType,
       dinnerMode: 'home',
-      aiMenu: [],
       time: '19:00',
       stepText: ''
     })
