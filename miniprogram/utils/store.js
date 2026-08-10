@@ -121,15 +121,6 @@ function demoTripData() {
   }
 }
 
-function demoPhotosData() {
-  return [
-    { id: 'p1', src: '/assets/photos/sunset.png', likes: ['me', 'f1', 'f2', 'f3', 'f5'], dislikes: [], createdAt: 1 },
-    { id: 'p2', src: '/assets/photos/hotpot.png', likes: ['f1', 'f4', 'f7', 'f8'], dislikes: ['f2'], createdAt: 2 },
-    { id: 'p3', src: '/assets/photos/mountain.png', likes: ['me', 'f4', 'f5', 'f6'], dislikes: [], createdAt: 3 },
-    { id: 'p4', src: '/assets/photos/tent.png', likes: ['f3', 'f7'], dislikes: ['f5', 'f8'], createdAt: 4 }
-  ]
-}
-
 var FRIEND_COORDS = {
   f1: [39.909, 116.656],
   f2: [39.921, 116.443],
@@ -205,12 +196,7 @@ function seedData() {
           { friendId: 'f8', status: 'yes', note: '带菌菇拼盘 🍄', signedAt: Date.now() - 3 * hour },
           { friendId: 'f2', status: 'maybe', note: '看加班情况', signedAt: Date.now() - 2 * hour }
         ],
-        comments: [
-          { id: 'c1', author: '白敏', authorId: 'f1', text: '我这次带鲜切牛肉，锅底就拜托Paddy啦！', at: Date.now() - 1 * day },
-          { id: 'c2', author: '阿凯', authorId: 'f2', text: '能不能早点开饭哈哈，我下班直接过去', at: Date.now() - 6 * hour }
-        ],
         dinner: demoDinnerData(),
-        photos: demoPhotosData()
       },
       {
         id: 'a_seed_outdoor',
@@ -232,9 +218,7 @@ function seedData() {
           { friendId: 'f7', status: 'maybe', note: '看天气', signedAt: Date.now() - 1 * day },
           { friendId: 'f3', status: 'no', note: '那天有事 😢', signedAt: Date.now() - 1 * day }
         ],
-        comments: [],
         outdoor: demoOutdoorData(),
-        photos: []
       },
       {
         id: 'a_seed_group',
@@ -242,7 +226,7 @@ function seedData() {
         title: '🎲 鹅鸭杀之夜',
         location: '地点待定（按大家位置取中）',
         startTime: fri,
-        description: '开黑局！地点会根据大家的地址选个居中的场子，谁有推荐也可以直接留言。',
+        description: '开黑局！地点会根据大家的地址选个居中的场子，有推荐的场子欢迎说出来。',
         creatorId: 'me',
         status: 'ongoing',
         createdAt: Date.now() - 4 * day,
@@ -254,9 +238,7 @@ function seedData() {
           { friendId: 'f4', status: 'yes', note: '', signedAt: Date.now() - 2 * day },
           { friendId: 'f6', status: 'maybe', note: '', signedAt: Date.now() - 1 * day }
         ],
-        comments: [],
         group: demoGroupData(),
-        photos: []
       },
       {
         id: 'a_seed_trip',
@@ -278,9 +260,7 @@ function seedData() {
           { friendId: 'f7', status: 'yes', note: '', signedAt: Date.now() - 3 * day },
           { friendId: 'f2', status: 'maybe', note: '看排班', signedAt: Date.now() - 2 * day }
         ],
-        comments: [],
         trip: demoTripData(),
-        photos: []
       },
       {
         id: 'a_seed_ended',
@@ -299,10 +279,6 @@ function seedData() {
           { friendId: 'f4', status: 'yes', note: '', signedAt: Date.now() - 14 * day },
           { friendId: 'f7', status: 'yes', note: '', signedAt: Date.now() - 13 * day }
         ],
-        comments: [
-          { id: 'c3', author: '西西', authorId: 'f7', text: '樱花太美了！下次还去！', at: Date.now() - 11 * day }
-        ],
-        photos: []
       }
     ]
   }
@@ -380,10 +356,6 @@ function upgradeData(d) {
     }
   })
   ;(d.activities || []).forEach(function (a) {
-    if (!a.photos) {
-      a.photos = a.id === 'a_seed_dinner' ? demoPhotosData() : []
-      changed = true
-    }
     if (a.type === 'tablegame') {
       a.type = 'group'
       changed = true
@@ -542,11 +514,9 @@ function createActivity(info) {
     creatorId: currentUid(),
     status: 'ongoing',
     createdAt: Date.now(),
-    photos: [],
     signups: [
       { friendId: currentUid(), status: 'yes', note: '发起人 🎉', signedAt: Date.now() }
-    ],
-    comments: []
+    ]
   }
   ;(info.aiMenu || []).forEach(function (name) {
     if (!activity.dinner) return
@@ -589,51 +559,6 @@ function updateActivity(activityId, info) {
   return true
 }
 
-function addPhoto(activityId, src) {
-  const d = getData()
-  const activity = d.activities.find(function (a) { return a.id === activityId })
-  if (!activity || !src) return
-  if (!activity.photos) activity.photos = []
-  activity.photos.push({
-    id: 'p' + Date.now(),
-    src: src,
-    likes: [],
-    dislikes: [],
-    createdAt: Date.now()
-  })
-  save(d, activityId)
-}
-
-function togglePhotoVote(activityId, photoId, type) {
-  const d = getData()
-  const activity = d.activities.find(function (a) { return a.id === activityId })
-  if (!activity) return
-  const photo = (activity.photos || []).find(function (p) { return p.id === photoId })
-  if (!photo) return
-  if (!photo.likes) photo.likes = []
-  if (!photo.dislikes) photo.dislikes = []
-  if (type === 'like') {
-    const i = photo.likes.indexOf(currentUid())
-    if (i >= 0) {
-      photo.likes.splice(i, 1)
-    } else {
-      photo.likes.push(currentUid())
-      const j = photo.dislikes.indexOf(currentUid())
-      if (j >= 0) photo.dislikes.splice(j, 1)
-    }
-  } else {
-    const i = photo.dislikes.indexOf(currentUid())
-    if (i >= 0) {
-      photo.dislikes.splice(i, 1)
-    } else {
-      photo.dislikes.push(currentUid())
-      const j = photo.likes.indexOf(currentUid())
-      if (j >= 0) photo.likes.splice(j, 1)
-    }
-  }
-  save(d, activityId)
-}
-
 function mySignup(activity) {
   return (activity.signups || []).find(function (s) { return s.friendId === currentUid() }) || null
 }
@@ -650,21 +575,6 @@ function signup(activityId, status, note) {
     activity.signups.push(record)
   }
   save(d, activityId)
-}
-
-function addComment(activityId, text) {
-  const d = getData()
-  const activity = d.activities.find(function (a) { return a.id === activityId })
-  if (!activity || !text || !text.trim()) return false
-  activity.comments.push({
-    id: 'c' + Date.now(),
-    author: d.profile.name,
-    authorId: currentUid(),
-    text: text.trim(),
-    at: Date.now()
-  })
-  save(d, activityId)
-  return true
 }
 
 function getDinner(activity) {
@@ -1227,9 +1137,6 @@ function mergeById(localList, remoteList, key, arrayKeys) {
 function mergeActivity(local, remote) {
   const merged = Object.assign({}, local, remote)
   merged.signups = mergeById(local.signups, remote.signups, 'friendId', [])
-  merged.comments = mergeById(local.comments, remote.comments, 'id', [])
-  merged.photos = mergeById(local.photos, remote.photos, 'id', ['likes', 'dislikes'])
-
   if (local.dinner || remote.dinner) {
     merged.dinner = Object.assign({}, local.dinner || {}, remote.dinner || {})
     merged.dinner.timeSlots = mergeById(local.dinner && local.dinner.timeSlots, remote.dinner && remote.dinner.timeSlots, 'id', ['votes'])
@@ -1390,16 +1297,6 @@ function migrateMeToOpenid(openid) {
         changed = true
       }
     })
-    ;(a.photos || []).forEach(function (p) {
-      if (p.likes) {
-        p.likes = p.likes.map(function (x) { return x === 'me' ? openid : x })
-        changed = true
-      }
-      if (p.dislikes) {
-        p.dislikes = p.dislikes.map(function (x) { return x === 'me' ? openid : x })
-        changed = true
-      }
-    })
     if (a.dinner) {
       ;(a.dinner.timeSlots || []).forEach(function (s) {
         if (s.votes) {
@@ -1493,7 +1390,7 @@ function requireLogin(callback) {
   }
   wx.showModal({
     title: '先登录一下',
-    content: '登录后朋友们才能认出你，报名、留言和活动数据也会自动同步',
+    content: '登录后朋友们才能认出你，报名和活动数据也会自动同步',
     confirmText: '去登录',
     cancelText: '先逛逛',
     success(res) {
@@ -1923,10 +1820,7 @@ module.exports = {
   createActivity: createActivity,
   removeActivity: removeActivity,
   updateActivity: updateActivity,
-  addPhoto: addPhoto,
-  togglePhotoVote: togglePhotoVote,
   signup: signup,
-  addComment: addComment,
   mySignup: mySignup,
   countConfirmed: countConfirmed,
   countMaybe: countMaybe,
