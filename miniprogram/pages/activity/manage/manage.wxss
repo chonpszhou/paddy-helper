@@ -77,9 +77,40 @@
 .act-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 14rpx;
   margin-top: 18rpx;
   padding-top: 16rpx;
   border-top: 1rpx solid #F5EFE8;
+}
+
+.mini-btn {
+  font-size: 25rpx;
+  color: #07C160;
+  border: 2rpx solid #C9F0DC;
+  border-radius: 999rpx;
+  padding: 10rpx 30rpx;
+  font-weight: 600;
+}
+
+.act-count {
+  display: inline-block;
+  margin-left: 12rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  padding: 2rpx 14rpx;
+  border-radius: 999rpx;
+  background: rgba(7, 193, 96, 0.12);
+  color: #07C160;
+}
+
+.act-count.ended {
+  background: rgba(154, 160, 175, 0.14);
+  color: #8A919E;
+}
+
+.act-count.live {
+  background: rgba(255, 92, 122, 0.12);
+  color: #FF5C7A;
 }
 
 .del-btn {

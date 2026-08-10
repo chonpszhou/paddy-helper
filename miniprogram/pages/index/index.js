@@ -6,6 +6,7 @@ function decorate(activity) {
   const meta = store.TYPE_META[activity.type] || { name: '活动', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
   const profile = store.getProfile()
   const uid = store.currentUid()
+  const parts = helpers.countdownParts(activity.startTime)
   const avatars = (activity.signups || [])
     .filter(function (s) { return s.status === 'yes' })
     .map(function (s) {
@@ -26,6 +27,8 @@ function decorate(activity) {
     color: meta.color,
     grad: meta.grad,
     timeText: helpers.formatDateTime(activity.startTime),
+    countdownText: helpers.countdownText(activity.startTime),
+    countdownKind: parts ? parts.kind : '',
     confirmed: store.countConfirmed(activity),
     myStatusText: store.myStatusText(activity),
     avatars: avatars.slice(0, 5).map(function (a, i) { return Object.assign({ k: i }, a) }),

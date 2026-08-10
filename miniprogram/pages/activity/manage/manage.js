@@ -4,12 +4,15 @@ const icons = require('../../../utils/icons')
 
 function decorate(activity) {
   const meta = store.TYPE_META[activity.type] || { name: '活动', icon: '📌', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
+  const parts = helpers.countdownParts(activity.startTime)
   return Object.assign({}, activity, {
     typeName: meta.name,
     typeIcon: icons.typeIcon(activity.type, meta.color),
     color: meta.color,
     grad: meta.grad,
     timeText: helpers.formatDateTime(activity.startTime),
+    countdownText: helpers.countdownText(activity.startTime),
+    countdownKind: parts ? parts.kind : '',
     confirmed: store.countConfirmed(activity)
   })
 }
@@ -64,6 +67,51 @@ Page({
           self.refresh()
           wx.showToast({ title: '已删除', icon: 'success' })
         }
+      }
+    })
+  },
+
+  endActivity(e) {
+    const self = this
+    const id = e.currentTarget.dataset.id
+    const title = e.currentTarget.dataset.title
+    wx.showModal({
+      title: '结束活动',
+      content: '把「' + title + '」标记为已结束？它会移到「已结束」列表里，方便回顾。',
+      confirmText: '结束',
+      confirmColor: '#FF8A5B',
+      success(res) {
+        if (res.confirm) {
+          store.markEnded(id)
+          self.refresh()
+          wx.showToast({ title: '已结束 🎉', icon: 'success' })
+        }
+      }
+    })
+  },
+
+  duplicateActivity(e) {
+    const self = this
+    const id = e.currentTarget.dataset.id
+    const title = e.currentTarget.dataset.title
+    wx.showModal({
+      title: '再来一场',
+      content: '复制「' + title + '」的配置生成新活动（时间顺延一周，报名清空）？',
+      confirmText: '生成',
+      confirmColor: '#07C160',
+      success(res) {
+        if (!res.confirm) return
+        const newId = store.duplicateActivity(id)
+        if (!newId) {
+          wx.showToast({ title: '复制失败，请重试', icon: 'none' })
+          return
+        }
+        wx.showToast({ title: '已生成新活动 ✨', icon: 'success' })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '/pages/activity/detail/detail?id=' + newId
+          })
+        }, 600)
       }
     })
   }

@@ -47,6 +47,7 @@ Page({
     isCreator: false,
     typeIconW: '',
     errorMsg: '',
+    countdown: { kind: '', text: '', hm: '', days: 0 },
     icons: {
       clockW: icons.icon('clock', '#FFFFFF'),
       pinW: icons.icon('pin', '#FFFFFF'),
@@ -61,10 +62,21 @@ Page({
 
   onShow() {
     this.refresh()
+    const self = this
+    if (this._countdownTimer) {
+      clearInterval(this._countdownTimer)
+    }
+    this._countdownTimer = setInterval(function () {
+      self.updateCountdown()
+    }, 30000)
   },
 
   onUnload() {
     this._destroyed = true
+    if (this._countdownTimer) {
+      clearInterval(this._countdownTimer)
+      this._countdownTimer = null
+    }
   },
 
   refresh() {
@@ -180,6 +192,7 @@ Page({
         isCreator: isCreator,
         errorMsg: ''
       })
+      this.updateCountdown()
     } catch (e) {
       console.error('[detail] 页面加载失败', e)
       this.setData({
@@ -187,6 +200,24 @@ Page({
         errorMsg: '页面加载出错，试试重新打开'
       })
     }
+  },
+
+  updateCountdown() {
+    const a = this.data.activity
+    if (!a) return
+    let parts = helpers.countdownParts(a.startTime)
+    if (a.status === 'ended') {
+      parts = { kind: 'ended' }
+    }
+    const kind = parts ? parts.kind : ''
+    this.setData({
+      countdown: {
+        kind: kind,
+        text: helpers.countdownDetail(a.startTime),
+        hm: helpers.formatTime(a.startTime),
+        days: parts ? parts.days : 0
+      }
+    })
   },
 
   chooseStatus(e) {

@@ -51,6 +51,55 @@ function greeting() {
   return '晚上好'
 }
 
+// 返回 { kind: 'ended' | 'live' | 'upcoming', days, hours, mins }
+function countdownParts(ts) {
+  if (!ts) return null
+  const diff = ts - Date.now()
+  if (diff <= 0) {
+    if (diff > -6 * 3600000) return { kind: 'live' }
+    return { kind: 'ended' }
+  }
+  return {
+    kind: 'upcoming',
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    mins: Math.floor((diff % 3600000) / 60000)
+  }
+}
+
+// 简短状态文本：今天 19:00 / 明天 19:00 / 2 天后 / 进行中 / 已结束
+function countdownText(ts) {
+  const p = countdownParts(ts)
+  if (!p) return ''
+  if (p.kind === 'ended') return '已结束'
+  if (p.kind === 'live') return '进行中'
+  const d = new Date(ts)
+  const startOfToday = new Date()
+  startOfToday.setHours(0, 0, 0, 0)
+  const eventDayMs = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+  const calDays = Math.round((eventDayMs - startOfToday.getTime()) / 86400000)
+  const hm = pad(d.getHours()) + ':' + pad(d.getMinutes())
+  if (calDays <= 0) return '今天 ' + hm
+  if (calDays === 1) return '明天 ' + hm
+  if (calDays <= 6) return calDays + ' 天后'
+  return (d.getMonth() + 1) + '月' + d.getDate() + '日'
+}
+
+// 详情页完整倒计时文案
+function countdownDetail(ts) {
+  const p = countdownParts(ts)
+  if (!p) return ''
+  if (p.kind === 'ended') return '活动已结束，期待下次再约 🎉'
+  if (p.kind === 'live') return '正在火热进行中 🔥'
+  if (p.days > 0) {
+    let t = '距离开始还有 ' + p.days + ' 天 ' + p.hours + ' 小时'
+    if (p.mins > 0) t += ' ' + p.mins + ' 分'
+    return t
+  }
+  if (p.hours > 0) return '距离开始还有 ' + p.hours + ' 小时 ' + p.mins + ' 分'
+  return '距离开始还有 ' + p.mins + ' 分钟'
+}
+
 function chooseMapLocation(callback) {
   wx.chooseLocation({
     success(res) {
@@ -127,6 +176,9 @@ module.exports = {
   today,
   combineDateTime,
   greeting,
+  countdownParts,
+  countdownText,
+  countdownDetail,
   chooseMapLocation,
   openMap,
   distanceKm,

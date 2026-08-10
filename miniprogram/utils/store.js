@@ -536,6 +536,112 @@ function removeActivity(activityId) {
   return false
 }
 
+function markEnded(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  activity.status = 'ended'
+  save(d, activityId)
+  return true
+}
+
+function countMyStats() {
+  const d = getData()
+  const uid = currentUid()
+  const openid = (d.profile && d.profile.openid) || ''
+  const deleted = d.deletedActivityIds || []
+  const list = d.activities.filter(function (a) { return deleted.indexOf(a.id) < 0 })
+  let created = 0
+  let joined = 0
+  let maybe = 0
+  let upcoming = 0
+  list.forEach(function (a) {
+    const isCreator = a.creatorId === uid || (!!a.creatorOpenid && a.creatorOpenid === openid)
+    if (isCreator) created++
+    const my = mySignup(a)
+    if (!my) return
+    if (my.status === 'yes') joined++
+    if (my.status === 'maybe') maybe++
+    if (a.status === 'ongoing') upcoming++
+  })
+  return { created: created, joined: joined, maybe: maybe, upcoming: upcoming }
+}
+
+function uniqueId(prefix) {
+  return prefix + Date.now() + '-' + Math.random().toString(36).slice(2, 8)
+}
+
+// “再来一场”：复制活动配置生成新活动（时间顺延一周，报名清空，保留菜单/行程/场馆结构）
+function duplicateActivity(activityId) {
+  const d = getData()
+  const src = d.activities.find(function (a) { return a.id === activityId })
+  if (!src) return null
+  const id = 'a' + Date.now()
+  const uid = currentUid()
+  const week = 7 * 24 * 3600000
+  const base = (src.startTime ? src.startTime + week : Date.now() + week)
+  const clone = {
+    id: id,
+    type: src.type,
+    title: src.title,
+    circleId: d.currentCircleId || src.circleId || '',
+    dinnerMode: src.dinnerMode || 'home',
+    location: src.location || '',
+    locationAddress: src.locationAddress || '',
+    locationLat: src.locationLat || null,
+    locationLng: src.locationLng || null,
+    startTime: base,
+    description: src.description || '',
+    invitedOpenids: [],
+    creatorId: uid,
+    status: 'ongoing',
+    createdAt: Date.now(),
+    signups: [
+      { friendId: uid, status: 'yes', note: '发起人 🎉', signedAt: Date.now() }
+    ]
+  }
+  if (src.type === 'dinner') {
+    clone.dinner = {
+      timeSlots: (src.dinner && src.dinner.timeSlots || []).map(function (s) {
+        return { id: uniqueId('ts'), label: s.label, votes: [uid] }
+      }),
+      dishes: (src.dinner && src.dinner.dishes || []).map(function (x) {
+        return { id: uniqueId('d'), name: x.name, voters: [uid] }
+      }),
+      bringItems: []
+    }
+  } else if (src.type === 'outdoor') {
+    clone.outdoor = {
+      cars: (src.outdoor && src.outdoor.cars || []).map(function (c) {
+        return { id: uniqueId('car'), driverId: uid, seats: c.seats || 3, note: '' }
+      }),
+      riders: [],
+      gear: (src.outdoor && src.outdoor.gear || []).map(function (g) {
+        return { id: uniqueId('g'), name: g.name, ownerIds: [uid] }
+      })
+    }
+  } else if (src.type === 'group') {
+    clone.group = {
+      finalVenueId: null,
+      venues: (src.group && src.group.venues || []).map(function (v) {
+        return Object.assign({}, v, { id: uniqueId('v'), votes: [uid], creatorId: uid })
+      })
+    }
+  } else if (src.type === 'trip') {
+    clone.trip = {
+      days: JSON.parse(JSON.stringify((src.trip && src.trip.days) || [])),
+      tasks: (src.trip && src.trip.tasks || []).map(function (t) {
+        return { id: uniqueId('t'), name: t.name, ownerId: null }
+      }),
+      stays: JSON.parse(JSON.stringify((src.trip && src.trip.stays) || [])),
+      expenses: []
+    }
+  }
+  d.activities.unshift(clone)
+  save(d, id)
+  return id
+}
+
 function updateActivity(activityId, info) {
   const d = getData()
   const activity = d.activities.find(function (a) { return a.id === activityId })
@@ -1787,6 +1893,9 @@ module.exports = {
   getEnded: getEnded,
   createActivity: createActivity,
   removeActivity: removeActivity,
+  markEnded: markEnded,
+  countMyStats: countMyStats,
+  duplicateActivity: duplicateActivity,
   updateActivity: updateActivity,
   signup: signup,
   mySignup: mySignup,
