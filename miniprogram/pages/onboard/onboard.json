@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "aurora-bg": "/components/aurora-bg/index"
+  }
+}

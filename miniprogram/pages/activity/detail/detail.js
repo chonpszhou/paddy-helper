@@ -114,7 +114,7 @@ Page({
     const membersList = (activity.signups || []).map(function (s) {
       let friend = null
       if (s.friendId === store.currentUid()) {
-        friend = { id: s.friendId, name: profile.name, location: profile.location, color: '#07C160', emoji: '👨‍🍳' }
+        friend = { id: s.friendId, name: profile.name || '朋友', location: profile.location, color: '#07C160', emoji: '👨‍🍳' }
       } else {
         friend = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
       }
@@ -206,7 +206,7 @@ Page({
         activity: activity,
         typeIconW: icons.typeIcon(activity.type, '#FFFFFF'),
         meta: meta,
-        creatorName: activity.creatorName || profile.name,
+        creatorName: activity.creatorName || profile.name || '朋友',
         timeText: helpers.formatDateTime(activity.startTime),
         confirmed: store.countConfirmed(activity),
         maybe: store.countMaybe(activity),

@@ -43,7 +43,7 @@ Page({
     const participants = (activity.signups || []).filter(function (s) { return s.status === 'yes' })
       .map(function (s) {
         if (s.friendId === uid) {
-          return { id: uid, name: profile.name, lat: profile.lat, lng: profile.lng }
+          return { id: uid, name: profile.name || '朋友', lat: profile.lat, lng: profile.lng }
         }
         const f = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
         return f ? { id: f.id, name: f.name, lat: f.lat, lng: f.lng } : null

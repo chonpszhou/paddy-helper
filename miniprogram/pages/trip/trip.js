@@ -35,7 +35,7 @@ Page({
     const profile = store.getProfile()
 
     const nameOf = function (fid) {
-      if (fid === store.currentUid()) return profile.name
+      if (fid === store.currentUid()) return profile.name || '朋友'
       const f = store.getFriend(fid) || store.getCachedUser(fid)
       return f ? f.name : '朋友'
     }

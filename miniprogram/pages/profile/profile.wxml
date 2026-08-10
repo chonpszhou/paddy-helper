@@ -5,7 +5,7 @@
       <image wx:if="{{profile.avatar}}" class="me-avatar-img" src="{{profile.avatar}}" mode="aspectFill"/>
       <view wx:else class="me-avatar">{{avatarLetter}}</view>
       <view class="me-texts">
-        <view class="me-name">{{profile.name}}<text class="me-authed" wx:if="{{profile.wechatAuthed}}"> 已登录</text></view>
+        <view class="me-name">{{displayName}}<text class="me-authed" wx:if="{{profile.wechatAuthed}}"> 已登录</text></view>
         <view class="me-intro">{{profile.intro}}</view>
       </view>
     </view>

@@ -1,7 +1,7 @@
 <aurora-bg></aurora-bg>
 <view class="page">
   <view class="hero-greet rise">
-    <view class="hi">👋 嗨，{{profile.name}}</view>
+    <view class="hi">👋 嗨，{{displayName}}</view>
     <view class="name">这周末，约起来</view>
     <view class="circle-chip" wx:if="{{circleName}}">{{circleName}}</view>
   </view>

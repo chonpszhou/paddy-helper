@@ -1,0 +1,43 @@
+<aurora-bg></aurora-bg>
+<view class="page">
+  <view class="hero rise">
+    <view class="hero-emoji">🫧</view>
+    <view class="hero-title">嗨，朋友 👋</view>
+    <view class="hero-sub">欢迎来到 Paddy 小助手</view>
+    <view class="hero-desc">和朋友们一起，把每个周末过得热气腾腾</view>
+  </view>
+
+  <view class="steps">
+    <view class="step-card rise" style="animation-delay: 60ms">
+      <view class="step-no">1</view>
+      <view class="step-icon">👤</view>
+      <view class="step-texts">
+        <view class="step-title">登录一下</view>
+        <view class="step-desc">用微信头像昵称，朋友们一眼认出你</view>
+      </view>
+    </view>
+
+    <view class="step-card rise" style="animation-delay: 120ms">
+      <view class="step-no">2</view>
+      <view class="step-icon">🔐</view>
+      <view class="step-texts">
+        <view class="step-title">建个圈子</view>
+        <view class="step-desc">通行码自动生成，只有圈内朋友能看到活动</view>
+      </view>
+    </view>
+
+    <view class="step-card rise" style="animation-delay: 180ms">
+      <view class="step-no">3</view>
+      <view class="step-icon">📅</view>
+      <view class="step-texts">
+        <view class="step-title">发个活动</view>
+        <view class="step-desc">聚餐 · 户外 · 团体 · 旅行，一键筹备约起来</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="cta rise" style="animation-delay: 240ms">
+    <button class="primary-btn start-btn" bindtap="start" hover-class="btn-hover">开始使用 🎉</button>
+    <view class="skip" bindtap="skip">先随便逛逛 ›</view>
+  </view>
+</view>

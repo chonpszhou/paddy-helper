@@ -374,7 +374,7 @@ Page({
     const participants = (activity.signups || [])
       .filter(function (s) { return s.status === 'yes' || s.status === 'maybe' })
       .map(function (s) {
-        if (s.friendId === uid) return { name: profile.name, color: '#07C160' }
+        if (s.friendId === uid) return { name: profile.name || '朋友', color: '#07C160' }
         const f = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
         return f ? { name: f.name, color: f.color || '#D9CFC4' } : null
       })
@@ -384,7 +384,7 @@ Page({
     const title = activity.title || '周末活动'
     const timeText = helpers.formatDateTime(activity.startTime)
     const location = activity.location || '地点待定'
-    const host = activity.creatorName || profile.name
+    const host = activity.creatorName || profile.name || '朋友'
     const description = activity.description || ''
     const confirmed = store.countConfirmed(activity)
     const maybe = store.countMaybe(activity)

@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'paddy_helper_data_v1'
+const ONBOARD_KEY = 'paddy_onboard_done'
 const privateMenu = require('./private-menu')
 
 const TYPE_META = {
@@ -284,6 +285,19 @@ function seedData() {
   }
 }
 
+function emptyData() {
+  return {
+    usersCache: {},
+    profile: {
+      name: '',
+      location: '',
+      intro: '和朋友们一起，把每个周末过得热气腾腾 🔥'
+    },
+    friends: [],
+    activities: []
+  }
+}
+
 function load() {
   return wx.getStorageSync(STORAGE_KEY) || null
 }
@@ -299,7 +313,8 @@ function save(data, activityId) {
 function ensureSeed() {
   const data = load()
   if (!data) {
-    save(seedData())
+    // 新用户从干净状态开始，由新手引导带入门；演示数据仅通过「恢复演示数据」触发
+    save(emptyData())
     return
   }
   if (upgradeData(data)) {
@@ -1104,7 +1119,15 @@ function getMySignups() {
 
 function resetDemo() {
   wx.removeStorageSync(STORAGE_KEY)
-  ensureSeed()
+  save(seedData())
+}
+
+function isOnboardDone() {
+  return !!wx.getStorageSync(ONBOARD_KEY)
+}
+
+function markOnboardDone() {
+  wx.setStorageSync(ONBOARD_KEY, true)
 }
 
 function currentUid() {
@@ -1133,7 +1156,7 @@ function cloudPushActivity(activity) {
   delete payload.cloudId
   payload.localId = activity.id
   payload.creatorOpenid = payload.creatorOpenid || profile.openid
-  payload.creatorName = payload.creatorName || profile.name
+  payload.creatorName = payload.creatorName || profile.name || '朋友'
   wx.cloud.callFunction({
     name: 'activity',
     // 优先用活动自己的圈子，避免跨圈子查看/互动时把活动推错圈子
@@ -1916,6 +1939,8 @@ function checkCloud(callback) {
 module.exports = {
   currentUid: currentUid,
   getCachedUser: getCachedUser,
+  isOnboardDone: isOnboardDone,
+  markOnboardDone: markOnboardDone,
   pullActivities: pullActivities,
   pullUsers: pullUsers,
   syncLocalToCloud: syncLocalToCloud,

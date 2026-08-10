@@ -12,7 +12,7 @@ function decorate(activity) {
     .map(function (s) {
       let f = null
       if (s.friendId === uid) {
-        f = { name: profile.name, color: '#07C160' }
+        f = { name: profile.name || '朋友', color: '#07C160' }
       } else {
         f = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
       }
@@ -100,6 +100,7 @@ Page({
     this.setData({
       greeting: helpers.greeting(),
       profile: profile,
+      displayName: profile.name || '朋友',
       noCircle: !profile.currentCircleId,
       stats: stats,
       feature: decorated[0] || null,

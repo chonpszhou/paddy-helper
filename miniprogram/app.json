@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/onboard/onboard",
     "pages/index/index",
     "pages/activity/list/list",
     "pages/activity/create/create",

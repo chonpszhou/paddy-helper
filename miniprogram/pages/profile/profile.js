@@ -43,6 +43,7 @@ Page({
     })
     this.setData({
       profile: profile,
+      displayName: profile.name || '朋友',
       circleName: circle ? circle.name : '',
       avatarLetter: profile.name ? profile.name.charAt(0) : 'P',
       manageCount: manageCount,
