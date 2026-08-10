@@ -29,18 +29,20 @@
       <view class="secret-star">✨</view>
     </view>
     <view class="secret-desc">鄂尔多斯蒙式 + 巴彦淖尔河套 + 东北硬菜，只有来周鹏家才有的待遇 🎁</view>
+    <view class="secret-hint">👆 点菜名直接加入聚会菜单，加入后大家就能投票</view>
     <view class="secret-cat" wx:for="{{privateMenu}}" wx:key="cat" wx:for-item="cat">
       <view class="secret-cat-title">{{cat.icon}} {{cat.cat}}<text class="secret-cat-count">{{cat.dishes.length}} 道</text></view>
       <view class="secret-grid">
-        <view class="secret-dish" wx:for="{{cat.dishes}}" wx:for-item="dish" wx:key="name">
+        <view class="secret-dish {{dish.added ? 'secret-dish-added' : ''}}" wx:for="{{cat.dishes}}" wx:for-item="dish" wx:key="name" bindtap="togglePrivateDish" data-name="{{dish.name}}" hover-class="press-hover">
           <image wx:if="{{dish.img}}" class="secret-dish-img" src="{{dish.img}}" mode="aspectFill"/>
           <view wx:else class="secret-dish-img secret-dish-img-ph">{{cat.icon}}</view>
           <text class="secret-dish-name">{{dish.name}}</text>
           <text class="secret-dish-spicy" wx:if="{{dish.spicy}}">🌶️</text>
+          <text class="secret-dish-tag" wx:if="{{dish.added}}">✓</text>
         </view>
       </view>
     </view>
-    <view class="secret-add" bindtap="addPrivateMenu">{{privateMenuAdded ? '✅ 已全部加入点菜清单' : '✨ 一键加入点菜清单（' + menuCount + ' 道）'}}</view>
+    <view class="secret-add" bindtap="addPrivateMenu">{{privateMenuAdded ? '✅ 已全部加入点菜清单' : '✨ 一键加入剩余 ' + privateMenuRemaining + ' 道'}}</view>
   </view>
 
   <view class="card">

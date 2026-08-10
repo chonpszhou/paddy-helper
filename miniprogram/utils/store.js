@@ -1021,6 +1021,19 @@ function addPrivateMenuToDinner(activityId) {
   return added
 }
 
+// 私房菜单单道菜加入点菜清单（不自动投票，保持与一键加入一致）
+function addPrivateDish(activityId, name) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !name || !name.trim()) return false
+  const dinner = getDinner(activity)
+  const key = name.trim()
+  if (dinner.dishes.some(function (x) { return x.name === key })) return false
+  dinner.dishes.push({ id: 'd' + Date.now() + '-' + Math.random().toString(36).slice(2, 7), name: key, voters: [] })
+  save(d, activityId)
+  return true
+}
+
 function countConfirmed(activity) {
   return (activity.signups || []).filter(function (s) { return s.status === 'yes' }).length
 }
@@ -1876,6 +1889,7 @@ module.exports = {
   checkCloud: checkCloud,
   isPaddyHome: isPaddyHome,
   addPrivateMenuToDinner: addPrivateMenuToDinner,
+  addPrivateDish: addPrivateDish,
   TYPE_META: TYPE_META,
   SIGNUP_META: SIGNUP_META,
   ensureSeed: ensureSeed,

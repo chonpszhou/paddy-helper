@@ -149,6 +149,31 @@
   padding: 10rpx 16rpx 10rpx 0;
 }
 
+.secret-hint {
+  font-size: 22rpx;
+  color: rgba(255, 232, 200, 0.72);
+  margin-top: 8rpx;
+}
+
+.secret-dish-added {
+  opacity: 0.85;
+}
+
+.secret-dish-tag {
+  flex-shrink: 0;
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 50%;
+  background: #FFD9A0;
+  color: #7A3415;
+  font-size: 22rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rpx;
+}
+
 .secret-dish-img {
   width: 72rpx;
   height: 72rpx;
