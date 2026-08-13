@@ -66,6 +66,15 @@
   gap: 16rpx;
 }
 
+.mode-row-wrap {
+  flex-wrap: wrap;
+}
+
+.mode-item-half {
+  flex: none;
+  width: calc((100% - 16rpx) / 2);
+}
+
 .mode-item {
   flex: 1;
   border: 3rpx solid transparent;

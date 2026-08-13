@@ -31,6 +31,14 @@
       </view>
     </view>
 
+    <view class="form-label" wx:if="{{selectedType === 'group'}}">🎮 团体玩法</view>
+    <view class="mode-row mode-row-wrap" wx:if="{{selectedType === 'group'}}">
+      <view class="mode-item mode-item-half {{groupGame === item.key ? 'mode-item-on' : ''}}" wx:for="{{groupGames}}" wx:key="key" bindtap="selectGroupGame" data-key="{{item.key}}">
+        <view class="mode-title">{{item.icon}} {{item.name}}</view>
+        <view class="mode-sub">{{item.sub}}</view>
+      </view>
+    </view>
+
     <view class="form-label">🏷️ 活动名称</view>
     <input class="input" placeholder="{{titlePlaceholder}}" value="{{title}}" bindinput="onTitle" maxlength="30"/>
 

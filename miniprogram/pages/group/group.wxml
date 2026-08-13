@@ -8,6 +8,49 @@
     <view class="final-banner" wx:if="{{hasFinal}}">✅ 已选定场馆：{{finalName}}</view>
   </view>
 
+  <view class="card wolf-card" wx:if="{{groupGame === 'werewolf'}}">
+    <view class="card-title">🐺 狼人杀 <text class="title-tip">主持人模式 · 翻牌看角色</text></view>
+
+    <block wx:if="{{wolf.phase === 'ready'}}">
+      <view class="wolf-presets">
+        <view class="wolf-preset {{presetKey === item.key ? 'wolf-preset-on' : ''}}" wx:for="{{wolfPresets}}" wx:key="key" bindtap="selectWolfPreset" data-key="{{item.key}}">
+          <view class="wolf-preset-name">{{item.icon}} {{item.name}}</view>
+          <view class="wolf-preset-roles">{{item.rolesText}}</view>
+        </view>
+      </view>
+      <view class="wolf-tip">👥 确认参加 {{wolfPlayerCount}} 人 · 分配后角色打乱，点卡片翻牌查看</view>
+      <view class="wolf-start" bindtap="startWolf" hover-class="press-hover">🎲 随机分配角色</view>
+    </block>
+
+    <block wx:else>
+      <view class="wolf-phase-bar">
+        <view class="wolf-phase-tag {{wolf.phase === 'night' ? 'wolf-night' : 'wolf-day'}}">{{wolf.phase === 'night' ? '🌙 天黑请闭眼' : '☀️ 天亮请睁眼'}}</view>
+        <view class="wolf-phase-btn" bindtap="toggleWolfPhase" hover-class="press-hover">{{wolf.phase === 'night' ? '天亮 ☀️' : '天黑 🌙'}}</view>
+      </view>
+      <view class="wolf-summary">存活 {{wolfAliveCount }} / {{wolf.players.length}} 人 · 点卡片翻牌看身份</view>
+      <view class="wolf-grid">
+        <view class="wolf-item" wx:for="{{wolfPlayers}}" wx:key="uid">
+          <view class="wolf-face {{item.revealed ? 'wolf-face-open' : ''}} {{item.dead ? 'wolf-face-dead' : ''}}" bindtap="flipWolfCard" data-uid="{{item.uid}}">
+            <block wx:if="{{item.revealed}}">
+              <view class="wolf-role-icon" style="background:{{item.roleColor}}22">{{item.roleIcon}}</view>
+              <view class="wolf-role-name" style="color:{{item.roleColor}}">{{item.role}}</view>
+            </block>
+            <block wx:else>
+              <view class="wolf-role-icon">🎴</view>
+              <view class="wolf-role-name">{{item.dead ? '已出局' : '点击翻牌'}}</view>
+            </block>
+          </view>
+          <view class="wolf-foot">
+            <text class="wolf-name">{{item.name}}{{item.isMe ? '（我）' : ''}}</text>
+            <view class="wolf-alive {{item.dead ? 'wolf-alive-dead' : ''}}" catchtap="toggleWolfAlive" data-uid="{{item.uid}}">{{item.dead ? '出局' : '存活'}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="wolf-actions">
+        <view class="wolf-act wolf-act-danger" bindtap="resetWolf" hover-class="press-hover">↻ 重新分配</view>
+      </view>
+    </block>
+  </view>
 
   <view class="card" wx:if="{{center}}">
     <view class="card-title">🗺️ 居中地点</view>
