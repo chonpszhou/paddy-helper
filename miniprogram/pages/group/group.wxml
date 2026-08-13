@@ -9,24 +9,26 @@
   </view>
 
   <view class="card wolf-card" wx:if="{{groupGame === 'werewolf'}}">
-    <view class="card-title">🐺 狼人杀 <text class="title-tip">主持人模式 · 翻牌看角色</text></view>
+    <view class="card-title">🐺 狼人杀 <text class="title-tip">上帝模式 · 发起人是上帝</text></view>
 
     <block wx:if="{{wolf.phase === 'ready'}}">
-      <view class="wolf-deck-card">
+      <view class="wolf-god-tip" wx:if="{{isGod}}">👑 你是上帝，负责配牌和全场管理</view>
+      <view class="wolf-wait-tip" wx:else>🕐 等待上帝配牌开始游戏…</view>
+      <view class="wolf-deck-card" wx:if="{{isGod}}">
         <view class="wolf-deck-line">👥 确认参加 <text class="wolf-deck-num">{{wolfPlayerCount}}</text> 人</view>
         <view class="wolf-deck-line">自动配牌（6-15 人自适应）：</view>
         <view class="wolf-deck-roles">{{wolfDeckText}}</view>
         <view class="wolf-tip">分配后角色打乱，点卡片翻牌查看身份</view>
       </view>
-      <view class="wolf-start" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
+      <view class="wolf-start" wx:if="{{isGod}}" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
     </block>
 
     <block wx:else>
       <view class="wolf-phase-bar">
         <view class="wolf-phase-tag {{wolf.phase === 'night' ? 'wolf-night' : 'wolf-day'}}">{{wolf.phase === 'night' ? '🌙 天黑请闭眼' : '☀️ 天亮请睁眼'}}</view>
-        <view class="wolf-phase-btn" bindtap="toggleWolfPhase" hover-class="press-hover">{{wolf.phase === 'night' ? '天亮 ☀️' : '天黑 🌙'}}</view>
+        <view class="wolf-phase-btn" wx:if="{{isGod}}" bindtap="toggleWolfPhase" hover-class="press-hover">{{wolf.phase === 'night' ? '天亮 ☀️' : '天黑 🌙'}}</view>
       </view>
-      <view class="wolf-summary">存活 {{wolfAliveCount }} / {{wolf.players.length}} 人 · 点卡片翻牌看身份</view>
+      <view class="wolf-summary">存活 {{wolfAliveCount }} / {{wolf.players.length}} 人{{isGod ? ' · 你是上帝，可翻任何牌' : ' · 点自己的牌看身份'}}</view>
       <view class="wolf-grid">
         <view class="wolf-item" wx:for="{{wolfPlayers}}" wx:key="uid">
           <view class="wolf-face {{item.revealed ? 'wolf-face-open' : ''}} {{item.dead ? 'wolf-face-dead' : ''}}" bindtap="flipWolfCard" data-uid="{{item.uid}}">
@@ -35,17 +37,18 @@
               <view class="wolf-role-name" style="color:{{item.roleColor}}">{{item.role}}</view>
             </block>
             <block wx:else>
-              <view class="wolf-role-icon">🎴</view>
-              <view class="wolf-role-name">{{item.dead ? '已出局' : '点击翻牌'}}</view>
+              <view class="wolf-role-icon">{{item.isMe || isGod ? '🎴' : '🔒'}}</view>
+              <view class="wolf-role-name">{{item.dead ? '已出局' : (item.isMe || isGod ? '点击翻牌' : '上帝专属')}}</view>
             </block>
           </view>
           <view class="wolf-foot">
             <text class="wolf-name">{{item.name}}{{item.isMe ? '（我）' : ''}}</text>
-            <view class="wolf-alive {{item.dead ? 'wolf-alive-dead' : ''}}" catchtap="toggleWolfAlive" data-uid="{{item.uid}}">{{item.dead ? '出局' : '存活'}}</view>
+            <view class="wolf-alive {{item.dead ? 'wolf-alive-dead' : ''}}" wx:if="{{isGod}}" catchtap="toggleWolfAlive" data-uid="{{item.uid}}">{{item.dead ? '出局' : '存活'}}</view>
+            <view class="wolf-alive {{item.dead ? 'wolf-alive-dead' : ''}}" wx:else>{{item.dead ? '出局' : '存活'}}</view>
           </view>
         </view>
       </view>
-      <view class="wolf-actions">
+      <view class="wolf-actions" wx:if="{{isGod}}">
         <view class="wolf-act wolf-act-danger" bindtap="resetWolf" hover-class="press-hover">↻ 重新分配</view>
       </view>
     </block>

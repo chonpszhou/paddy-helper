@@ -22,7 +22,8 @@ Page({
     wolfPlayers: [],
     wolfPlayerCount: 0,
     wolfAliveCount: 0,
-    wolfDeckText: ''
+    wolfDeckText: '',
+    isGod: false
   },
 
   onLoad(options) {
@@ -180,11 +181,16 @@ Page({
       wolfPlayers: wolfPlayers,
       wolfPlayerCount: wolfPlayerCount,
       wolfAliveCount: wolfAliveCount,
-      wolfDeckText: wolfDeckText
+      wolfDeckText: wolfDeckText,
+      isGod: isCreator
     })
   },
 
   startWolf() {
+    if (!this.data.isGod) {
+      wx.showToast({ title: '只有上帝可以配牌', icon: 'none' })
+      return
+    }
     const ok = store.assignWerewolf(this.data.id)
     if (!ok) {
       wx.showToast({ title: '先让大家确认参加吧', icon: 'none' })
@@ -197,17 +203,29 @@ Page({
 
   flipWolfCard(e) {
     const uid = e.currentTarget.dataset.uid
+    if (!this.data.isGod && uid !== store.currentUid()) {
+      wx.showToast({ title: '只能翻自己的牌哦 🔒', icon: 'none' })
+      return
+    }
     if (!this._revealed) this._revealed = {}
     this._revealed[uid] = !this._revealed[uid]
     this.refresh()
   },
 
   toggleWolfAlive(e) {
+    if (!this.data.isGod) {
+      wx.showToast({ title: '只有上帝可以标记出局', icon: 'none' })
+      return
+    }
     store.toggleWerewolfAlive(this.data.id, e.currentTarget.dataset.uid)
     this.refresh()
   },
 
   toggleWolfPhase() {
+    if (!this.data.isGod) {
+      wx.showToast({ title: '只有上帝可以切换天黑天亮', icon: 'none' })
+      return
+    }
     const next = this.data.wolf.phase === 'night' ? 'day' : 'night'
     store.setWerewolfPhase(this.data.id, next)
     this.refresh()
@@ -215,6 +233,10 @@ Page({
 
   resetWolf() {
     const self = this
+    if (!this.data.isGod) {
+      wx.showToast({ title: '只有上帝可以重新配牌', icon: 'none' })
+      return
+    }
     wx.showModal({
       title: '重新分配',
       content: '确定清空当前角色重新分配吗？出局记录也会一起清掉。',
