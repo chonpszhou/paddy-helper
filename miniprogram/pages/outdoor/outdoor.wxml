@@ -35,7 +35,7 @@
   </view>
 
   <view class="card">
-    <view class="card-title">🎒 装备清单 <text class="title-tip">点一下标记"我有"</text></view>
+    <view class="card-title">🎒 装备清单 <text class="title-tip">点一下标记"我有"{{isCreator ? ' · 发起人可删' : ''}}</text></view>
     <view class="gear-grid">
       <view
         class="gear {{item.iOwn ? 'gear-on' : ''}}"
@@ -45,6 +45,7 @@
         data-gear-id="{{item.id}}"
       >
         <view class="gear-name">{{item.name}}</view>
+        <view class="gear-del" wx:if="{{isCreator}}" catchtap="removeGear" data-gear-id="{{item.id}}">✕</view>
         <view class="gear-foot">
           <text class="gear-owners">{{item.ownerEmojis || '👀'}}</text>
           <text class="gear-count">{{item.ownerText}}</text>

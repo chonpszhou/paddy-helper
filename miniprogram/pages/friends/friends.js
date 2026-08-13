@@ -120,7 +120,7 @@ Page({
     if (!friend) return
     const self = this
     wx.showActionSheet({
-      itemList: ['修改所在位置', '删除好友'],
+      itemList: ['更新备注位置（仅本机）', '删除好友'],
       success(res) {
         if (res.tapIndex === 0) {
           helpers.chooseMapLocation(function (loc) {

@@ -13,6 +13,7 @@ function decorate(activity) {
     timeText: helpers.formatDateTime(activity.startTime),
     countdownText: helpers.countdownText(activity.startTime),
     countdownKind: parts ? parts.kind : '',
+    isCreator: store.isCreator(activity),
     confirmed: store.countConfirmed(activity)
   })
 }

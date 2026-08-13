@@ -37,10 +37,11 @@
   </view>
 
   <view class="card">
-    <view class="card-title">🙋 分工认领 <text class="title-tip">点一下认领</text></view>
+    <view class="card-title">🙋 分工认领 <text class="title-tip">点一下认领{{isCreator ? ' · 发起人可删' : ''}}</text></view>
     <view class="task" wx:for="{{tasks}}" wx:key="id" bindtap="toggleTask" data-task-id="{{item.id}}">
       <view class="task-name">{{item.name}}</view>
       <view class="task-status {{item.isMine ? 'task-status-mine' : ''}} {{item.taken ? '' : 'task-status-todo'}}">{{item.statusText}}</view>
+      <view class="task-del" wx:if="{{isCreator}}" catchtap="removeTask" data-task-id="{{item.id}}">✕</view>
     </view>
     <view class="empty" wx:if="{{!tasks.length}}">
       <view class="empty-text">还没有分工项</view>

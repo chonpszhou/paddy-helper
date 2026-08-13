@@ -83,6 +83,11 @@
   border-top: 1rpx solid #F5EFE8;
 }
 
+.act-actions-viewonly {
+  font-size: 24rpx;
+  color: #B0A79E;
+}
+
 .mini-btn {
   font-size: 25rpx;
   color: #07C160;

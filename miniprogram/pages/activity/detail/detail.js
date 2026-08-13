@@ -285,10 +285,16 @@ Page({
     }
     store.requireLogin(function (okLogin) {
       if (!okLogin) return
-      const ok = store.addComment(self.data.id, self.data.commentText)
-      if (ok) {
-        self.setData({ commentText: '' })
-        self.refresh()
+      try {
+        const ok = store.addComment(self.data.id, self.data.commentText)
+        if (ok) {
+          self.setData({ commentText: '' })
+          self.refresh()
+          wx.showToast({ title: '已留言 💬', icon: 'success' })
+        }
+      } catch (e) {
+        console.error('[comment] 留言失败', e)
+        wx.showToast({ title: '留言失败，请重试', icon: 'none' })
       }
     })
   },

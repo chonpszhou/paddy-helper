@@ -86,6 +86,7 @@ Page({
     if (!activity) return
     const trip = activity.trip || { days: [], tasks: [], stays: [], expenses: [] }
     const profile = store.getProfile()
+    const isCreator = store.isCreator(activity)
 
     const nameOf = function (fid) {
       if (fid === store.currentUid()) return profile.name || '朋友'
@@ -168,7 +169,8 @@ Page({
       expenses: expenses,
       total: total,
       aaCount: aaCount,
-      perPersonText: aaCount > 0 ? perPerson.toFixed(1) : '0'
+      perPersonText: aaCount > 0 ? perPerson.toFixed(1) : '0',
+      isCreator: isCreator
     })
   },
 
@@ -231,6 +233,22 @@ Page({
   toggleTask(e) {
     store.toggleTaskOwner(this.data.id, e.currentTarget.dataset.taskId)
     this.refresh()
+  },
+
+  removeTask(e) {
+    const self = this
+    wx.showModal({
+      title: '删除分工',
+      content: '确定把这项分工删掉吗？',
+      confirmText: '删除',
+      confirmColor: '#FF4D4F',
+      success(res) {
+        if (res.confirm) {
+          store.removeTask(self.data.id, e.currentTarget.dataset.taskId)
+          self.refresh()
+        }
+      }
+    })
   },
 
   addTask() {

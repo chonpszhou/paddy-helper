@@ -17,11 +17,12 @@
       <view class="act-meta">🕐 {{item.timeText}} <text class="act-count {{item.countdownKind}}">{{item.countdownText}}</text></view>
       <view class="act-meta">📍 {{item.location || '地点待定'}}</view>
     </view>
-    <view class="act-actions">
+    <view class="act-actions" wx:if="{{item.isCreator}}">
       <view class="mini-btn" catchtap="duplicateActivity" data-id="{{item.id}}" data-title="{{item.title}}">再来一场</view>
       <view class="mini-btn" catchtap="endActivity" data-id="{{item.id}}" data-title="{{item.title}}" wx:if="{{item.status === 'ongoing'}}">结束活动</view>
       <view class="del-btn" catchtap="removeActivity" data-id="{{item.id}}" data-title="{{item.title}}">删除</view>
     </view>
+    <view class="act-actions act-actions-viewonly" wx:else>👀 只有发起人可以管理这个活动</view>
   </view>
 
   <view class="empty" wx:if="{{!activities.length}}">
