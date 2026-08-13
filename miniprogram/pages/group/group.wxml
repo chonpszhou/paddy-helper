@@ -8,7 +8,6 @@
     <view class="final-banner" wx:if="{{hasFinal}}">✅ 已选定场馆：{{finalName}}</view>
   </view>
 
-<<<<<<< HEAD
   <view class="ai-trigger" bindtap="aiGroup" hover-class="press-hover">
     <text class="ai-trigger-icon">✨</text>
     <view class="ai-trigger-texts">
@@ -16,7 +15,8 @@
       <view class="ai-trigger-sub">输入人数和偏好，推荐剧本杀、桌游、狼人杀方案</view>
     </view>
     <text class="ai-trigger-go">›</text>
-=======
+  </view>
+
   <view class="card wolf-card" wx:if="{{groupGame === 'werewolf'}}">
     <view class="card-title">🐺 狼人杀 <text class="title-tip">主持人模式 · 翻牌看角色</text></view>
 
@@ -59,7 +59,6 @@
         <view class="wolf-act wolf-act-danger" bindtap="resetWolf" hover-class="press-hover">↻ 重新分配</view>
       </view>
     </block>
->>>>>>> compliant-submission
   </view>
 
   <view class="card" wx:if="{{center}}">
