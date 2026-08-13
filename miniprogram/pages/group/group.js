@@ -19,11 +19,10 @@ Page({
     finalName: '',
     groupGame: '',
     wolf: { phase: 'ready', players: [] },
-    wolfPresets: [],
-    presetKey: 'slim',
     wolfPlayers: [],
     wolfPlayerCount: 0,
-    wolfAliveCount: 0
+    wolfAliveCount: 0,
+    wolfDeckText: ''
   },
 
   onLoad(options) {
@@ -191,21 +190,15 @@ Page({
         revealed: !!revealedMap[p.uid]
       }
     })
-    const wolfPresets = Object.keys(store.WEREWOLF_PRESETS).map(function (key) {
-      const p = store.WEREWOLF_PRESETS[key]
-      const counts = {}
-      p.roles.forEach(function (r) { counts[r] = (counts[r] || 0) + 1 })
-      return {
-        key: key,
-        icon: key === 'standard' ? '🐺' : (key === 'mini' ? '🌙' : '🌗'),
-        name: p.name,
-        rolesText: Object.keys(counts).map(function (r) {
-          return r + '×' + counts[r]
-        }).join(' · ')
-      }
-    })
     const wolfPlayerCount = (activity.signups || []).filter(function (s) { return s.status === 'yes' }).length
     const wolfAliveCount = (w.players || []).filter(function (p) { return p.alive !== false }).length
+    const wolfDeckCounts = {}
+    store.werewolfAutoDeck(wolfPlayerCount).forEach(function (r) {
+      wolfDeckCounts[r] = (wolfDeckCounts[r] || 0) + 1
+    })
+    const wolfDeckText = Object.keys(wolfDeckCounts).map(function (r) {
+      return r + (wolfDeckCounts[r] > 1 ? '×' + wolfDeckCounts[r] : '')
+    }).join(' · ')
 
     this.setData({
       activity: activity,
@@ -224,19 +217,15 @@ Page({
       isCreator: isCreator,
       groupGame: groupGame,
       wolf: w,
-      wolfPresets: wolfPresets,
       wolfPlayers: wolfPlayers,
       wolfPlayerCount: wolfPlayerCount,
-      wolfAliveCount: wolfAliveCount
+      wolfAliveCount: wolfAliveCount,
+      wolfDeckText: wolfDeckText
     })
   },
 
-  selectWolfPreset(e) {
-    this.setData({ presetKey: e.currentTarget.dataset.key })
-  },
-
   startWolf() {
-    const ok = store.assignWerewolf(this.data.id, this.data.presetKey)
+    const ok = store.assignWerewolf(this.data.id)
     if (!ok) {
       wx.showToast({ title: '先让大家确认参加吧', icon: 'none' })
       return

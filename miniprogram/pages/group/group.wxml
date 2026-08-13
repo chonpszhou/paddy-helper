@@ -21,14 +21,13 @@
     <view class="card-title">🐺 狼人杀 <text class="title-tip">主持人模式 · 翻牌看角色</text></view>
 
     <block wx:if="{{wolf.phase === 'ready'}}">
-      <view class="wolf-presets">
-        <view class="wolf-preset {{presetKey === item.key ? 'wolf-preset-on' : ''}}" wx:for="{{wolfPresets}}" wx:key="key" bindtap="selectWolfPreset" data-key="{{item.key}}">
-          <view class="wolf-preset-name">{{item.icon}} {{item.name}}</view>
-          <view class="wolf-preset-roles">{{item.rolesText}}</view>
-        </view>
+      <view class="wolf-deck-card">
+        <view class="wolf-deck-line">👥 确认参加 <text class="wolf-deck-num">{{wolfPlayerCount}}</text> 人</view>
+        <view class="wolf-deck-line">自动配牌（6-15 人自适应）：</view>
+        <view class="wolf-deck-roles">{{wolfDeckText}}</view>
+        <view class="wolf-tip">分配后角色打乱，点卡片翻牌查看身份</view>
       </view>
-      <view class="wolf-tip">👥 确认参加 {{wolfPlayerCount}} 人 · 分配后角色打乱，点卡片翻牌查看</view>
-      <view class="wolf-start" bindtap="startWolf" hover-class="press-hover">🎲 随机分配角色</view>
+      <view class="wolf-start" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
     </block>
 
     <block wx:else>
