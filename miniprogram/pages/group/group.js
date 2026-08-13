@@ -193,6 +193,18 @@ Page({
     })
     const wolfPlayerCount = (activity.signups || []).filter(function (s) { return s.status === 'yes' }).length
     const wolfAliveCount = (w.players || []).filter(function (p) { return p.alive !== false }).length
+    const godUid = w.godUid || ''
+    const noGod = !godUid
+    const isGod = !!godUid && godUid === uid
+    let godName = ''
+    if (godUid) {
+      if (godUid === uid) {
+        godName = profile.name || '我'
+      } else {
+        const f = store.getFriend(godUid) || store.getCachedUser(godUid)
+        godName = f ? f.name : '朋友'
+      }
+    }
     const wolfDeckCounts = {}
     store.werewolfAutoDeck(wolfPlayerCount).forEach(function (r) {
       wolfDeckCounts[r] = (wolfDeckCounts[r] || 0) + 1
@@ -222,7 +234,34 @@ Page({
       wolfPlayerCount: wolfPlayerCount,
       wolfAliveCount: wolfAliveCount,
       wolfDeckText: wolfDeckText,
-      isGod: isCreator
+      isGod: isGod,
+      noGod: noGod,
+      godName: godName
+    })
+  },
+
+  claimGod() {
+    if (store.claimWerewolfGod(this.data.id)) {
+      this.refresh()
+      wx.showToast({ title: '你已成为上帝 👑', icon: 'success' })
+    } else {
+      wx.showToast({ title: '上帝已经有人了哦', icon: 'none' })
+    }
+  },
+
+  resignGod() {
+    const self = this
+    wx.showModal({
+      title: '让出上帝',
+      content: '确定把上帝身份让出来吗？其他人可以重新认领。',
+      confirmText: '让出',
+      confirmColor: '#B45309',
+      success(res) {
+        if (res.confirm) {
+          store.resignWerewolfGod(self.data.id)
+          self.refresh()
+        }
+      }
     })
   },
 

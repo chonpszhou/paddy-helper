@@ -1024,8 +1024,32 @@ function getGroup(activity) {
 
 function getWerewolf(activity) {
   const group = getGroup(activity)
-  if (!group.werewolf) group.werewolf = { phase: 'ready', players: [] }
+  if (!group.werewolf) group.werewolf = { godUid: '', phase: 'ready', players: [] }
   return group.werewolf
+}
+
+// 认领上帝身份：先到先得，只有无人认领时才能认领
+function claimWerewolfGod(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  const w = getWerewolf(activity)
+  if (w.godUid) return false
+  w.godUid = currentUid()
+  save(d, activityId)
+  return true
+}
+
+// 让出上帝身份（仅未开局时可以）
+function resignWerewolfGod(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  const w = getWerewolf(activity)
+  if (!w.godUid || w.phase !== 'ready') return false
+  w.godUid = ''
+  save(d, activityId)
+  return true
 }
 
 function shuffleArr(arr) {
@@ -1100,7 +1124,7 @@ function resetWerewolf(activityId) {
   const activity = d.activities.find(function (a) { return a.id === activityId })
   if (!activity) return
   const group = getGroup(activity)
-  group.werewolf = { phase: 'ready', players: [] }
+  group.werewolf = { godUid: (group.werewolf && group.werewolf.godUid) || '', phase: 'ready', players: [] }
   save(d, activityId)
 }
 
@@ -2225,6 +2249,8 @@ module.exports = {
   addPrivateDish: addPrivateDish,
   werewolfAutoDeck: werewolfAutoDeck,
   WEREWOLF_ROLE_META: WEREWOLF_ROLE_META,
+  claimWerewolfGod: claimWerewolfGod,
+  resignWerewolfGod: resignWerewolfGod,
   assignWerewolf: assignWerewolf,
   toggleWerewolfAlive: toggleWerewolfAlive,
   setWerewolfPhase: setWerewolfPhase,
