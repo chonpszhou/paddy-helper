@@ -223,18 +223,18 @@ Page({
     const self = this
     console.log('[create] submit tapped')
     if (this.data.submitting) return
-    // 记录「从发起页来」：没圈子时引导去建圈，完成后回到发起页继续填表
-    try {
-      wx.setStorageSync('create_return', true)
-    } catch (e) {
-      // 存储失败不影响主流程
-    }
     this.setData({ submitting: true, stepText: '检查登录状态…' })
     try {
       store.requireLogin(function (ok) {
         if (!ok) {
           self.setData({ submitting: false, stepText: '' })
           return
+        }
+        // 记录「从发起页来」：没圈子时引导去建圈，完成后回到发起页继续填表
+        try {
+          wx.setStorageSync('create_return', true)
+        } catch (e) {
+          // 存储失败不影响主流程
         }
         const circle = store.getCurrentCircle()
         if (!circle) {
@@ -318,6 +318,7 @@ Page({
   },
 
   saveActivity(title, startTime) {
+    const self = this
     if (this.data.isEdit) {
       store.updateActivity(this.data.editId, {
         type: this.data.selectedType,
@@ -333,10 +334,9 @@ Page({
       })
       wx.showToast({ title: '已保存 💾', icon: 'success' })
       setTimeout(function () {
-        wx.navigateBack({
-          fail() {
-            wx.switchTab({ url: '/pages/index/index' })
-          }
+        // 发起页是 tabBar 页面，无法 navigateBack 返回详情页，改用 reLaunch 直达
+        wx.reLaunch({
+          url: '/pages/activity/detail/detail?id=' + self.data.editId
         })
       }, 600)
       return

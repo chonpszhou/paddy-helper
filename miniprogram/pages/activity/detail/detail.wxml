@@ -36,7 +36,7 @@
         <text class="fs-l">成员</text>
       </view>
     </view>
-    <view class="signup-btns">
+    <view class="signup-btns" wx:if="{{!ended}}">
       <view
         wx:for="{{signupOptions}}"
         wx:key="key"
@@ -46,8 +46,14 @@
         hover-class="press-hover"
       >{{item.icon}} {{item.label}}</view>
     </view>
-    <view wx:if="{{myStatus === 'yes'}}" class="note-row">
+    <view class="ended-tip" wx:else>🎉 活动已结束，照片和海报仍可查看</view>
+    <view wx:if="{{myStatus === 'yes' && !ended}}" class="note-row">
       <input class="note-input" placeholder="留句话，比如：我带蛋糕 🎂" value="{{myNote}}" bindinput="onNote"/>
+    </view>
+    <view wx:if="{{!ended}}" class="checkin-row {{iCheckedIn ? 'checkin-row-on' : ''}}" bindtap="toggleCheckIn" hover-class="press-hover">
+      <text class="checkin-icon">{{iCheckedIn ? '📍' : '🖐️'}}</text>
+      <text class="checkin-text">{{iCheckedIn ? '我已到场，点此取消' : '我已到场，点我签到'}}</text>
+      <text class="checkin-count">{{checkedInCount}}/{{confirmed}} 已到</text>
     </view>
   </view>
 
@@ -75,6 +81,7 @@
           <view class="member-name">{{item.name}}{{item.isMe ? '（我）' : ''}}</view>
           <view class="member-note" wx:if="{{item.note}}">{{item.note}}</view>
         </view>
+        <view class="member-checkin" wx:if="{{item.checkedIn}}">📍 已到</view>
         <view class="member-status" style="color:{{item.statusColor}}">{{item.statusText}}</view>
       </view>
       <view class="empty-mini" wx:if="{{!membersList.length}}">🪑 还没有人报名</view>
@@ -115,6 +122,7 @@
 
 <view class="bottom-bar" wx:if="{{activity}}">
   <view class="bb-btn bb-ghost" bindtap="goEdit" hover-class="press-hover" wx:if="{{isCreator}}"><image class="mi" src="{{icons.edit}}"/> 编辑</view>
+  <view class="bb-btn bb-ghost" bindtap="copyInvite" hover-class="press-hover"><image class="mi" src="{{icons.share}}"/> 邀请</view>
   <view class="bb-btn bb-ghost" bindtap="goPoster" hover-class="press-hover"><image class="mi" src="{{icons.camera}}"/> 海报</view>
   <view class="bb-btn bb-primary" bindtap="goSpecial" hover-class="press-hover" wx:if="{{special && special.goUrl}}">进入筹备 ›</view>
   <view class="bb-btn bb-primary" bindtap="goBack" hover-class="press-hover" wx:else>返回</view>

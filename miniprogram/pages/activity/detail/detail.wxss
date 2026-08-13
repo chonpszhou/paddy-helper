@@ -208,6 +208,52 @@
   margin-top: 18rpx;
 }
 
+.checkin-row {
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+  background: rgba(7, 193, 96, 0.08);
+  border: 1rpx solid rgba(7, 193, 96, 0.18);
+  border-radius: 999rpx;
+  padding: 16rpx 24rpx;
+}
+
+.ended-tip {
+  margin-top: 18rpx;
+  text-align: center;
+  font-size: 25rpx;
+  color: #9AA3AF;
+  background: rgba(15, 23, 42, 0.04);
+  border-radius: 999rpx;
+  padding: 16rpx 24rpx;
+}
+
+.checkin-row-on {
+  background: rgba(7, 193, 96, 0.16);
+  border-color: rgba(7, 193, 96, 0.32);
+}
+
+.checkin-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.checkin-text {
+  flex: 1;
+  font-size: 25rpx;
+  font-weight: 600;
+  color: #0E1116;
+}
+
+.checkin-count {
+  font-size: 23rpx;
+  font-weight: 700;
+  color: #07C160;
+  background: rgba(7, 193, 96, 0.12);
+  border-radius: 999rpx;
+  padding: 6rpx 16rpx;
+}
+
 .countdown-card {
   position: relative;
   z-index: 2;
@@ -457,6 +503,17 @@
 .member-status {
   font-size: 23rpx;
   font-weight: 600;
+  flex-shrink: 0;
+}
+
+.member-checkin {
+  font-size: 21rpx;
+  font-weight: 700;
+  color: #07C160;
+  background: rgba(7, 193, 96, 0.12);
+  border-radius: 999rpx;
+  padding: 4rpx 12rpx;
+  margin-right: 14rpx;
   flex-shrink: 0;
 }
 

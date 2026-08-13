@@ -739,11 +739,24 @@ function signup(activityId, status, note) {
   const idx = activity.signups.findIndex(function (s) { return s.friendId === currentUid() })
   const record = { friendId: currentUid(), status: status, note: note || '', signedAt: Date.now() }
   if (idx >= 0) {
+    record.checkedIn = activity.signups[idx].checkedIn
     activity.signups[idx] = record
   } else {
     activity.signups.push(record)
   }
   save(d, activityId)
+}
+
+// 活动到场签到：只有报名「参加」的人可以标记/取消到场
+function toggleCheckIn(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  const my = activity.signups.find(function (s) { return s.friendId === currentUid() })
+  if (!my || my.status !== 'yes') return false
+  my.checkedIn = !my.checkedIn
+  save(d, activityId)
+  return true
 }
 
 function addPhoto(activityId, src) {
@@ -1489,6 +1502,8 @@ function mergeById(localList, remoteList, key, arrayKeys) {
 function mergeActivity(local, remote) {
   const merged = Object.assign({}, local, remote)
   merged.signups = mergeById(local.signups, remote.signups, 'friendId', [])
+  // 活动相册：按照片 id 合并，点赞/点踩数组取并集，避免多端同步时丢照片或丢票
+  merged.photos = mergeById(local.photos, remote.photos, 'id', ['likes', 'dislikes'])
   if (local.dinner || remote.dinner) {
     merged.dinner = Object.assign({}, local.dinner || {}, remote.dinner || {})
     merged.dinner.timeSlots = mergeById(local.dinner && local.dinner.timeSlots, remote.dinner && remote.dinner.timeSlots, 'id', ['votes'])
@@ -2188,6 +2203,7 @@ module.exports = {
   duplicateActivity: duplicateActivity,
   updateActivity: updateActivity,
   signup: signup,
+  toggleCheckIn: toggleCheckIn,
   addPhoto: addPhoto,
   togglePhotoVote: togglePhotoVote,
   mySignup: mySignup,

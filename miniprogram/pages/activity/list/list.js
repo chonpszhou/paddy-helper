@@ -27,6 +27,20 @@ Page({
     this.refresh()
   },
 
+  onPullDownRefresh() {
+    const self = this
+    this.refresh()
+    const profile = store.getProfile()
+    if (profile.openid) {
+      store.pullActivities(function () {
+        self.refresh()
+        wx.stopPullDownRefresh()
+      })
+    } else {
+      wx.stopPullDownRefresh()
+    }
+  },
+
   refresh() {
     let list
     if (this.data.tab === 'all') {

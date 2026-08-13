@@ -35,6 +35,9 @@ Page({
     confirmed: 0,
     maybe: 0,
     members: 0,
+    checkedInCount: 0,
+    iCheckedIn: false,
+    ended: false,
     signupOptions: [
       { key: 'yes', icon: '✅', label: '参加' },
       { key: 'maybe', icon: '🤔', label: '待定' },
@@ -54,7 +57,8 @@ Page({
       clockW: icons.icon('clock', '#FFFFFF'),
       pinW: icons.icon('pin', '#FFFFFF'),
       edit: icons.icon('edit', '#0E1116'),
-      camera: icons.icon('camera', '#0E1116')
+      camera: icons.icon('camera', '#0E1116'),
+      share: icons.icon('share', '#0E1116')
     }
   },
 
@@ -71,6 +75,13 @@ Page({
     this._countdownTimer = setInterval(function () {
       self.updateCountdown()
     }, 30000)
+  },
+
+  onHide() {
+    if (this._countdownTimer) {
+      clearInterval(this._countdownTimer)
+      this._countdownTimer = null
+    }
   },
 
   onUnload() {
@@ -111,13 +122,13 @@ Page({
       const profile = store.getProfile()
       const uid = store.currentUid()
       const isCreator = activity.creatorId === uid || (!!activity.creatorOpenid && activity.creatorOpenid === profile.openid)
-    const membersList = (activity.signups || []).map(function (s) {
-      let friend = null
-      if (s.friendId === store.currentUid()) {
-        friend = { id: s.friendId, name: profile.name || '朋友', location: profile.location, color: '#07C160', emoji: '👨‍🍳' }
-      } else {
-        friend = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
-      }
+      const membersList = (activity.signups || []).map(function (s) {
+        let friend = null
+        if (s.friendId === store.currentUid()) {
+          friend = { id: s.friendId, name: profile.name || '朋友', location: profile.location, color: '#07C160', emoji: '👨‍🍳' }
+        } else {
+          friend = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
+        }
         if (!friend) return null
         const statusMeta = store.SIGNUP_META[s.status]
         const statusColor = s.status === 'yes' ? '#2FA46F' : s.status === 'maybe' ? '#D99A2B' : s.status === 'no' ? '#B0A79E' : '#9A8F86'
@@ -126,19 +137,23 @@ Page({
           name: friend.name,
           emoji: friend.emoji,
           color: friend.color,
-        isMe: s.friendId === store.currentUid(),
+          isMe: s.friendId === store.currentUid(),
           note: s.note || '',
           statusText: statusMeta ? statusMeta.icon + ' ' + statusMeta.label : '📨 已邀请',
           statusColor: statusColor,
+          checkedIn: !!s.checkedIn,
           sortIndex: ['yes', 'maybe', 'no', 'invited'].indexOf(s.status)
         }
       }).filter(function (x) { return x !== null })
         .sort(function (a, b) { return a.sortIndex - b.sortIndex })
 
+      const checkedInCount = (activity.signups || []).filter(function (s) {
+        return s.status === 'yes' && s.checkedIn
+      }).length
+
       const photos = (activity.photos || []).map(function (p) {
         const likes = p.likes || []
         const dislikes = p.dislikes || []
-        const uid = store.currentUid()
         const score = likes.length - dislikes.length
         return {
           id: p.id,
@@ -215,6 +230,9 @@ Page({
         myStatus: my ? my.status : '',
         myNote: my ? my.note : '',
         membersList: membersList,
+        ended: activity.status === 'ended',
+        checkedInCount: checkedInCount,
+        iCheckedIn: !!(my && my.status === 'yes' && my.checkedIn),
         photos: photos,
         photoUrls: photoUrls,
         special: special,
@@ -265,6 +283,39 @@ Page({
     this.setData({ myNote: e.detail.value })
   },
 
+  toggleCheckIn() {
+    const self = this
+    store.requireLogin(function (ok) {
+      if (!ok) return
+      if (store.toggleCheckIn(self.data.id)) {
+        self.refresh()
+        wx.showToast({ title: self.data.iCheckedIn ? '已签到 📍' : '已取消签到', icon: 'none' })
+      } else {
+        wx.showToast({ title: '报名「参加」后才能签到哦', icon: 'none' })
+      }
+    })
+  },
+
+  copyInvite() {
+    const a = this.data.activity
+    if (!a) return
+    const circle = store.getCurrentCircle()
+    const code = circle && circle.code ? '\n圈子通行码：' + circle.code : ''
+    const path = a.cloudId ? 'cid=' + a.cloudId : 'id=' + a.id
+    const text = '【Paddy小助手】周末约起来 🫧\n' +
+      '🏷️ ' + a.title + '\n' +
+      '🕐 ' + helpers.formatDateTime(a.startTime) + '\n' +
+      '📍 ' + (a.location || '地点待定') + '\n' +
+      '— 打开小程序点开链接就能报名：' +
+      code
+    wx.setClipboardData({
+      data: text,
+      success() {
+        wx.showToast({ title: '邀请文案已复制 ✨', icon: 'success' })
+      }
+    })
+  },
+
   goSpecial() {
     const sp = this.data.special
     if (sp && sp.goUrl) {
@@ -275,7 +326,8 @@ Page({
   },
 
   goEdit() {
-    wx.navigateTo({
+    // 发起页是 tabBar 页面，navigateTo 无法跳转，改用 reLaunch 带参进入编辑态
+    wx.reLaunch({
       url: '/pages/activity/create/create?id=' + this.data.id
     })
   },

@@ -28,6 +28,20 @@ Page({
     this.refresh()
   },
 
+  onPullDownRefresh() {
+    const self = this
+    this.refresh()
+    const profile = store.getProfile()
+    if (profile.openid) {
+      store.pullActivities(function () {
+        self.refresh()
+        wx.stopPullDownRefresh()
+      })
+    } else {
+      wx.stopPullDownRefresh()
+    }
+  },
+
   refresh() {
     const list = this.data.tab === 'ongoing' ? store.getUpcoming() : store.getEnded()
     this.setData({

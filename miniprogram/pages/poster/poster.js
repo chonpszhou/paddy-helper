@@ -514,5 +514,15 @@ Page({
       title: this.data.shareTitle || '周末一起约',
       path: '/pages/activity/detail/detail?' + id
     }
+  },
+
+  onShareTimeline() {
+    const activity = store.getActivity(this.data.id)
+    const id = activity ? (activity.cloudId ? 'cid=' + activity.cloudId : 'id=' + activity.id) : 'id=' + this.data.id
+    return {
+      title: this.data.shareTitle || '周末一起约',
+      query: id,
+      imageUrl: this.data.posterPath || ''
+    }
   }
 })

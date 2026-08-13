@@ -202,7 +202,14 @@ Page({
       })
     }
     if (wx.cloud && wx.cloud.callFunction) {
-      wx.cloud.callFunction({ name: 'weather' })
+      const a = store.getActivity(this.data.id)
+      wx.cloud.callFunction({
+        name: 'weather',
+        data: {
+          lat: a && a.locationLat,
+          lng: a && a.locationLng
+        }
+      })
         .then(function (res) {
           done((res.result && res.result.text) || '')
         })
