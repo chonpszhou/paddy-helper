@@ -153,12 +153,6 @@ Page({
   },
 
   goHome() {
-    const profile = store.getProfile()
-    if (!profile.openid) {
-      wx.showToast({ title: '先登录才能进入首页', icon: 'none' })
-      wx.navigateTo({ url: '/pages/login/login' })
-      return
-    }
     wx.reLaunch({ url: '/pages/index/index' })
   },
 

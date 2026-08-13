@@ -101,7 +101,7 @@
         <view class="bring-name">{{item.name}}</view>
         <view class="bring-item">{{item.item}}</view>
       </view>
-      <view class="bring-remove" wx:if="{{item.isMine}}" catchtap="removeBring" data-item-id="{{item.id}}">取消</view>
+      <view class="bring-remove" wx:if="{{item.isMine || isCreator}}" catchtap="removeBring" data-item-id="{{item.id}}">{{item.isMine ? '取消' : '删除'}}</view>
     </view>
     <view class="empty" wx:if="{{!bringItems.length}}">
       <view class="empty-icon">🎁</view>
