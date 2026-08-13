@@ -10,15 +10,24 @@ const circles = db.collection('circles')
 // ★ 订阅消息模板 ID：从云函数「配置 → 环境变量」读取 SUBSCRIBE_TEMPLATE_ID
 // 部署前请在云开发控制台 → 云函数 → activity → 配置 → 环境变量 中添加：
 //   SUBSCRIBE_TEMPLATE_ID = 你的模板ID
-// 留空则通知功能停用（当前线上已部署的版本不受影响）
+// 留空则通知功能停用
 const SUBSCRIBE_TEMPLATE_ID = process.env.SUBSCRIBE_TEMPLATE_ID || ''
 
 // ★ 模板字段映射：改成你模板里对应的 key（在「我的模板」里能看到，形如 thing1.DATA / time2.DATA）
 // 默认按最常见的「活动名称 thing1 / 活动时间 time2 / 活动地点 thing3」配置
-const TEMPLATE_FIELDS = {
+// 也可以通过环境变量 TEMPLATE_FIELDS 覆盖，例如：
+//   TEMPLATE_FIELDS = {"name":"thing1","time":"time2","location":"thing4"}
+let TEMPLATE_FIELDS = {
   name: 'thing1',
   time: 'time2',
   location: 'thing3'
+}
+try {
+  if (process.env.TEMPLATE_FIELDS) {
+    TEMPLATE_FIELDS = Object.assign({}, TEMPLATE_FIELDS, JSON.parse(process.env.TEMPLATE_FIELDS))
+  }
+} catch (e) {
+  console.error('[notify] TEMPLATE_FIELDS 环境变量解析失败，使用默认字段映射', e)
 }
 
 function fmtTime(ts) {
@@ -50,7 +59,10 @@ async function isMember(circleId, openid) {
 
 // 创建活动后，给已授权订阅消息的好友推送一条「新活动提醒」
 async function notifyCreation(activity, creatorOpenid, docId) {
-  if (!SUBSCRIBE_TEMPLATE_ID) return
+  if (!SUBSCRIBE_TEMPLATE_ID) {
+    console.error('[notify] 未配置 SUBSCRIBE_TEMPLATE_ID 环境变量，活动通知已跳过。请在云函数 activity 的配置中添加环境变量后重新部署')
+    return
+  }
   try {
     const res = await users.where({ subscribed: true }).limit(100).get()
     let receivers = res.data.filter(function (u) {
