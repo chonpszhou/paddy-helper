@@ -10,12 +10,12 @@
 .doc-title {
   font-size: 34rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
 }
 
 .doc-sub {
   font-size: 23rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 8rpx;
 }
 
@@ -31,7 +31,7 @@
 
 .doc-item {
   font-size: 25rpx;
-  color: #3D4450;
+  color: #C7D0DE;
   line-height: 1.7;
   margin-bottom: 12rpx;
 }

@@ -5,7 +5,7 @@
 
 .head-sub {
   font-size: 26rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
@@ -15,12 +15,12 @@
 
 .head-addr {
   font-size: 23rpx;
-  color: #B0A79E;
+  color: #7C8698;
 }
 
 .final-banner {
   margin-top: 18rpx;
-  background: #EAF8F1;
+  background: rgba(0, 229, 160, 0.14);
   color: #1F8A58;
   font-size: 26rpx;
   font-weight: 600;
@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .legend-dot {
@@ -69,7 +69,7 @@
 }
 
 .legend-org {
-  background: #07C160;
+  background: #00E5A0;
 }
 
 .legend-purple {
@@ -78,7 +78,7 @@
 
 .center-text {
   font-size: 25rpx;
-  color: #6F675F;
+  color: #8B95A7;
   margin-top: 16rpx;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .warn-card {
-  background: #FFF7E8;
+  background: rgba(245, 184, 61, 0.14);
 }
 
 .warn {
@@ -98,7 +98,7 @@
 }
 
 .venue {
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 18rpx;
   padding: 20rpx 22rpx;
   margin-bottom: 16rpx;
@@ -128,7 +128,7 @@
 
 .venue-address {
   font-size: 23rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 6rpx;
 }
 
@@ -145,13 +145,13 @@
 
 .venue-count {
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .venue-vote {
   flex-shrink: 0;
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   border: 2rpx solid #E4D8CC;
   border-radius: 999rpx;
   padding: 8rpx 22rpx;
@@ -179,9 +179,9 @@
 }
 
 .venue-action-final {
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.10);
   color: #8B6CF6;
-  border: 2rpx solid #D8CCFB;
+  border: 2rpx solid rgba(139, 92, 246, 0.35);
   font-weight: 600;
 }
 
@@ -192,7 +192,7 @@
 
 .add-line {
   text-align: center;
-  color: #07C160;
+  color: #00E5A0;
   font-size: 26rpx;
   font-weight: 600;
   padding: 16rpx 0 4rpx;
@@ -216,8 +216,8 @@
 
 .wolf-wait-tip {
   font-size: 26rpx;
-  color: #6B7480;
-  background: rgba(15, 23, 42, 0.05);
+  color: #8B95A7;
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 18rpx;
   padding: 20rpx 22rpx;
 }
@@ -238,7 +238,7 @@
 
 .wolf-claim-desc {
   font-size: 25rpx;
-  color: #6B7480;
+  color: #8B95A7;
   line-height: 1.6;
   margin-top: 12rpx;
 }
@@ -265,12 +265,12 @@
   margin-top: 18rpx;
   text-align: center;
   font-size: 24rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   padding: 10rpx 0;
 }
 
 .wolf-deck-card {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(21, 29, 50, 0.72);
   border: 1rpx solid rgba(124, 58, 237, 0.16);
   border-radius: 24rpx;
   padding: 24rpx;
@@ -278,19 +278,19 @@
 
 .wolf-deck-line {
   font-size: 26rpx;
-  color: #3D4450;
+  color: #C7D0DE;
 }
 
 .wolf-deck-num {
   font-weight: 800;
-  color: #7C3AED;
+  color: #A78BFA;
 }
 
 .wolf-deck-roles {
   margin-top: 12rpx;
   font-size: 27rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
   line-height: 1.6;
 }
 
@@ -302,33 +302,33 @@
 
 .wolf-preset {
   width: calc((100% - 16rpx) / 2);
-  background: rgba(255, 255, 255, 0.72);
-  border: 2rpx solid rgba(15, 23, 42, 0.08);
+  background: rgba(21, 29, 50, 0.72);
+  border: 2rpx solid rgba(255, 255, 255, 0.10);
   border-radius: 22rpx;
   padding: 20rpx;
 }
 
 .wolf-preset-on {
-  border-color: #7C3AED;
+  border-color: #A78BFA;
   background: rgba(124, 58, 237, 0.08);
 }
 
 .wolf-preset-name {
   font-size: 27rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
 }
 
 .wolf-preset-roles {
   font-size: 21rpx;
-  color: #8A919E;
+  color: #8B95A7;
   margin-top: 8rpx;
   line-height: 1.5;
 }
 
 .wolf-tip {
   font-size: 24rpx;
-  color: #6B7480;
+  color: #8B95A7;
   margin-top: 22rpx;
 }
 
@@ -372,7 +372,7 @@
 }
 
 .wolf-day {
-  background: #FFF4D6;
+  background: rgba(245, 184, 61, 0.16);
   color: #B7791F;
 }
 
@@ -380,7 +380,7 @@
   flex-shrink: 0;
   font-size: 25rpx;
   font-weight: 700;
-  color: #7C3AED;
+  color: #A78BFA;
   background: rgba(124, 58, 237, 0.1);
   border-radius: 999rpx;
   padding: 16rpx 28rpx;
@@ -388,7 +388,7 @@
 
 .wolf-summary {
   font-size: 23rpx;
-  color: #8A919E;
+  color: #8B95A7;
   margin-top: 18rpx;
 }
 
@@ -416,9 +416,9 @@
 }
 
 .wolf-face-open {
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.10);
   border: 2rpx solid rgba(124, 58, 237, 0.25);
-  box-shadow: 0 8rpx 20rpx rgba(16, 24, 40, 0.08);
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.34);
 }
 
 .wolf-face-dead {
@@ -438,7 +438,7 @@
 }
 
 .wolf-face-open .wolf-role-name {
-  color: #0E1116;
+  color: #EAF0F8;
 }
 
 .wolf-foot {
@@ -450,7 +450,7 @@
 
 .wolf-name {
   font-size: 22rpx;
-  color: #3D4450;
+  color: #C7D0DE;
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -481,7 +481,7 @@
 
 .wolf-act {
   font-size: 25rpx;
-  color: #8A919E;
+  color: #8B95A7;
   border: 2rpx solid rgba(15, 23, 42, 0.1);
   border-radius: 999rpx;
   padding: 14rpx 40rpx;

@@ -1,6 +1,6 @@
 page {
-  background: #F5F6F8;
-  color: #0E1116;
+  background: #0A0F1E;
+  color: #EAF0F8;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
   font-size: 28rpx;
   line-height: 1.5;
@@ -17,13 +17,13 @@ view, text, input, textarea, button {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1rpx solid rgba(255, 255, 255, 0.72);
+  background: rgba(21, 29, 50, 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.10);
   border-radius: 32rpx;
   padding: 28rpx;
-  box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.05), 0 16rpx 40rpx rgba(16, 24, 40, 0.09);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.28), 0 16rpx 40rpx rgba(0, 0, 0, 0.34);
   margin-bottom: 24rpx;
   animation: cardIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
@@ -40,13 +40,13 @@ view, text, input, textarea, button {
 }
 
 .primary-btn {
-  background: #07C160;
+  background: linear-gradient(135deg, #00E5A0, #00C896);
   color: #FFFFFF;
   border-radius: 48rpx;
   font-weight: 600;
   font-size: 30rpx;
   border: none;
-  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.24);
+  box-shadow: 0 8rpx 28rpx rgba(0, 229, 160, 0.24), 0 0 24rpx rgba(0, 229, 160, 0.12);
 }
 
 .press-hover {
@@ -69,24 +69,25 @@ button::after {
 .section-title {
   font-size: 34rpx;
   font-weight: 700;
-  color: #0E1116;
+  color: #EAF0F8;
 }
 
 .section-more {
   font-size: 26rpx;
-  color: #6B7480;
+  color: #8B95A7;
 }
 
 .card-title {
   font-size: 32rpx;
   font-weight: 700;
   margin-bottom: 20rpx;
+  color: #EAF0F8;
 }
 
 .empty {
   text-align: center;
   padding: 80rpx 0;
-  color: #6B7480;
+  color: #8B95A7;
 }
 
 .empty-icon {
@@ -95,7 +96,7 @@ button::after {
 }
 
 .glass {
-  background: #FFFFFF;
+  background: rgba(21, 29, 50, 0.72);
 }
 
 .empty-state {
@@ -111,23 +112,23 @@ button::after {
 .empty-state-text {
   font-size: 30rpx;
   font-weight: 600;
-  color: #6F675F;
+  color: #C7D0DE;
 }
 
 .empty-state-sub {
   font-size: 24rpx;
-  color: #B0A79E;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
 .back-btn {
   display: inline-block;
   margin-top: 40rpx;
-  background: #07C160;
+  background: linear-gradient(135deg, #00E5A0, #00C896);
   color: #FFFFFF;
   font-size: 27rpx;
   font-weight: 600;
   padding: 16rpx 60rpx;
   border-radius: 999rpx;
-  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.25);
+  box-shadow: 0 8rpx 20rpx rgba(0, 229, 160, 0.25);
 }

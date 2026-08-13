@@ -57,9 +57,9 @@ Page({
     icons: {
       clockW: icons.icon('clock', '#FFFFFF'),
       pinW: icons.icon('pin', '#FFFFFF'),
-      edit: icons.icon('edit', '#0E1116'),
-      camera: icons.icon('camera', '#0E1116'),
-      share: icons.icon('share', '#0E1116')
+      edit: icons.icon('edit', '#EAF0F8'),
+      camera: icons.icon('camera', '#EAF0F8'),
+      share: icons.icon('share', '#EAF0F8')
     }
   },
 
@@ -137,13 +137,13 @@ Page({
       const membersList = (activity.signups || []).map(function (s) {
         let friend = null
         if (s.friendId === store.currentUid()) {
-          friend = { id: s.friendId, name: profile.name || '朋友', location: profile.location, color: '#07C160', emoji: '👨‍🍳' }
+          friend = { id: s.friendId, name: profile.name || '朋友', location: profile.location, color: '#00E5A0', emoji: '👨‍🍳' }
         } else {
           friend = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
         }
         if (!friend) return null
         const statusMeta = store.SIGNUP_META[s.status]
-        const statusColor = s.status === 'yes' ? '#2FA46F' : s.status === 'maybe' ? '#D99A2B' : s.status === 'no' ? '#B0A79E' : '#9A8F86'
+        const statusColor = s.status === 'yes' ? '#00E5A0' : s.status === 'maybe' ? '#F5B83D' : s.status === 'no' ? '#8B95A7' : '#7C8698'
         return {
           id: friend.id,
           name: friend.name,

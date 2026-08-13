@@ -11,13 +11,13 @@
 }
 
 .add-btn {
-  background: linear-gradient(135deg, #06AD56, #07C160);
+  background: linear-gradient(135deg, #06AD56, #00E5A0);
   color: #FFFFFF;
   font-size: 26rpx;
   font-weight: 600;
   padding: 12rpx 28rpx;
   border-radius: 999rpx;
-  box-shadow: 0 6rpx 16rpx rgba(7, 193, 96, 0.25);
+  box-shadow: 0 6rpx 16rpx rgba(0, 229, 160, 0.25);
 }
 
 .form-label {
@@ -31,7 +31,7 @@
 }
 
 .input {
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 14rpx;
   height: 80rpx;
   line-height: 80rpx;
@@ -49,7 +49,7 @@
   width: 108rpx;
   height: 108rpx;
   padding: 0;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 50%;
   line-height: normal;
   flex-shrink: 0;
@@ -71,7 +71,7 @@
 .avatar-pick-tip {
   flex: 1;
   font-size: 22rpx;
-  color: #B0A79E;
+  color: #7C8698;
   line-height: 1.6;
 }
 
@@ -90,8 +90,8 @@
   text-align: center;
   height: 80rpx;
   line-height: 80rpx;
-  background: #FFF4EC;
-  color: #07C160;
+  background: rgba(255, 138, 91, 0.16);
+  color: #00E5A0;
   border-radius: 14rpx;
   font-size: 25rpx;
   font-weight: 600;
@@ -115,7 +115,7 @@
 }
 
 .emoji-item-active {
-  border-color: #07C160;
+  border-color: #00E5A0;
 }
 
 .save-btn {
@@ -147,7 +147,7 @@
   border-radius: 50%;
   margin-right: 20rpx;
   flex-shrink: 0;
-  background: #F5EFE8;
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .friend-info {
@@ -162,7 +162,7 @@
 
 .friend-location {
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 4rpx;
 }
 

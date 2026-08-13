@@ -12,11 +12,11 @@ Page({
     manageCount: 0,
     version: 'v1.0',
     icons: {
-      pin: icons.icon('pin', '#07C160'),
+      pin: icons.icon('pin', '#00E5A0'),
       lock: icons.icon('lock', '#7C3AED'),
       bell: icons.icon('bell', '#D97706'),
       cal: icons.icon('cal', '#0EA5E9'),
-      users: icons.icon('users', '#07C160'),
+      users: icons.icon('users', '#00E5A0'),
       shield: icons.icon('shield', '#6B7280'),
       chevR: icons.icon('chevR', '#C2C7CF')
     }

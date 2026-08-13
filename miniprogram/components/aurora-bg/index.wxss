@@ -4,50 +4,68 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(160deg, #f3fbf6 0%, #eef6ff 55%, #f6f1ff 100%);
+  background:
+    radial-gradient(1100rpx 800rpx at 88% -8%, rgba(56, 130, 246, 0.20), transparent 62%),
+    radial-gradient(1000rpx 760rpx at -8% 42%, rgba(0, 229, 160, 0.13), transparent 62%),
+    radial-gradient(1000rpx 860rpx at 62% 112%, rgba(139, 92, 246, 0.17), transparent 62%),
+    linear-gradient(165deg, #0A0F1E 0%, #0D1428 48%, #0A1120 100%);
+}
+
+/* 科技感微网格 */
+.aurora::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1rpx, transparent 1rpx);
+  background-size: 56rpx 56rpx;
 }
 
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-  animation: drift 22s ease-in-out infinite alternate;
+  filter: blur(70px);
+  mix-blend-mode: screen;
+  animation: drift 26s ease-in-out infinite alternate;
 }
 
 .b1 {
-  width: 640rpx;
-  height: 640rpx;
-  left: -140rpx;
-  top: -160rpx;
-  background: radial-gradient(circle, #7ef0c0, transparent 70%);
+  width: 560rpx;
+  height: 560rpx;
+  left: -170rpx;
+  top: -190rpx;
+  background: radial-gradient(circle, #00E5A0, transparent 70%);
+  opacity: 0.35;
 }
 
 .b2 {
-  width: 580rpx;
-  height: 580rpx;
-  right: -160rpx;
-  top: 160rpx;
-  background: radial-gradient(circle, #8fd0ff, transparent 70%);
+  width: 520rpx;
+  height: 520rpx;
+  right: -180rpx;
+  top: 120rpx;
+  background: radial-gradient(circle, #3B82F6, transparent 70%);
+  opacity: 0.42;
   animation-delay: -7s;
 }
 
 .b3 {
-  width: 700rpx;
-  height: 700rpx;
-  left: 220rpx;
-  bottom: -240rpx;
-  background: radial-gradient(circle, #c8a8ff, transparent 70%);
+  width: 640rpx;
+  height: 640rpx;
+  left: 200rpx;
+  bottom: -270rpx;
+  background: radial-gradient(circle, #8B5CF6, transparent 70%);
+  opacity: 0.36;
   animation-delay: -13s;
 }
 
 .b4 {
-  width: 420rpx;
-  height: 420rpx;
-  right: 120rpx;
-  bottom: 80rpx;
-  background: radial-gradient(circle, #ffd6a8, transparent 70%);
+  width: 380rpx;
+  height: 380rpx;
+  right: 140rpx;
+  bottom: 70rpx;
+  background: radial-gradient(circle, #22D3EE, transparent 70%);
+  opacity: 0.3;
   animation-delay: -4s;
 }
 

@@ -12,7 +12,7 @@
   margin-bottom: 20rpx;
   padding: 20rpx 28rpx;
   background: rgba(139, 92, 246, 0.12);
-  color: #7C3AED;
+  color: #A78BFA;
   font-size: 26rpx;
   font-weight: 600;
   border-radius: 20rpx;
@@ -33,11 +33,11 @@
   border-radius: 20rpx;
   padding: 20rpx 0 16rpx;
   text-align: center;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .type-item-active {
-  background: #FFF4EC;
+  background: rgba(255, 138, 91, 0.16);
 }
 
 .type-icon {
@@ -57,7 +57,7 @@
 
 .type-name {
   font-size: 26rpx;
-  color: #6F675F;
+  color: #8B95A7;
   font-weight: 600;
 }
 
@@ -81,12 +81,12 @@
   border-radius: 20rpx;
   padding: 22rpx 0;
   text-align: center;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .mode-item-on {
-  background: #FFF4EC;
-  border-color: #07C160;
+  background: rgba(255, 138, 91, 0.16);
+  border-color: #00E5A0;
 }
 
 .mode-title {
@@ -96,12 +96,12 @@
 
 .mode-sub {
   font-size: 21rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 8rpx;
 }
 
 .input {
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   height: 84rpx;
   line-height: 84rpx;
@@ -124,8 +124,8 @@
   text-align: center;
   height: 84rpx;
   line-height: 84rpx;
-  background: #FFF4EC;
-  color: #07C160;
+  background: rgba(255, 138, 91, 0.16);
+  color: #00E5A0;
   border-radius: 16rpx;
   font-size: 26rpx;
   font-weight: 600;
@@ -134,7 +134,7 @@
 
 .loc-tip {
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
@@ -145,7 +145,7 @@
 
 .picker-item {
   flex: 1;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
 }
 
@@ -159,7 +159,7 @@
 .textarea {
   width: 100%;
   min-height: 160rpx;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   padding: 20rpx 24rpx;
   font-size: 28rpx;
@@ -179,7 +179,7 @@
 
 .invite-link {
   font-size: 24rpx;
-  color: #07C160;
+  color: #00E5A0;
   font-weight: 600;
   padding: 4rpx 8rpx;
 }
@@ -188,15 +188,15 @@
   display: flex;
   align-items: center;
   gap: 10rpx;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border: 3rpx solid transparent;
   border-radius: 999rpx;
   padding: 10rpx 22rpx 10rpx 12rpx;
 }
 
 .friend-chip-active {
-  background: #FFF4EC;
-  border-color: #07C160;
+  background: rgba(255, 138, 91, 0.16);
+  border-color: #00E5A0;
 }
 
 .friend-emoji {
@@ -215,7 +215,7 @@
 
 .form-tip {
   font-size: 24rpx;
-  color: #B0A79E;
+  color: #7C8698;
   margin-top: 12rpx;
 }
 

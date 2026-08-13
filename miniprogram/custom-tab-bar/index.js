@@ -8,20 +8,20 @@ Component({
       {
         pagePath: '/pages/index/index',
         text: '首页',
-        iconPath: icons.icon('home', '#9AA3AF'),
-        selectedIconPath: icons.icon('home', '#07C160')
+        iconPath: icons.icon('home', '#8B95A7'),
+        selectedIconPath: icons.icon('home', '#00E5A0')
       },
       {
         pagePath: '/pages/activity/create/create',
         text: '发起',
-        iconPath: icons.icon('plus', '#9AA3AF'),
-        selectedIconPath: icons.icon('plus', '#07C160')
+        iconPath: icons.icon('plus', '#8B95A7'),
+        selectedIconPath: icons.icon('plus', '#00E5A0')
       },
       {
         pagePath: '/pages/profile/profile',
         text: '我的',
-        iconPath: icons.icon('user', '#9AA3AF'),
-        selectedIconPath: icons.icon('user', '#07C160')
+        iconPath: icons.icon('user', '#8B95A7'),
+        selectedIconPath: icons.icon('user', '#00E5A0')
       }
     ]
   },

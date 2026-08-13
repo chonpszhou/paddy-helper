@@ -19,7 +19,7 @@
 
 .intro-sub {
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
@@ -35,21 +35,21 @@
   border-radius: 32rpx;
   font-size: 26rpx;
   font-weight: 600;
-  color: #07C160;
+  color: #00E5A0;
   background: rgba(7, 193, 96, 0.10);
-  border: 1rpx solid rgba(7, 193, 96, 0.25);
+  border: 1rpx solid rgba(0, 229, 160, 0.25);
 }
 
 .privacy-card {
   margin-top: 24rpx;
   background: rgba(7, 193, 96, 0.06);
-  border-color: rgba(7, 193, 96, 0.16);
+  border-color: rgba(0, 229, 160, 0.18);
 }
 
 .privacy-title {
   font-size: 27rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
   margin-bottom: 12rpx;
 }
 
@@ -72,7 +72,7 @@
 
 .section-tip {
   font-size: 23rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin: 8rpx 0 20rpx;
 }
 
@@ -116,7 +116,7 @@
 .foot-tip {
   text-align: center;
   font-size: 22rpx;
-  color: #B0A79E;
+  color: #7C8698;
   margin-top: 36rpx;
 }
 
@@ -147,7 +147,7 @@
 
 .success-tip {
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-bottom: 20rpx;
 }
 
@@ -156,7 +156,7 @@
   font-size: 52rpx;
   font-weight: 800;
   letter-spacing: 6rpx;
-  color: #07C160;
+  color: #00E5A0;
   background: rgba(7, 193, 96, 0.1);
   padding: 16rpx 36rpx;
   border-radius: 20rpx;
@@ -170,7 +170,7 @@
 
 .success-login {
   font-size: 22rpx;
-  color: #D99A2B;
+  color: #F5B83D;
   margin-bottom: 16rpx;
 }
 
@@ -200,8 +200,8 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-  background: #F2F3F5;
-  color: #3D4450;
+  background: rgba(255, 255, 255, 0.08);
+  color: #C7D0DE;
   border-radius: 48rpx;
   font-size: 28rpx;
   font-weight: 600;
@@ -217,7 +217,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(21, 29, 50, 0.7);
   border-radius: 18rpx;
   padding: 22rpx 24rpx;
 }
@@ -238,21 +238,21 @@
 
 .circle-item-code {
   font-size: 21rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   margin-top: 5rpx;
   letter-spacing: 1rpx;
 }
 
 .circle-item-state {
   font-size: 24rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   font-weight: 600;
   margin-left: 16rpx;
   flex-shrink: 0;
 }
 
 .circle-item-state.on {
-  color: #07C160;
+  color: #00E5A0;
 }
 
 .circle-item-copy,
@@ -266,8 +266,8 @@
 }
 
 .circle-item-copy {
-  color: #07C160;
-  background: rgba(7, 193, 96, 0.08);
+  color: #00E5A0;
+  background: rgba(0, 229, 160, 0.10);
 }
 
 .circle-item-leave {

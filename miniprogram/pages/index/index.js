@@ -12,7 +12,7 @@ function decorate(activity) {
     .map(function (s) {
       let f = null
       if (s.friendId === uid) {
-        f = { name: profile.name || '朋友', color: '#07C160' }
+        f = { name: profile.name || '朋友', color: '#00E5A0' }
       } else {
         f = store.getFriend(s.friendId) || store.getCachedUser(s.friendId)
       }
@@ -46,9 +46,9 @@ Page({
     feature: null,
     others: [],
     icons: {
-      clock: icons.icon('clock', '#6B7480'),
-      pin: icons.icon('pin', '#6B7480'),
-      chevR: icons.icon('chevR', '#9AA3AF')
+      clock: icons.icon('clock', '#8B95A7'),
+      pin: icons.icon('pin', '#8B95A7'),
+      chevR: icons.icon('chevR', '#7C8698')
     }
   },
 

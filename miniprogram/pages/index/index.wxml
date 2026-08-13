@@ -8,7 +8,7 @@
 
   <view class="overview-card rise" hover-class="press-hover">
     <view class="ov">
-      <view class="ov-n" style="color: #07C160">{{stats.upcoming}}</view>
+      <view class="ov-n" style="color: #00E5A0">{{stats.upcoming}}</view>
       <view class="ov-l">进行中</view>
     </view>
     <view class="ov-div"></view>

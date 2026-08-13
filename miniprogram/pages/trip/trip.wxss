@@ -5,7 +5,7 @@
 
 .head-sub {
   font-size: 26rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
@@ -15,7 +15,7 @@
 
 .head-addr {
   font-size: 23rpx;
-  color: #B0A79E;
+  color: #7C8698;
 }
 
 .title-tip {
@@ -26,7 +26,7 @@
 }
 
 .day {
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 18rpx;
   padding: 20rpx 22rpx;
   margin-bottom: 16rpx;
@@ -42,12 +42,12 @@
 .day-title {
   font-size: 28rpx;
   font-weight: 700;
-  color: #07C160;
+  color: #00E5A0;
 }
 
 .day-add {
   font-size: 24rpx;
-  color: #07C160;
+  color: #00E5A0;
   font-weight: 600;
 }
 
@@ -62,7 +62,7 @@
   font-size: 23rpx;
   color: #8B6CF6;
   font-weight: 700;
-  background: #EFEAFE;
+  background: rgba(139, 92, 246, 0.18);
   border-radius: 10rpx;
   padding: 4rpx 12rpx;
   margin-right: 16rpx;
@@ -90,7 +90,7 @@
 
 .add-line {
   text-align: center;
-  color: #07C160;
+  color: #00E5A0;
   font-size: 26rpx;
   font-weight: 600;
   padding: 16rpx 0 4rpx;
@@ -101,7 +101,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 16rpx;
   padding: 18rpx 22rpx;
   margin-bottom: 12rpx;
@@ -130,7 +130,7 @@
 
 .task-status {
   font-size: 23rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .task-status-mine {
@@ -139,7 +139,7 @@
 }
 
 .task-status-todo {
-  color: #D99A2B;
+  color: #F5B83D;
   font-weight: 600;
 }
 
@@ -159,7 +159,7 @@
   height: 64rpx;
   line-height: 64rpx;
   border-radius: 50%;
-  background: #EFEAFE;
+  background: rgba(139, 92, 246, 0.18);
   text-align: center;
   font-size: 32rpx;
   margin-right: 16rpx;
@@ -178,7 +178,7 @@
 
 .stay-meta {
   font-size: 23rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 4rpx;
 }
 
@@ -205,14 +205,14 @@
 
 .expense-payer {
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 4rpx;
 }
 
 .expense-amount {
   font-size: 28rpx;
   font-weight: 700;
-  color: #07C160;
+  color: #00E5A0;
   margin: 0 14rpx;
 }
 
@@ -220,7 +220,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #FFF4EC;
+  background: rgba(255, 138, 91, 0.16);
   border-radius: 16rpx;
   padding: 18rpx 22rpx;
   margin-top: 16rpx;
@@ -233,7 +233,7 @@
 
 .sum-per {
   font-size: 24rpx;
-  color: #07C160;
+  color: #00E5A0;
   font-weight: 700;
 }
 
@@ -246,7 +246,7 @@
 .form-input {
   flex: 1;
   min-width: 0;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 14rpx;
   height: 76rpx;
   line-height: 76rpx;

@@ -5,7 +5,7 @@
 
 .head-sub {
   font-size: 26rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
@@ -15,7 +15,7 @@
 
 .head-addr {
   font-size: 23rpx;
-  color: #B0A79E;
+  color: #7C8698;
 }
 
 .hot-card {
@@ -164,7 +164,7 @@
   width: 34rpx;
   height: 34rpx;
   border-radius: 50%;
-  background: #FFD9A0;
+  background: rgba(245, 184, 61, 0.22);
   color: #7A3415;
   font-size: 22rpx;
   font-weight: 800;
@@ -225,7 +225,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 18rpx;
   padding: 20rpx 22rpx;
   margin-bottom: 14rpx;
@@ -249,20 +249,20 @@
 
 .slot-count {
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .slot-check {
   flex-shrink: 0;
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   border: 2rpx solid #E4D8CC;
   border-radius: 999rpx;
   padding: 8rpx 20rpx;
 }
 
 .slot-check-on {
-  background: linear-gradient(135deg, #06AD56, #07C160);
+  background: linear-gradient(135deg, #06AD56, #00E5A0);
   color: #FFFFFF;
   border-color: transparent;
   font-weight: 600;
@@ -284,7 +284,7 @@
 
 .add-line {
   text-align: center;
-  color: #07C160;
+  color: #00E5A0;
   font-size: 26rpx;
   font-weight: 600;
   padding: 16rpx 0 4rpx;
@@ -292,7 +292,7 @@
 
 .restaurant-tip {
   font-size: 25rpx;
-  color: #6F675F;
+  color: #8B95A7;
   line-height: 1.6;
 }
 
@@ -305,7 +305,7 @@
 .dish {
   position: relative;
   width: calc((100% - 14rpx) / 2);
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 18rpx;
   padding: 18rpx;
   border: 3rpx solid transparent;
@@ -328,8 +328,8 @@
 }
 
 .dish-on {
-  background: #FFF2E8;
-  border-color: #07C160;
+  background: rgba(255, 138, 91, 0.14);
+  border-color: #00E5A0;
 }
 
 .dish-name {
@@ -346,12 +346,12 @@
 
 .dish-count {
   font-size: 21rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .dish-mark {
   font-size: 21rpx;
-  color: #2FA46F;
+  color: #00E5A0;
   font-weight: 600;
 }
 
@@ -384,7 +384,7 @@
 
 .bring-name {
   font-size: 25rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .bring-item {
@@ -410,7 +410,7 @@
 
 .bring-input {
   flex: 1;
-  background: #FBF6F0;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999rpx;
   height: 72rpx;
   line-height: 72rpx;
@@ -419,7 +419,7 @@
 }
 
 .bring-add {
-  background: linear-gradient(135deg, #06AD56, #07C160);
+  background: linear-gradient(135deg, #06AD56, #00E5A0);
   color: #FFFFFF;
   font-size: 26rpx;
   font-weight: 600;
@@ -448,5 +448,5 @@
 
 .shop-count {
   font-size: 22rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }

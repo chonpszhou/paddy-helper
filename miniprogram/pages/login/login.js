@@ -7,7 +7,7 @@ Page({
   data: {
     avatar: '',
     nickname: '',
-    camIcon: icons.icon('camera', '#9AA3AF'),
+    camIcon: icons.icon('camera', '#8B95A7'),
     agreed: false
   },
 

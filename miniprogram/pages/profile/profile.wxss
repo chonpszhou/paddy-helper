@@ -15,7 +15,7 @@
   width: 108rpx;
   height: 108rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #06AD56, #07C160);
+  background: linear-gradient(135deg, #06AD56, #00E5A0);
   color: #FFFFFF;
   font-size: 48rpx;
   font-weight: 700;
@@ -32,7 +32,7 @@
   border-radius: 50%;
   margin-right: 24rpx;
   flex-shrink: 0;
-  background: #F5EFE8;
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .me-name {
@@ -42,19 +42,19 @@
 
 .me-intro {
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
   margin-top: 8rpx;
 }
 
 .me-authed {
   font-size: 22rpx;
-  color: #2FA46F;
+  color: #00E5A0;
   font-weight: 600;
 }
 
 .me-edit {
   font-size: 25rpx;
-  color: #07C160;
+  color: #00E5A0;
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -90,7 +90,7 @@
 
 .row-value {
   font-size: 25rpx;
-  color: #9A8F86;
+  color: #7C8698;
   max-width: 280rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -130,7 +130,7 @@
 
 .mine-status {
   font-size: 24rpx;
-  color: #9A8F86;
+  color: #7C8698;
 }
 
 .mine-title {
@@ -141,7 +141,7 @@
 
 .mine-meta {
   font-size: 25rpx;
-  color: #6F675F;
+  color: #8B95A7;
 }
 
 .mine-count {
@@ -151,18 +151,18 @@
   font-weight: 700;
   padding: 2rpx 12rpx;
   border-radius: 999rpx;
-  background: rgba(7, 193, 96, 0.12);
-  color: #07C160;
+  background: rgba(0, 229, 160, 0.14);
+  color: #00E5A0;
 }
 
 .mine-count.ended {
   background: rgba(154, 160, 175, 0.14);
-  color: #8A919E;
+  color: #8B95A7;
 }
 
 .mine-count.live {
   background: rgba(255, 92, 122, 0.12);
-  color: #FF5C7A;
+  color: #FF7A93;
 }
 
 .stats-card {
@@ -184,14 +184,14 @@
 
 .st-l {
   font-size: 23rpx;
-  color: #6B7480;
+  color: #8B95A7;
   margin-top: 10rpx;
 }
 
 .st-div {
   width: 1rpx;
   height: 52rpx;
-  background: rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .about {
@@ -207,7 +207,7 @@
 
 .reset-link {
   font-size: 24rpx;
-  color: #B0A79E;
+  color: #7C8698;
   text-decoration: underline;
   margin-top: 20rpx;
 }

@@ -113,7 +113,7 @@ Page({
       title: '再来一场',
       content: '复制「' + title + '」的配置生成新活动（时间顺延一周，报名清空）？',
       confirmText: '生成',
-      confirmColor: '#07C160',
+      confirmColor: '#00E5A0',
       success(res) {
         if (!res.confirm) return
         const newId = store.duplicateActivity(id)

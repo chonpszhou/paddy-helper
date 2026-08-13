@@ -43,7 +43,7 @@ Page({
       return f ? f.emoji : '🙂'
     }
     const colorOf = function (fid) {
-      if (fid === store.currentUid()) return '#07C160'
+      if (fid === store.currentUid()) return '#00E5A0'
       const f = store.getFriend(fid) || store.getCachedUser(fid)
       return f ? f.color : '#D9CFC4'
     }

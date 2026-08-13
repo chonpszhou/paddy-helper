@@ -21,7 +21,7 @@
 
   <view class="card stats-card">
     <view class="st">
-      <text class="st-n" style="color: #07C160">{{stats.created}}</text>
+      <text class="st-n" style="color: #00E5A0">{{stats.created}}</text>
       <text class="st-l">组织</text>
     </view>
     <view class="st-div"></view>

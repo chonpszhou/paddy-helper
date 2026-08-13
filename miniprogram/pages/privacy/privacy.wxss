@@ -9,19 +9,19 @@
 .head-title {
   font-size: 40rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
 }
 
 .head-sub {
   font-size: 24rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   margin-top: 10rpx;
 }
 
 .sec-title {
   font-size: 30rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
   margin-bottom: 18rpx;
 }
 
@@ -38,7 +38,7 @@
   width: 10rpx;
   height: 10rpx;
   border-radius: 50%;
-  background: #07C160;
+  background: #00E5A0;
   margin: 14rpx 16rpx 0 0;
   flex-shrink: 0;
 }
@@ -46,13 +46,13 @@
 .sec-text {
   flex: 1;
   font-size: 26rpx;
-  color: #3A4250;
+  color: #C7D0DE;
   line-height: 1.7;
 }
 
 .foot {
   font-size: 23rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   text-align: center;
   padding: 30rpx 20rpx;
   line-height: 1.6;

@@ -13,12 +13,12 @@
   top: calc(env(safe-area-inset-top) + 46rpx);
   left: 36rpx;
   font-size: 25rpx;
-  color: #5B6472;
-  background: rgba(255, 255, 255, 0.62);
-  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  color: #8B95A7;
+  background: rgba(21, 29, 50, 0.58);
+  border: 1rpx solid rgba(21, 29, 50, 0.78);
   border-radius: 999rpx;
   padding: 10rpx 26rpx;
-  box-shadow: 0 4rpx 14rpx rgba(16, 24, 40, 0.06);
+  box-shadow: 0 4rpx 14rpx rgba(0, 0, 0, 0.26);
   z-index: 10;
 }
 
@@ -59,13 +59,13 @@
 .slide-title {
   font-size: 44rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
   letter-spacing: -1rpx;
 }
 
 .slide-desc {
   font-size: 27rpx;
-  color: #5B6472;
+  color: #8B95A7;
   line-height: 1.65;
   margin-top: 22rpx;
   max-width: 600rpx;
@@ -73,14 +73,14 @@
 
 .slide-mini {
   font-size: 24rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   margin-top: 34rpx;
 }
 
 .slide-tip {
   margin-top: 40rpx;
   font-size: 25rpx;
-  color: #7C3AED;
+  color: #A78BFA;
   background: rgba(139, 92, 246, 0.1);
   border-radius: 999rpx;
   padding: 14rpx 30rpx;
@@ -98,14 +98,14 @@
 
 .type-mini {
   width: calc((100% - 20rpx) / 2);
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(21, 29, 50, 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
   border: 2rpx solid;
   border-radius: 28rpx;
   padding: 26rpx 20rpx;
   text-align: left;
-  box-shadow: 0 8rpx 24rpx rgba(16, 24, 40, 0.06);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.26);
 }
 
 .type-mini-icon {
@@ -115,13 +115,13 @@
 .type-mini-name {
   font-size: 28rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #EAF0F8;
   margin-top: 12rpx;
 }
 
 .type-mini-sub {
   font-size: 21rpx;
-  color: #8A919E;
+  color: #8B95A7;
   margin-top: 6rpx;
 }
 
@@ -138,13 +138,13 @@
   display: flex;
   align-items: flex-start;
   gap: 20rpx;
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1rpx solid rgba(255, 255, 255, 0.78);
+  background: rgba(21, 29, 50, 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1rpx solid rgba(21, 29, 50, 0.66);
   border-radius: 24rpx;
   padding: 20rpx 24rpx;
-  box-shadow: 0 8rpx 24rpx rgba(16, 24, 40, 0.05);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.24);
 }
 
 .feature-icon {
@@ -154,7 +154,7 @@
 
 .feature-text {
   font-size: 24rpx;
-  color: #3D4450;
+  color: #C7D0DE;
   line-height: 1.55;
   text-align: left;
 }
@@ -168,7 +168,7 @@
 
 .nav-back {
   font-size: 27rpx;
-  color: #6B7480;
+  color: #8B95A7;
   padding: 18rpx 10rpx;
   width: 180rpx;
 }
@@ -216,6 +216,6 @@
   text-align: center;
   margin-top: 26rpx;
   font-size: 26rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   padding: 12rpx 0;
 }

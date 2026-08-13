@@ -22,7 +22,7 @@
   <view class="float-card">
     <view class="float-stats">
       <view class="fs">
-        <text class="fs-n" style="color: #07C160">{{confirmed}}</text>
+        <text class="fs-n" style="color: #00E5A0">{{confirmed}}</text>
         <text class="fs-l">参加</text>
       </view>
       <view class="fs-div"></view>

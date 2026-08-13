@@ -23,13 +23,13 @@
 
 .hi {
   font-size: 30rpx;
-  color: #6B7480;
+  color: #8B95A7;
 }
 
 .name {
   font-size: 46rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #F2F6FC;
   margin-top: 8rpx;
   letter-spacing: 1rpx;
 }
@@ -39,8 +39,8 @@
   margin-top: 16rpx;
   font-size: 22rpx;
   font-weight: 600;
-  color: #8B5CF6;
-  background: rgba(139, 92, 246, 0.12);
+  color: #A78BFA;
+  background: rgba(139, 92, 246, 0.16);
   padding: 8rpx 22rpx;
   border-radius: 999rpx;
 }
@@ -48,14 +48,14 @@
 .overview-card {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.66);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1rpx solid rgba(255, 255, 255, 0.75);
+  background: rgba(21, 29, 50, 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.10);
   border-radius: 32rpx;
   padding: 28rpx 0;
   margin: 22rpx 0 26rpx;
-  box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.05), 0 16rpx 40rpx rgba(16, 24, 40, 0.09);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.28), 0 16rpx 40rpx rgba(0, 0, 0, 0.34);
 }
 
 .ov {
@@ -71,14 +71,14 @@
 
 .ov-l {
   font-size: 24rpx;
-  color: #6B7480;
+  color: #8B95A7;
   margin-top: 10rpx;
 }
 
 .ov-div {
   width: 1rpx;
   height: 56rpx;
-  background: rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .circle-banner {
@@ -88,9 +88,9 @@
   margin: 24rpx 0 26rpx;
   padding: 26rpx 28rpx;
   border-radius: 26rpx;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(14, 165, 233, 0.12));
-  border: 1rpx solid rgba(139, 92, 246, 0.22);
-  box-shadow: 0 8rpx 24rpx rgba(139, 92, 246, 0.10);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(14, 165, 233, 0.14));
+  border: 1rpx solid rgba(139, 92, 246, 0.30);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.28), 0 0 28rpx rgba(139, 92, 246, 0.12);
 }
 
 .circle-banner-icon {
@@ -105,28 +105,29 @@
 .circle-banner-title {
   font-size: 28rpx;
   font-weight: 700;
-  color: #0E1116;
+  color: #F2F6FC;
 }
 
 .circle-banner-sub {
   font-size: 23rpx;
-  color: #6F675F;
+  color: #A7B0C2;
   margin-top: 4rpx;
 }
 
 .circle-banner-go {
   font-size: 26rpx;
   font-weight: 700;
-  color: #7C3AED;
+  color: #A78BFA;
   flex-shrink: 0;
 }
 
 .chips {
   display: flex;
-  background: rgba(233, 233, 235, 0.9);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 20rpx;
   padding: 6rpx;
   margin-bottom: 26rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
 }
 
 .chip {
@@ -135,25 +136,25 @@
   padding: 14rpx 0;
   border-radius: 16rpx;
   background: transparent;
-  color: #6B7480;
+  color: #8B95A7;
   font-size: 25rpx;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .chip.on {
-  background: #FFFFFF;
-  color: #0E1116;
+  background: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
   font-weight: 700;
-  box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.08);
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.3);
 }
 
 .feature {
-  background: #FFFFFF;
+  background: rgba(21, 29, 50, 0.8);
   border-radius: 34rpx;
   overflow: hidden;
   margin-bottom: 26rpx;
-  box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.05), 0 18rpx 44rpx rgba(16, 24, 40, 0.1);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.3), 0 18rpx 44rpx rgba(0, 0, 0, 0.38);
   animation: riseIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -299,15 +300,15 @@
 }
 
 .av-more {
-  background: #E9E9EB;
-  color: #6B7480;
+  background: rgba(255, 255, 255, 0.12);
+  color: #A7B0C2;
 }
 
 .feature-join {
   display: flex;
   align-items: center;
   font-size: 25rpx;
-  color: #3A4250;
+  color: #C7D0DE;
   font-weight: 600;
 }
 
@@ -333,12 +334,12 @@
 .sec-title {
   font-size: 30rpx;
   font-weight: 800;
-  color: #0E1116;
+  color: #F2F6FC;
 }
 
 .sec-more {
   font-size: 24rpx;
-  color: #9AA3AF;
+  color: #7C8698;
   font-weight: 500;
   padding: 4rpx 8rpx;
 }
@@ -346,14 +347,14 @@
 .row-card {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  background: rgba(21, 29, 50, 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.10);
   border-radius: 26rpx;
   padding: 24rpx 26rpx;
   margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 8rpx rgba(16, 24, 40, 0.04), 0 10rpx 28rpx rgba(16, 24, 40, 0.07);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.26), 0 10rpx 28rpx rgba(0, 0, 0, 0.32);
   animation: riseIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -373,7 +374,7 @@
 .row-title {
   font-size: 29rpx;
   font-weight: 700;
-  color: #0E1116;
+  color: #EAF0F8;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -383,7 +384,7 @@
   display: flex;
   align-items: center;
   font-size: 23rpx;
-  color: #6B7480;
+  color: #8B95A7;
   margin-top: 6rpx;
 }
 
@@ -394,18 +395,18 @@
   font-weight: 700;
   padding: 2rpx 12rpx;
   border-radius: 999rpx;
-  background: rgba(7, 193, 96, 0.12);
-  color: #07C160;
+  background: rgba(0, 229, 160, 0.14);
+  color: #00E5A0;
 }
 
 .row-count.ended {
-  background: rgba(154, 160, 175, 0.14);
-  color: #8A919E;
+  background: rgba(154, 160, 175, 0.16);
+  color: #8B95A7;
 }
 
 .row-count.live {
-  background: rgba(255, 92, 122, 0.12);
-  color: #FF5C7A;
+  background: rgba(255, 92, 122, 0.16);
+  color: #FF7A93;
 }
 
 .row-tag {
