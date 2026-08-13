@@ -111,6 +111,26 @@
 
 </view>
 
+<view class="page preview-page" wx:elif="{{preview}}">
+  <view class="preview-card" style="background:{{preview.grad}}">
+    <view class="preview-blob pb1"></view>
+    <view class="preview-blob pb2"></view>
+    <view class="preview-lock">🔒 私密圈子活动</view>
+    <view class="preview-title">{{preview.title}}</view>
+    <view class="preview-meta" wx:if="{{preview.circleName}}">🫧 {{preview.circleName}}</view>
+    <view class="preview-meta">🕐 {{preview.timeText}}</view>
+    <view class="preview-meta">📍 {{preview.location || '地点待定'}}</view>
+    <view class="preview-desc" wx:if="{{preview.description}}">{{preview.description}}</view>
+  </view>
+
+  <view class="preview-info">
+    <view class="preview-join">✅ {{preview.confirmed}} 人参加{{preview.maybe ? ' · 🤔 ' + preview.maybe + ' 人待定' : ''}}</view>
+    <view class="preview-note">这是「{{preview.circleName || '私密圈子'}}」圈内的活动。加入圈子后，才能看到成员名单、筹备进度和活动相册。分享出去的活动只会显示这些基本信息。</view>
+    <button class="primary-btn preview-btn" bindtap="goJoin" hover-class="btn-hover">加入圈子后查看 ›</button>
+    <view class="preview-back" bindtap="goBack">先逛逛首页</view>
+  </view>
+</view>
+
 <view class="page" wx:else>
   <view class="card empty-state">
     <view class="empty-state-icon">😵</view>

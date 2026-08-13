@@ -141,6 +141,46 @@ exports.main = async (event) => {
   const { OPENID } = cloud.getWXContext()
   const action = event && event.action ? event.action : ''
 
+  // 活动概览：分享给圈外人时只暴露基础信息（标题/时间/地点/人数），
+  // 成员名单、照片、筹备内容、签到等一律不返回，加入圈子后才能看完整详情
+  if (action === 'preview') {
+    const cloudId = String(event.cloudId || '')
+    if (!cloudId) return { ok: false, error: '缺少活动标识' }
+    let a = null
+    try {
+      const res = await activities.doc(cloudId).get()
+      a = res.data
+    } catch (e) {
+      return { ok: false, error: '活动不存在或已删除' }
+    }
+    if (!a) return { ok: false, error: '活动不存在或已删除' }
+    let circleName = ''
+    try {
+      const c = await circles.doc(a.circleId || '').get()
+      circleName = (c.data && c.data.name) || ''
+    } catch (e) {
+      // 圈子可能已解散，概览仍可展示
+    }
+    const signups = a.signups || []
+    return {
+      ok: true,
+      preview: {
+        id: cloudId,
+        type: a.type || '',
+        title: a.title || '',
+        startTime: a.startTime || 0,
+        location: a.location || '',
+        locationAddress: a.locationAddress || '',
+        description: a.description || '',
+        creatorName: a.creatorName || '',
+        circleId: a.circleId || '',
+        circleName: circleName,
+        confirmed: signups.filter(function (s) { return s && s.status === 'yes' }).length,
+        maybe: signups.filter(function (s) { return s && s.status === 'maybe' }).length
+      }
+    }
+  }
+
   const circleId = event.circleId || ''
   if (!(await isMember(circleId, OPENID))) {
     return { ok: false, code: 'NEED_CIRCLE', error: '需要先加入圈子才能访问' }

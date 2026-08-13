@@ -10,6 +10,13 @@
     <view class="home-btn" bindtap="goHome" hover-class="press-hover">🏠 回首页</view>
   </view>
 
+  <view class="card privacy-card">
+    <view class="privacy-title">🔒 转发与隐私</view>
+    <view class="privacy-line">· 圈子分享链接<b>不含通行码</b>，好友点开后需向你索取才能加入</view>
+    <view class="privacy-line">· 通行码请通过<b>私聊</b>发送给信任的朋友，不要发到公开群或朋友圈</view>
+    <view class="privacy-line">· 成员资料、活动筹备只在圈子内可见，分享出去的活动只显示基本信息</view>
+  </view>
+
   <view class="card success-card" wx:if="{{created}}">
     <view class="success-emoji">🎉</view>
     <view class="success-title">「{{createdName}}」创建成功！</view>

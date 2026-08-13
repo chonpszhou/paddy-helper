@@ -67,6 +67,12 @@ Page({
         }
         wx.showToast({ title: '登录成功 🎉', icon: 'success' })
         setTimeout(function () {
+          const ret = wx.getStorageSync('login_return')
+          if (ret) {
+            wx.removeStorageSync('login_return')
+            wx.reLaunch({ url: ret })
+            return
+          }
           const profile = store.getProfile()
           if (!profile.currentCircleId) {
             wx.reLaunch({ url: '/pages/circle/circle' })

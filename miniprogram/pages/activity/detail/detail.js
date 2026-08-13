@@ -30,6 +30,7 @@ Page({
     id: '',
     cid: '',
     activity: null,
+    preview: null,
     meta: {},
     creatorName: '',
     confirmed: 0,
@@ -106,8 +107,18 @@ Page({
         this._triedPull = true
         const self = this
         store.pullActivities(function () {
-          if (!self._destroyed) self.refresh()
+          if (self._destroyed) return
+          const act = self.data.id ? store.getActivity(self.data.id) : store.getActivityByCloudId(self.data.cid)
+          if (act) {
+            self.refresh()
+          } else {
+            self.loadPreview()
+          }
         })
+        return
+      }
+      if (this.data.cid) {
+        this.loadPreview()
         return
       }
       this.setData({
@@ -117,6 +128,7 @@ Page({
       return
     }
     try {
+      this.setData({ preview: null })
       const meta = store.TYPE_META[activity.type] || { name: '活动', icon: '📌', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
       const my = store.mySignup(activity)
       const profile = store.getProfile()
@@ -249,6 +261,50 @@ Page({
     }
   },
 
+  loadPreview() {
+    const self = this
+    store.previewActivity(this.data.cid, function (ok, preview) {
+      if (self._destroyed) return
+      if (ok && preview) {
+        const theme = store.TYPE_META[preview.type] || { name: '活动', icon: '📌', color: '#6B7280', grad: 'linear-gradient(135deg, #9AA3AF, #D3D8DF)' }
+        self.setData({
+          preview: Object.assign({}, preview, {
+            typeName: theme.name,
+            color: theme.color,
+            grad: theme.grad,
+            timeText: helpers.formatDateTime(preview.startTime)
+          }),
+          activity: null,
+          errorMsg: ''
+        })
+      } else {
+        self.setData({
+          activity: null,
+          preview: null,
+          errorMsg: '活动不存在或已被删除。如果刚收到通知，活动可能在其他圈子，去「我的 → 我的圈子」切换后再看。'
+        })
+      }
+    })
+  },
+
+  goJoin() {
+    const self = this
+    // 记录返回路径：登录/加入圈子成功后自动回到这个活动
+    const ret = '/pages/activity/detail/detail?cid=' + this.data.cid
+    try {
+      wx.setStorageSync('circle_return', ret)
+      wx.setStorageSync('login_return', '/pages/circle/circle')
+    } catch (e) {
+      // 存储失败不影响主流程
+    }
+    store.requireLogin(function (ok) {
+      if (!ok) return
+      wx.navigateTo({
+        url: '/pages/circle/circle'
+      })
+    })
+  },
+
   updateCountdown() {
     const a = this.data.activity
     if (!a) return
@@ -299,19 +355,16 @@ Page({
   copyInvite() {
     const a = this.data.activity
     if (!a) return
-    const circle = store.getCurrentCircle()
-    const code = circle && circle.code ? '\n圈子通行码：' + circle.code : ''
     const path = a.cloudId ? 'cid=' + a.cloudId : 'id=' + a.id
     const text = '【Paddy小助手】周末约起来 🫧\n' +
       '🏷️ ' + a.title + '\n' +
       '🕐 ' + helpers.formatDateTime(a.startTime) + '\n' +
       '📍 ' + (a.location || '地点待定') + '\n' +
-      '— 打开小程序点开链接就能报名：' +
-      code
+      '— 打开小程序点开链接查看详情，加入圈子后就能报名啦：'
     wx.setClipboardData({
       data: text,
       success() {
-        wx.showToast({ title: '邀请文案已复制 ✨', icon: 'success' })
+        wx.showToast({ title: '邀请文案已复制，记得提醒朋友加入圈子 ✨', icon: 'none' })
       }
     })
   },

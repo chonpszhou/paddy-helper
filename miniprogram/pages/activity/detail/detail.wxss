@@ -2,6 +2,118 @@
   padding: 0 0 260rpx;
 }
 
+.preview-page {
+  padding: 48rpx 32rpx 80rpx;
+}
+
+.preview-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 40rpx;
+  padding: 44rpx 40rpx 52rpx;
+  color: #FFFFFF;
+  box-shadow: 0 18rpx 44rpx rgba(16, 24, 40, 0.14);
+  animation: riseIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.preview-blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  filter: blur(8px);
+}
+
+.pb1 {
+  width: 220rpx;
+  height: 220rpx;
+  right: -60rpx;
+  top: -70rpx;
+}
+
+.pb2 {
+  width: 140rpx;
+  height: 140rpx;
+  left: 50rpx;
+  bottom: -50rpx;
+}
+
+.preview-lock {
+  display: inline-block;
+  font-size: 23rpx;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.24);
+  border-radius: 999rpx;
+  padding: 8rpx 20rpx;
+}
+
+.preview-title {
+  position: relative;
+  font-size: 44rpx;
+  font-weight: 800;
+  margin-top: 26rpx;
+  letter-spacing: 1rpx;
+  line-height: 1.35;
+}
+
+.preview-meta {
+  position: relative;
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  opacity: 0.95;
+}
+
+.preview-desc {
+  position: relative;
+  margin-top: 22rpx;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  font-size: 25rpx;
+  line-height: 1.6;
+}
+
+.preview-info {
+  margin-top: 28rpx;
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.9);
+  border-radius: 34rpx;
+  padding: 32rpx 30rpx;
+  box-shadow: 0 12rpx 36rpx rgba(16, 24, 40, 0.08);
+  animation: riseIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
+}
+
+.preview-join {
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #0E1116;
+}
+
+.preview-note {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #6B7480;
+  line-height: 1.65;
+  background: rgba(7, 193, 96, 0.08);
+  border-radius: 20rpx;
+  padding: 18rpx 22rpx;
+}
+
+.preview-btn {
+  margin-top: 28rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+}
+
+.preview-back {
+  text-align: center;
+  margin-top: 22rpx;
+  font-size: 25rpx;
+  color: #9AA3AF;
+  font-weight: 600;
+}
+
 .hero {
   position: relative;
   overflow: hidden;

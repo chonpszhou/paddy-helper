@@ -89,6 +89,12 @@ Page({
                 wx.removeStorageSync('create_return')
                 wx.switchTab({ url: '/pages/activity/create/create' })
               } else {
+                const ret = wx.getStorageSync('circle_return')
+                if (ret) {
+                  wx.removeStorageSync('circle_return')
+                  wx.reLaunch({ url: ret })
+                  return
+                }
                 wx.reLaunch({ url: '/pages/index/index' })
               }
             }
@@ -96,6 +102,12 @@ Page({
         } else {
           wx.showToast({ title: '已加入「' + circle.name + '」🎉', icon: 'success' })
           setTimeout(function () {
+            const ret = wx.getStorageSync('circle_return')
+            if (ret) {
+              wx.removeStorageSync('circle_return')
+              wx.reLaunch({ url: ret })
+              return
+            }
             if (self._fromCreate) {
               wx.removeStorageSync('create_return')
               wx.switchTab({ url: '/pages/activity/create/create' })
@@ -139,7 +151,7 @@ Page({
     wx.setClipboardData({
       data: this.data.createdCode,
       success() {
-        wx.showToast({ title: '已复制 ✨', icon: 'success' })
+        wx.showToast({ title: '通行码已复制，请私聊发给朋友 🔐', icon: 'none' })
       }
     })
   },
@@ -153,12 +165,18 @@ Page({
     wx.setClipboardData({
       data: code,
       success() {
-        wx.showToast({ title: '通行码已复制 ✨', icon: 'success' })
+        wx.showToast({ title: '通行码已复制，请私聊发给朋友 🔐', icon: 'none' })
       }
     })
   },
 
   enterCircle() {
+    const ret = wx.getStorageSync('circle_return')
+    if (ret) {
+      wx.removeStorageSync('circle_return')
+      wx.reLaunch({ url: ret })
+      return
+    }
     if (this._fromCreate) {
       wx.removeStorageSync('create_return')
       wx.switchTab({ url: '/pages/activity/create/create' })
@@ -237,16 +255,8 @@ Page({
   onShareAppMessage() {
     const circle = store.getCurrentCircle()
     return {
-      title: '来「' + (circle ? circle.name : '我的圈子') + '」一起玩 🫧',
-      path: '/pages/circle/circle' + (circle && circle.code ? '?code=' + circle.code : '')
-    }
-  },
-
-  onShareTimeline() {
-    const circle = store.getCurrentCircle()
-    return {
-      title: '来「' + (circle ? circle.name : '我的圈子') + '」一起玩 🫧',
-      query: circle && circle.code ? 'code=' + circle.code : ''
+      title: '来「' + (circle ? circle.name : '我的圈子') + '」一起玩 🫧（私密圈子）',
+      path: '/pages/circle/circle'
     }
   }
 })

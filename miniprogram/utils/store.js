@@ -1458,6 +1458,34 @@ function pullActivities(callback) {
     })
 }
 
+// 活动概览：从分享链接点进来、还没加入圈子时，拉取云端的基础信息
+// （只含标题/时间/地点/人数，不含成员名单与筹备数据）
+function previewActivity(cloudId, callback) {
+  const done = function (ok, preview, error) {
+    if (callback) callback(ok, preview, error)
+  }
+  if (!cloudId || !wx.cloud || !wx.cloud.callFunction) {
+    done(false, null, '云开发不可用')
+    return
+  }
+  wx.cloud.callFunction({
+    name: 'activity',
+    data: { action: 'preview', cloudId: cloudId }
+  })
+    .then(function (res) {
+      const r = res.result || {}
+      if (r.ok && r.preview) {
+        done(true, r.preview)
+      } else {
+        done(false, null, r.error || '活动不存在')
+      }
+    })
+    .catch(function (e) {
+      console.error('[sync] preview failed', e)
+      done(false, null, ((e && (e.errMsg || e.message)) || '网络异常'))
+    })
+}
+
 function sanitizeForStorage(obj) {
   try {
     return JSON.parse(JSON.stringify(obj))
@@ -2152,6 +2180,7 @@ module.exports = {
   isOnboardDone: isOnboardDone,
   markOnboardDone: markOnboardDone,
   pullActivities: pullActivities,
+  previewActivity: previewActivity,
   pullUsers: pullUsers,
   syncLocalToCloud: syncLocalToCloud,
   migrateMeToOpenid: migrateMeToOpenid,
