@@ -15,21 +15,6 @@ const SIGNUP_META = {
   no: { label: '不参加', icon: '❌' }
 }
 
-const WEREWOLF_PRESETS = {
-  mini: {
-    name: '迷你局（6人）',
-    roles: ['狼人', '狼人', '村民', '村民', '预言家', '女巫']
-  },
-  slim: {
-    name: '精简局（8人）',
-    roles: ['狼人', '狼人', '村民', '村民', '村民', '预言家', '女巫', '猎人']
-  },
-  standard: {
-    name: '标准局（12人）',
-    roles: ['狼人', '狼人', '狼人', '狼人', '村民', '村民', '村民', '村民', '预言家', '女巫', '猎人', '白痴']
-  }
-}
-
 const WEREWOLF_ROLE_META = {
   '狼人': { icon: '🐺', color: '#B91C1C' },
   '村民': { icon: '🧑‍🌾', color: '#0E7490' },
@@ -39,6 +24,39 @@ const WEREWOLF_ROLE_META = {
   '白痴': { icon: '🤡', color: '#BE185D' },
   '守卫': { icon: '🛡️', color: '#1D4ED8' },
   '丘比特': { icon: '💘', color: '#DB2777' }
+}
+
+// 按实际人数自动配牌（6-15 人）：狼人 ≈ 1/3，神职随人数增加，其余村民
+function werewolfAutoDeck(playerCount) {
+  const n = Math.max(6, Math.min(15, playerCount || 6))
+  let wolves
+  let gods
+  if (n <= 7) {
+    wolves = 2
+    gods = 2
+  } else if (n <= 8) {
+    wolves = 2
+    gods = 3
+  } else if (n <= 10) {
+    wolves = 3
+    gods = 3
+  } else if (n <= 11) {
+    wolves = 3
+    gods = 4
+  } else if (n <= 14) {
+    wolves = 4
+    gods = 4
+  } else {
+    wolves = 5
+    gods = 4
+  }
+  const godPool = ['预言家', '女巫', '猎人', '白痴', '守卫', '丘比特']
+  const villagers = n - wolves - gods
+  const deck = []
+  for (let i = 0; i < wolves; i++) deck.push('狼人')
+  for (let i = 0; i < villagers; i++) deck.push('村民')
+  for (let i = 0; i < gods; i++) deck.push(godPool[i])
+  return deck
 }
 
 function demoDinnerData() {
@@ -970,8 +988,8 @@ function shuffleArr(arr) {
   return a
 }
 
-// 随机分配狼人杀角色：参加者为确认参加的圈友，角色按预设补齐/截断后打乱
-function assignWerewolf(activityId, presetKey) {
+// 随机分配狼人杀角色：参加者为确认参加的圈友，按人数自动配牌后打乱
+function assignWerewolf(activityId) {
   const d = getData()
   const activity = d.activities.find(function (a) { return a.id === activityId })
   if (!activity) return false
@@ -980,34 +998,22 @@ function assignWerewolf(activityId, presetKey) {
     .filter(function (s) { return s.status === 'yes' })
     .map(function (s) { return s.friendId })
   if (!players.length) return false
-  const preset = WEREWOLF_PRESETS[presetKey] || WEREWOLF_PRESETS.slim
-  let deck = preset.roles.slice()
-  while (deck.length < players.length) deck.push('村民')
+  let deck = werewolfAutoDeck(players.length)
   if (deck.length > players.length) {
-    // 人少时优先保留关键角色（每种角色至少留一个），多余名额从剩余角色里随机补
-    const needed = players.length
-    const uniqueRoles = []
-    const seen = {}
-    preset.roles.forEach(function (r) {
-      if (!seen[r]) {
-        seen[r] = true
-        uniqueRoles.push(r)
+    // 人数极少时优先裁村民，再裁狼人，保住神职
+    while (deck.length > players.length) {
+      const ci = deck.indexOf('村民')
+      if (ci >= 0) {
+        deck.splice(ci, 1)
+        continue
       }
-    })
-    const kept = uniqueRoles.slice(0, needed)
-    const rest = deck.slice()
-    uniqueRoles.forEach(function (r) {
-      const i = rest.indexOf(r)
-      if (i >= 0) rest.splice(i, 1)
-    })
-    const extras = []
-    while (extras.length < needed - kept.length) {
-      if (!rest.length) rest.push('村民')
-      const idx = Math.floor(Math.random() * rest.length)
-      extras.push(rest[idx])
-      rest.splice(idx, 1)
+      const wi = deck.indexOf('狼人')
+      if (wi >= 0) {
+        deck.splice(wi, 1)
+        continue
+      }
+      deck.pop()
     }
-    deck = kept.concat(extras)
   }
   deck = shuffleArr(deck)
   w.players = players.map(function (uid, i) {
@@ -2127,7 +2133,7 @@ module.exports = {
   isPaddyHome: isPaddyHome,
   addPrivateMenuToDinner: addPrivateMenuToDinner,
   addPrivateDish: addPrivateDish,
-  WEREWOLF_PRESETS: WEREWOLF_PRESETS,
+  werewolfAutoDeck: werewolfAutoDeck,
   WEREWOLF_ROLE_META: WEREWOLF_ROLE_META,
   assignWerewolf: assignWerewolf,
   toggleWerewolfAlive: toggleWerewolfAlive,
