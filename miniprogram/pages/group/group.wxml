@@ -30,7 +30,7 @@
         </view>
         <view class="wolf-start" wx:if="{{isGod}}" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
         <view class="wolf-resign" wx:if="{{isGod}}" bindtap="resignGod" hover-class="press-hover">让出上帝身份</view>
-      </view>
+    </block>
     </block>
 
     <block wx:else>
