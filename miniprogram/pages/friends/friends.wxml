@@ -6,9 +6,9 @@
   </view>
 
   <view class="card add-card" wx:if="{{showAdd}}">
-    <view class="form-label">✏️ 名字</view>
+    <view class="form-label">名字</view>
     <input class="input" placeholder="朋友的名字" value="{{newName}}" bindinput="onNewName" maxlength="10"/>
-    <view class="form-label">🖼️ 头像（可选）</view>
+    <view class="form-label">头像（可选）</view>
     <view class="avatar-row">
       <button class="avatar-pick" open-type="chooseAvatar" bindchooseavatar="onFriendAvatar">
         <image wx:if="{{newAvatar}}" class="avatar-pick-img" src="{{newAvatar}}" mode="aspectFill"/>
@@ -16,7 +16,7 @@
       </button>
       <view class="avatar-pick-tip">点左边按钮选微信头像；不选的话用下面的表情当头像</view>
     </view>
-    <view class="form-label">📍 所在位置</view>
+    <view class="form-label">所在位置</view>
     <view class="loc-row">
       <input class="input loc-input" placeholder="比如：通州区（用于算居中地点）" value="{{newLocation}}" bindinput="onNewLocation" maxlength="20"/>
       <view class="map-pick" bindtap="pickLocation">🗺️ 选点</view>

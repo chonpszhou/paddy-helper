@@ -141,9 +141,9 @@
 </view>
 
 <view class="bottom-bar" wx:if="{{activity}}">
-  <view class="bb-btn bb-ghost" bindtap="goEdit" hover-class="press-hover" wx:if="{{isCreator}}"><image class="mi" src="{{icons.edit}}"/> 编辑</view>
-  <view class="bb-btn bb-ghost" bindtap="copyInvite" hover-class="press-hover"><image class="mi" src="{{icons.share}}"/> 邀请</view>
-  <view class="bb-btn bb-ghost" bindtap="goPoster" hover-class="press-hover"><image class="mi" src="{{icons.camera}}"/> 海报</view>
-  <view class="bb-btn bb-primary" bindtap="goSpecial" hover-class="press-hover" wx:if="{{special && special.goUrl}}">进入筹备 ›</view>
-  <view class="bb-btn bb-primary" bindtap="goBack" hover-class="press-hover" wx:else>返回</view>
+  <view class="bb-icon" bindtap="goEdit" hover-class="press-hover" wx:if="{{isCreator}}"><image class="bb-icon-img" src="{{icons.edit}}"/></view>
+  <view class="bb-icon" bindtap="copyInvite" hover-class="press-hover"><image class="bb-icon-img" src="{{icons.share}}"/></view>
+  <view class="bb-icon" bindtap="goPoster" hover-class="press-hover"><image class="bb-icon-img" src="{{icons.camera}}"/></view>
+  <view class="bb-main" bindtap="goSpecial" hover-class="press-hover" wx:if="{{special && special.goUrl}}">进入筹备 ›</view>
+  <view class="bb-main" bindtap="goBack" hover-class="press-hover" wx:else>返回首页</view>
 </view>

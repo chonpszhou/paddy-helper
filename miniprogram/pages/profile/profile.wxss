@@ -61,12 +61,29 @@
 
 .row-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 30rpx 28rpx;
+  gap: 20rpx;
+}
+
+.row-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.row-icon-img {
+  width: 34rpx;
+  height: 34rpx;
 }
 
 .row-label {
+  flex: 1;
+  min-width: 0;
   font-size: 29rpx;
   font-weight: 600;
 }
@@ -74,6 +91,16 @@
 .row-value {
   font-size: 25rpx;
   color: #9A8F86;
+  max-width: 280rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-chev {
+  width: 26rpx;
+  height: 26rpx;
+  flex-shrink: 0;
 }
 
 .mine {

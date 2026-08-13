@@ -13,8 +13,10 @@
   </view>
 
   <view class="card row-card" bindtap="editLocation">
-    <text class="row-label">📍 我的位置</text>
-    <text class="row-value">{{profile.location || '设置我的位置'}} ›</text>
+    <view class="row-icon" style="background:rgba(7,193,96,0.10)"><image class="row-icon-img" src="{{icons.pin}}"/></view>
+    <text class="row-label">我的位置</text>
+    <text class="row-value">{{profile.location || '设置我的位置'}}</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="card stats-card">
@@ -40,28 +42,38 @@
   </view>
 
   <view class="card row-card" bindtap="manageCircle">
-    <text class="row-label">🔐 我的圈子</text>
-    <text class="row-value">{{circleName || '加入 / 创建圈子'}} ›</text>
+    <view class="row-icon" style="background:rgba(124,58,237,0.10)"><image class="row-icon-img" src="{{icons.lock}}"/></view>
+    <text class="row-label">我的圈子</text>
+    <text class="row-value">{{circleName || '加入 / 创建圈子'}}</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="card row-card" bindtap="enableNotify">
-    <text class="row-label">🔔 活动通知</text>
-    <text class="row-value">{{profile.subscribed ? '已开启 · 点此续期 ›' : '点此开启 ›'}}</text>
+    <view class="row-icon" style="background:rgba(217,119,6,0.10)"><image class="row-icon-img" src="{{icons.bell}}"/></view>
+    <text class="row-label">活动通知</text>
+    <text class="row-value">{{profile.subscribed ? '已开启 · 点此续期' : '点此开启'}}</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="card row-card" bindtap="goManage">
-    <text class="row-label">🗂️ 活动管理</text>
-    <text class="row-value">{{manageCount}} 个活动 ›</text>
+    <view class="row-icon" style="background:rgba(14,165,233,0.10)"><image class="row-icon-img" src="{{icons.cal}}"/></view>
+    <text class="row-label">活动管理</text>
+    <text class="row-value">{{manageCount}} 个活动</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="card row-card" bindtap="goFriends">
-    <text class="row-label">👫 好友圈</text>
-    <text class="row-value">添加 / 管理好友 ›</text>
+    <view class="row-icon" style="background:rgba(139,92,246,0.10)"><image class="row-icon-img" src="{{icons.users}}"/></view>
+    <text class="row-label">好友圈</text>
+    <text class="row-value">添加 / 管理好友</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="card row-card" bindtap="goPrivacy">
-    <text class="row-label">📄 隐私政策</text>
-    <text class="row-value">查看 ›</text>
+    <view class="row-icon" style="background:rgba(107,114,128,0.10)"><image class="row-icon-img" src="{{icons.shield}}"/></view>
+    <text class="row-label">隐私政策</text>
+    <text class="row-value">查看</text>
+    <image class="row-chev" src="{{icons.chevR}}"/>
   </view>
 
   <view class="section-head">
