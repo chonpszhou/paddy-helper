@@ -284,6 +284,12 @@ Page({
     const self = this
     console.log('[create] submit tapped')
     if (this.data.submitting) return
+    // 记录「从发起页来」：没圈子时引导去建圈，完成后回到发起页继续填表
+    try {
+      wx.setStorageSync('create_return', true)
+    } catch (e) {
+      // 存储失败不影响主流程
+    }
     this.setData({ submitting: true, stepText: '检查登录状态…' })
     try {
       store.requireLogin(function (ok) {
@@ -300,7 +306,9 @@ Page({
             confirmText: '去创建/加入',
             success(res) {
               if (res.confirm) {
-                wx.navigateTo({ url: '/pages/circle/circle' })
+                wx.navigateTo({ url: '/pages/circle/circle?from=create' })
+              } else {
+                wx.removeStorageSync('create_return')
               }
               self.setData({ stepText: '' })
             }
@@ -435,6 +443,7 @@ Page({
       }, 600)
     }
     this.clearForm()
+    wx.removeStorageSync('create_return')
   },
 
   clearForm() {
