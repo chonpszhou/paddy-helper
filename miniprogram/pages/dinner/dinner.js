@@ -48,6 +48,7 @@ Page({
       return f ? f.color : '#D9CFC4'
     }
     const uid = store.currentUid()
+    const isCreator = store.isCreator(activity)
 
     const slots = dinner.timeSlots.map(function (s) {
       return {
@@ -133,6 +134,7 @@ Page({
       menuCount: menuCount,
       privateMenuAdded: menuAdded,
       privateMenuRemaining: Math.max(0, menuCount - menuAddedCount),
+      isCreator: isCreator,
       hotSlotText: hotSlot,
       hotSlotCount: hotSlotCount,
       hotDishText: hotDishes.join(' · ')
@@ -142,6 +144,22 @@ Page({
   toggleTime(e) {
     store.toggleTimeVote(this.data.id, e.currentTarget.dataset.slotId)
     this.refresh()
+  },
+
+  removeTimeSlot(e) {
+    const self = this
+    wx.showModal({
+      title: '删除时间段',
+      content: '确定删除这个时间段吗？',
+      confirmText: '删除',
+      confirmColor: '#FF4D4F',
+      success(res) {
+        if (res.confirm) {
+          store.removeTimeSlot(self.data.id, e.currentTarget.dataset.slotId)
+          self.refresh()
+        }
+      }
+    })
   },
 
   addTimeSlot() {
@@ -162,6 +180,22 @@ Page({
   toggleDish(e) {
     store.toggleDishVote(this.data.id, e.currentTarget.dataset.dishId)
     this.refresh()
+  },
+
+  removeDish(e) {
+    const self = this
+    wx.showModal({
+      title: '删除菜品',
+      content: '确定把这道菜从菜单里删掉吗？',
+      confirmText: '删除',
+      confirmColor: '#FF4D4F',
+      success(res) {
+        if (res.confirm) {
+          store.removeDish(self.data.id, e.currentTarget.dataset.dishId)
+          self.refresh()
+        }
+      }
+    })
   },
 
   addDish() {

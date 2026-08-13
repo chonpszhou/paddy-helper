@@ -561,6 +561,13 @@ function markEnded(activityId) {
   return true
 }
 
+function isCreator(activity) {
+  if (!activity) return false
+  const uid = currentUid()
+  const openid = (getProfile() && getProfile().openid) || ''
+  return activity.creatorId === uid || (!!activity.creatorOpenid && activity.creatorOpenid === openid)
+}
+
 function countMyStats() {
   const d = getData()
   const uid = currentUid()
@@ -755,6 +762,15 @@ function addTimeSlot(activityId, label) {
   save(d, activityId)
 }
 
+function removeTimeSlot(activityId, slotId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !isCreator(activity)) return
+  const dinner = getDinner(activity)
+  dinner.timeSlots = dinner.timeSlots.filter(function (s) { return s.id !== slotId })
+  save(d, activityId)
+}
+
 function toggleTimeVote(activityId, slotId) {
   const d = getData()
   const activity = d.activities.find(function (a) { return a.id === activityId })
@@ -777,6 +793,15 @@ function addDish(activityId, name) {
   const dinner = getDinner(activity)
   if (dinner.dishes.some(function (x) { return x.name === name.trim() })) return
   dinner.dishes.push({ id: 'd' + Date.now(), name: name.trim(), voters: [currentUid()] })
+  save(d, activityId)
+}
+
+function removeDish(activityId, dishId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !isCreator(activity)) return
+  const dinner = getDinner(activity)
+  dinner.dishes = dinner.dishes.filter(function (x) { return x.id !== dishId })
   save(d, activityId)
 }
 
@@ -866,6 +891,15 @@ function addGear(activityId, name) {
   const outdoor = getOutdoor(activity)
   if (outdoor.gear.some(function (g) { return g.name === name.trim() })) return
   outdoor.gear.push({ id: 'g' + Date.now(), name: name.trim(), ownerIds: [currentUid()] })
+  save(d, activityId)
+}
+
+function removeGear(activityId, gearId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !isCreator(activity)) return
+  const outdoor = getOutdoor(activity)
+  outdoor.gear = outdoor.gear.filter(function (g) { return g.id !== gearId })
   save(d, activityId)
 }
 
@@ -992,6 +1026,15 @@ function addTask(activityId, name) {
   const trip = getTrip(activity)
   if (trip.tasks.some(function (t) { return t.name === name.trim() })) return
   trip.tasks.push({ id: 't' + Date.now(), name: name.trim(), ownerId: null })
+  save(d, activityId)
+}
+
+function removeTask(activityId, taskId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity || !isCreator(activity)) return
+  const trip = getTrip(activity)
+  trip.tasks = trip.tasks.filter(function (t) { return t.id !== taskId })
   save(d, activityId)
 }
 
@@ -1980,6 +2023,7 @@ module.exports = {
   createActivity: createActivity,
   removeActivity: removeActivity,
   markEnded: markEnded,
+  isCreator: isCreator,
   countMyStats: countMyStats,
   duplicateActivity: duplicateActivity,
   updateActivity: updateActivity,
@@ -1992,8 +2036,10 @@ module.exports = {
   myStatusText: myStatusText,
   getMySignups: getMySignups,
   addTimeSlot: addTimeSlot,
+  removeTimeSlot: removeTimeSlot,
   toggleTimeVote: toggleTimeVote,
   addDish: addDish,
+  removeDish: removeDish,
   toggleDishVote: toggleDishVote,
   addBringItem: addBringItem,
   removeBringItem: removeBringItem,
@@ -2001,6 +2047,7 @@ module.exports = {
   removeCar: removeCar,
   toggleRider: toggleRider,
   addGear: addGear,
+  removeGear: removeGear,
   toggleGearOwner: toggleGearOwner,
   addVenue: addVenue,
   removeVenue: removeVenue,
@@ -2010,6 +2057,7 @@ module.exports = {
   addTripItem: addTripItem,
   removeTripItem: removeTripItem,
   addTask: addTask,
+  removeTask: removeTask,
   toggleTaskOwner: toggleTaskOwner,
   addStay: addStay,
   removeStay: removeStay,

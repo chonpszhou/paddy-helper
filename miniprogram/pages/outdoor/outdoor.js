@@ -47,6 +47,7 @@ Page({
     if (!activity) return
     const outdoor = activity.outdoor || { cars: [], riders: [], gear: [] }
     const profile = store.getProfile()
+    const isCreator = store.isCreator(activity)
 
     const nameOf = function (fid) {
       if (fid === store.currentUid()) return profile.name || '朋友'
@@ -111,6 +112,7 @@ Page({
       isRider: outdoor.riders.indexOf(uid) >= 0,
       riderBtnText: outdoor.riders.indexOf(uid) >= 0 ? '我需要搭车 ✓' : '我需要搭车',
       gear: gear,
+      isCreator: isCreator,
       tips: seasonTips()
     })
   },
@@ -155,6 +157,22 @@ Page({
   toggleGear(e) {
     store.toggleGearOwner(this.data.id, e.currentTarget.dataset.gearId)
     this.refresh()
+  },
+
+  removeGear(e) {
+    const self = this
+    wx.showModal({
+      title: '删除装备',
+      content: '确定把这项装备从清单里删掉吗？',
+      confirmText: '删除',
+      confirmColor: '#FF4D4F',
+      success(res) {
+        if (res.confirm) {
+          store.removeGear(self.data.id, e.currentTarget.dataset.gearId)
+          self.refresh()
+        }
+      }
+    })
   },
 
   addGear() {
