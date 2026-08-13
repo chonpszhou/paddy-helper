@@ -9,18 +9,28 @@
   </view>
 
   <view class="card wolf-card" wx:if="{{groupGame === 'werewolf'}}">
-    <view class="card-title">🐺 狼人杀 <text class="title-tip">上帝模式 · 发起人是上帝</text></view>
+    <view class="card-title">🐺 狼人杀 <text class="title-tip">先认领上帝，再开局</text></view>
 
     <block wx:if="{{wolf.phase === 'ready'}}">
-      <view class="wolf-god-tip" wx:if="{{isGod}}">👑 你是上帝，负责配牌和全场管理</view>
-      <view class="wolf-wait-tip" wx:else>🕐 等待上帝配牌开始游戏…</view>
-      <view class="wolf-deck-card" wx:if="{{isGod}}">
-        <view class="wolf-deck-line">👥 确认参加 <text class="wolf-deck-num">{{wolfPlayerCount}}</text> 人</view>
-        <view class="wolf-deck-line">自动配牌（6-15 人自适应）：</view>
-        <view class="wolf-deck-roles">{{wolfDeckText}}</view>
-        <view class="wolf-tip">分配后角色打乱，点卡片翻牌查看身份</view>
+      <block wx:if="{{noGod}}">
+        <view class="wolf-claim-card">
+          <view class="wolf-claim-title">👑 需要一位上帝</view>
+          <view class="wolf-claim-desc">上帝负责配牌、标记出局、切换天黑天亮，全场由他主持。谁想当，点下面认领～</view>
+          <view class="wolf-claim-btn" bindtap="claimGod" hover-class="press-hover">🙋 我来当上帝</view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="wolf-god-tip" wx:if="{{isGod}}">👑 你是上帝（{{godName}}），负责配牌和全场管理</view>
+        <view class="wolf-wait-tip" wx:else>🕐 上帝「{{godName}}」正在配牌，稍等一下…</view>
+        <view class="wolf-deck-card" wx:if="{{isGod}}">
+          <view class="wolf-deck-line">👥 确认参加 <text class="wolf-deck-num">{{wolfPlayerCount}}</text> 人</view>
+          <view class="wolf-deck-line">自动配牌（6-15 人自适应）：</view>
+          <view class="wolf-deck-roles">{{wolfDeckText}}</view>
+          <view class="wolf-tip">分配后角色打乱，点卡片翻牌查看身份</view>
+        </view>
+        <view class="wolf-start" wx:if="{{isGod}}" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
+        <view class="wolf-resign" wx:if="{{isGod}}" bindtap="resignGod" hover-class="press-hover">让出上帝身份</view>
       </view>
-      <view class="wolf-start" wx:if="{{isGod}}" bindtap="startWolf" hover-class="press-hover">🎲 按此配置随机分配</view>
     </block>
 
     <block wx:else>
