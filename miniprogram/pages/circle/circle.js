@@ -22,6 +22,8 @@ Page({
         joinCode: String(options.code).trim().toUpperCase()
       })
     }
+    // 从发起页跳过来：创建/加入圈子后回到发起页继续填表
+    this._fromCreate = !!(options && options.from === 'create') || !!wx.getStorageSync('create_return')
   },
 
   onShow() {
@@ -83,6 +85,9 @@ Page({
             success(res) {
               if (res.confirm) {
                 wx.navigateTo({ url: '/pages/login/login' })
+              } else if (self._fromCreate) {
+                wx.removeStorageSync('create_return')
+                wx.switchTab({ url: '/pages/activity/create/create' })
               } else {
                 wx.reLaunch({ url: '/pages/index/index' })
               }
@@ -91,7 +96,12 @@ Page({
         } else {
           wx.showToast({ title: '已加入「' + circle.name + '」🎉', icon: 'success' })
           setTimeout(function () {
-            wx.reLaunch({ url: '/pages/index/index' })
+            if (self._fromCreate) {
+              wx.removeStorageSync('create_return')
+              wx.switchTab({ url: '/pages/activity/create/create' })
+            } else {
+              wx.reLaunch({ url: '/pages/index/index' })
+            }
           }, 600)
         }
       } else {
@@ -149,10 +159,16 @@ Page({
   },
 
   enterCircle() {
-    wx.reLaunch({ url: '/pages/index/index' })
+    if (this._fromCreate) {
+      wx.removeStorageSync('create_return')
+      wx.switchTab({ url: '/pages/activity/create/create' })
+    } else {
+      wx.reLaunch({ url: '/pages/index/index' })
+    }
   },
 
   goHome() {
+    wx.removeStorageSync('create_return')
     wx.reLaunch({ url: '/pages/index/index' })
   },
 
