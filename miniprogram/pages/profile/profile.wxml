@@ -46,7 +46,7 @@
 
   <view class="card row-card" bindtap="enableNotify">
     <text class="row-label">🔔 活动通知</text>
-    <text class="row-value">{{profile.subscribed ? '已开启 ✓' : '点此开启 ›'}}</text>
+    <text class="row-value">{{profile.subscribed ? '已开启 · 点此续期 ›' : '点此开启 ›'}}</text>
   </view>
 
   <view class="card row-card" bindtap="goManage">
