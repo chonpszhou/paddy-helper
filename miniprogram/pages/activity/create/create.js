@@ -13,6 +13,14 @@ Page({
     ],
     selectedType: 'dinner',
     dinnerMode: 'home',
+    groupGames: [
+      { key: 'werewolf', icon: '🐺', name: '狼人杀', sub: '角色分配 + 游戏管理' },
+      { key: 'jubensha', icon: '🎭', name: '剧本杀', sub: '到店开本' },
+      { key: 'goose', icon: '🦆', name: '鹅鸭杀', sub: '开黑局' },
+      { key: 'board', icon: '🎲', name: '桌游', sub: '经典桌游' },
+      { key: 'other', icon: '✨', name: '其他', sub: '自由发挥' }
+    ],
+    groupGame: 'werewolf',
     title: '',
     date: '',
     time: '19:00',
@@ -81,6 +89,9 @@ Page({
     } else if (type === 'outdoor') {
       tip = '⛰️ 户外活动出发前记得看天气，筹备页会给出行提醒'
     } else if (type === 'group') {
+      if (this.data.groupGame === 'werewolf') {
+        tip = '🐺 狼人杀局：发起后可在筹备页配置角色并随机分配，还有天黑/天亮管理'
+      } else {
       const located = (store.getFriends() || []).filter(function (f) { return f.lat && f.lng })
       if (located.length >= 2) {
         const freq = {}
@@ -100,6 +111,7 @@ Page({
       } else {
         tip = '🎲 发起后大家可以推荐场馆，筹备页会根据大家的位置自动算居中地点'
       }
+      }
     } else if (type === 'trip') {
       tip = '✈️ 旅行筹备支持行程安排、任务分工和 AA 记账，发起后慢慢完善'
     }
@@ -117,6 +129,7 @@ Page({
           today: helpers.today(),
           selectedType: act.type || 'dinner',
           dinnerMode: act.dinnerMode || 'home',
+          groupGame: act.groupGame || (act.group && act.group.game) || 'werewolf',
           title: act.title || '',
           date: helpers.formatDateInput(act.startTime) || helpers.today(),
           time: helpers.formatTime(act.startTime) || '19:00',
@@ -162,6 +175,13 @@ Page({
   selectDinnerMode(e) {
     this.setData({
       dinnerMode: e.currentTarget.dataset.mode
+    })
+    this.refreshSmartTip()
+  },
+
+  selectGroupGame(e) {
+    this.setData({
+      groupGame: e.currentTarget.dataset.key
     })
     this.refreshSmartTip()
   },
@@ -355,6 +375,7 @@ Page({
       store.updateActivity(this.data.editId, {
         type: this.data.selectedType,
         dinnerMode: this.data.dinnerMode,
+        groupGame: this.data.selectedType === 'group' ? this.data.groupGame : '',
         title: title,
         location: this.data.location.trim(),
         locationAddress: this.data.locationAddress,
@@ -381,6 +402,7 @@ Page({
     const id = store.createActivity({
       type: this.data.selectedType,
       dinnerMode: this.data.dinnerMode,
+      groupGame: this.data.selectedType === 'group' ? this.data.groupGame : '',
       title: title,
       location: this.data.location.trim(),
       locationAddress: this.data.locationAddress,

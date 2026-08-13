@@ -196,8 +196,9 @@ Page({
       if (special && special.goUrl && activity.type === 'group') {
         const group = activity.group || {}
         const finalVenue = (group.venues || []).find(function (v) { return v.id === group.finalVenueId }) || null
+        const gameTag = activity.groupGame === 'werewolf' ? '🐺 狼人杀局 · ' : ''
         special = Object.assign({}, special, {
-          text: finalVenue ? '已选定：' + finalVenue.name : '候选场馆 ' + (group.venues || []).length + ' 家 · 待定'
+          text: gameTag + (finalVenue ? '已选定：' + finalVenue.name : '候选场馆 ' + (group.venues || []).length + ' 家 · 待定')
         })
       }
       if (special && special.goUrl && activity.type === 'trip') {

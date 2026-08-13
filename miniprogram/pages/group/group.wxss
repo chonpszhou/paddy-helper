@@ -197,3 +197,207 @@
   font-weight: 600;
   padding: 16rpx 0 4rpx;
 }
+
+/* 🐺 狼人杀 */
+.wolf-card {
+  background: linear-gradient(150deg, rgba(88, 28, 135, 0.06), rgba(185, 28, 28, 0.06));
+  border: 1rpx solid rgba(88, 28, 135, 0.18);
+}
+
+.wolf-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.wolf-preset {
+  width: calc((100% - 16rpx) / 2);
+  background: rgba(255, 255, 255, 0.72);
+  border: 2rpx solid rgba(15, 23, 42, 0.08);
+  border-radius: 22rpx;
+  padding: 20rpx;
+}
+
+.wolf-preset-on {
+  border-color: #7C3AED;
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.wolf-preset-name {
+  font-size: 27rpx;
+  font-weight: 800;
+  color: #0E1116;
+}
+
+.wolf-preset-roles {
+  font-size: 21rpx;
+  color: #8A919E;
+  margin-top: 8rpx;
+  line-height: 1.5;
+}
+
+.wolf-tip {
+  font-size: 24rpx;
+  color: #6B7480;
+  margin-top: 22rpx;
+}
+
+.wolf-start {
+  margin-top: 22rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #8B5CF6, #C026D3);
+  color: #FFFFFF;
+  font-size: 29rpx;
+  font-weight: 700;
+  box-shadow: 0 10rpx 26rpx rgba(139, 92, 246, 0.3);
+}
+
+.wolf-start:active {
+  transform: scale(0.96);
+}
+
+.wolf-phase-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.wolf-phase-tag {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 800;
+  border-radius: 999rpx;
+  padding: 18rpx 24rpx;
+  text-align: center;
+}
+
+.wolf-night {
+  background: #1E1B3A;
+  color: #C7C4FF;
+}
+
+.wolf-day {
+  background: #FFF4D6;
+  color: #B7791F;
+}
+
+.wolf-phase-btn {
+  flex-shrink: 0;
+  font-size: 25rpx;
+  font-weight: 700;
+  color: #7C3AED;
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 999rpx;
+  padding: 16rpx 28rpx;
+}
+
+.wolf-summary {
+  font-size: 23rpx;
+  color: #8A919E;
+  margin-top: 18rpx;
+}
+
+.wolf-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+
+.wolf-item {
+  width: calc((100% - 32rpx) / 3);
+}
+
+.wolf-face {
+  background: linear-gradient(145deg, #5B21B6, #3B0764);
+  border-radius: 20rpx;
+  height: 150rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  box-shadow: 0 8rpx 20rpx rgba(59, 7, 100, 0.25);
+}
+
+.wolf-face-open {
+  background: #FFFFFF;
+  border: 2rpx solid rgba(124, 58, 237, 0.25);
+  box-shadow: 0 8rpx 20rpx rgba(16, 24, 40, 0.08);
+}
+
+.wolf-face-dead {
+  opacity: 0.55;
+  filter: grayscale(0.8);
+}
+
+.wolf-role-icon {
+  font-size: 48rpx;
+  line-height: 1;
+}
+
+.wolf-role-name {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.wolf-face-open .wolf-role-name {
+  color: #0E1116;
+}
+
+.wolf-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10rpx;
+}
+
+.wolf-name {
+  font-size: 22rpx;
+  color: #3D4450;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wolf-alive {
+  flex-shrink: 0;
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #047857;
+  background: rgba(4, 120, 87, 0.1);
+  border-radius: 999rpx;
+  padding: 4rpx 12rpx;
+}
+
+.wolf-alive-dead {
+  color: #B91C1C;
+  background: rgba(185, 28, 28, 0.1);
+}
+
+.wolf-actions {
+  margin-top: 22rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.wolf-act {
+  font-size: 25rpx;
+  color: #8A919E;
+  border: 2rpx solid rgba(15, 23, 42, 0.1);
+  border-radius: 999rpx;
+  padding: 14rpx 40rpx;
+}
+
+.wolf-act-danger {
+  color: #B91C1C;
+  border-color: rgba(185, 28, 28, 0.2);
+}

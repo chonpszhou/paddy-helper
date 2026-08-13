@@ -15,6 +15,32 @@ const SIGNUP_META = {
   no: { label: '不参加', icon: '❌' }
 }
 
+const WEREWOLF_PRESETS = {
+  mini: {
+    name: '迷你局（6人）',
+    roles: ['狼人', '狼人', '村民', '村民', '预言家', '女巫']
+  },
+  slim: {
+    name: '精简局（8人）',
+    roles: ['狼人', '狼人', '村民', '村民', '村民', '预言家', '女巫', '猎人']
+  },
+  standard: {
+    name: '标准局（12人）',
+    roles: ['狼人', '狼人', '狼人', '狼人', '村民', '村民', '村民', '村民', '预言家', '女巫', '猎人', '白痴']
+  }
+}
+
+const WEREWOLF_ROLE_META = {
+  '狼人': { icon: '🐺', color: '#B91C1C' },
+  '村民': { icon: '🧑‍🌾', color: '#0E7490' },
+  '预言家': { icon: '🔮', color: '#7C3AED' },
+  '女巫': { icon: '🧙', color: '#B45309' },
+  '猎人': { icon: '🏹', color: '#047857' },
+  '白痴': { icon: '🤡', color: '#BE185D' },
+  '守卫': { icon: '🛡️', color: '#1D4ED8' },
+  '丘比特': { icon: '💘', color: '#DB2777' }
+}
+
 function demoDinnerData() {
   return {
     timeSlots: [
@@ -554,6 +580,7 @@ function createActivity(info) {
     description: info.description || '',
     invitedOpenids: info.invitedOpenids || [],
     dinner: info.type === 'dinner' ? { timeSlots: [], dishes: [], bringItems: [] } : null,
+    groupGame: info.groupGame || '',
     photos: [],
     creatorId: currentUid(),
     status: 'ongoing',
@@ -707,6 +734,7 @@ function updateActivity(activityId, info) {
   if (!activity) return false
   activity.type = info.type || activity.type
   activity.dinnerMode = info.dinnerMode || activity.dinnerMode || 'home'
+  activity.groupGame = info.groupGame !== undefined ? info.groupGame : activity.groupGame
   activity.title = info.title
   activity.location = info.location || ''
   activity.locationAddress = info.locationAddress || ''
@@ -974,6 +1002,100 @@ function getGroup(activity) {
     activity.group = { venues: [], finalVenueId: null }
   }
   return activity.group
+}
+
+function getWerewolf(activity) {
+  const group = getGroup(activity)
+  if (!group.werewolf) group.werewolf = { phase: 'ready', players: [] }
+  return group.werewolf
+}
+
+function shuffleArr(arr) {
+  const a = arr.slice()
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const t = a[i]
+    a[i] = a[j]
+    a[j] = t
+  }
+  return a
+}
+
+// 随机分配狼人杀角色：参加者为确认参加的圈友，角色按预设补齐/截断后打乱
+function assignWerewolf(activityId, presetKey) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return false
+  const w = getWerewolf(activity)
+  const players = (activity.signups || [])
+    .filter(function (s) { return s.status === 'yes' })
+    .map(function (s) { return s.friendId })
+  if (!players.length) return false
+  const preset = WEREWOLF_PRESETS[presetKey] || WEREWOLF_PRESETS.slim
+  let deck = preset.roles.slice()
+  while (deck.length < players.length) deck.push('村民')
+  if (deck.length > players.length) {
+    // 人少时优先保留关键角色（每种角色至少留一个），多余名额从剩余角色里随机补
+    const needed = players.length
+    const uniqueRoles = []
+    const seen = {}
+    preset.roles.forEach(function (r) {
+      if (!seen[r]) {
+        seen[r] = true
+        uniqueRoles.push(r)
+      }
+    })
+    const kept = uniqueRoles.slice(0, needed)
+    const rest = deck.slice()
+    uniqueRoles.forEach(function (r) {
+      const i = rest.indexOf(r)
+      if (i >= 0) rest.splice(i, 1)
+    })
+    const extras = []
+    while (extras.length < needed - kept.length) {
+      if (!rest.length) rest.push('村民')
+      const idx = Math.floor(Math.random() * rest.length)
+      extras.push(rest[idx])
+      rest.splice(idx, 1)
+    }
+    deck = kept.concat(extras)
+  }
+  deck = shuffleArr(deck)
+  w.players = players.map(function (uid, i) {
+    return { uid: uid, role: deck[i], alive: true }
+  })
+  w.phase = 'night'
+  save(d, activityId)
+  return true
+}
+
+function toggleWerewolfAlive(activityId, uid) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return
+  const w = getWerewolf(activity)
+  const p = (w.players || []).find(function (x) { return x.uid === uid })
+  if (!p) return
+  p.alive = !p.alive
+  save(d, activityId)
+}
+
+function setWerewolfPhase(activityId, phase) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return
+  const w = getWerewolf(activity)
+  w.phase = phase === 'day' ? 'day' : (phase === 'night' ? 'night' : 'ready')
+  save(d, activityId)
+}
+
+function resetWerewolf(activityId) {
+  const d = getData()
+  const activity = d.activities.find(function (a) { return a.id === activityId })
+  if (!activity) return
+  const group = getGroup(activity)
+  group.werewolf = { phase: 'ready', players: [] }
+  save(d, activityId)
 }
 
 function addVenue(activityId, info) {
@@ -2095,6 +2217,12 @@ module.exports = {
   isPaddyHome: isPaddyHome,
   addPrivateMenuToDinner: addPrivateMenuToDinner,
   addPrivateDish: addPrivateDish,
+  WEREWOLF_PRESETS: WEREWOLF_PRESETS,
+  WEREWOLF_ROLE_META: WEREWOLF_ROLE_META,
+  assignWerewolf: assignWerewolf,
+  toggleWerewolfAlive: toggleWerewolfAlive,
+  setWerewolfPhase: setWerewolfPhase,
+  resetWerewolf: resetWerewolf,
   TYPE_META: TYPE_META,
   SIGNUP_META: SIGNUP_META,
   ensureSeed: ensureSeed,
