@@ -48,7 +48,7 @@
       </view>
       <view class="venue-actions">
         <view class="venue-action venue-action-final" bindtap="setFinal" data-venue-id="{{item.id}}">{{item.isFinal ? '取消选定' : '定这家'}}</view>
-        <view class="venue-action venue-action-del" wx:if="{{item.isMine}}" catchtap="removeVenue" data-venue-id="{{item.id}}">删除</view>
+        <view class="venue-action venue-action-del" wx:if="{{item.isMine || isCreator}}" catchtap="removeVenue" data-venue-id="{{item.id}}">删除</view>
       </view>
     </view>
     <view class="empty" wx:if="{{!venues.length}}">

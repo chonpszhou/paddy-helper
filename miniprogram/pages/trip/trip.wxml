@@ -49,7 +49,7 @@
         <view class="stay-name">{{item.name}}{{item.isMine ? '（我订）' : ''}}</view>
         <view class="stay-meta">¥{{item.cost}}/晚 × {{item.nights}}晚 = ¥{{item.total}} · {{item.ownerName}} 订</view>
       </view>
-      <view class="item-del" wx:if="{{item.isMine}}" catchtap="removeStay" data-stay-id="{{item.id}}">✕</view>
+      <view class="item-del" wx:if="{{item.isMine || isCreator}}" catchtap="removeStay" data-stay-id="{{item.id}}">✕</view>
     </view>
     <view class="form-row">
       <input class="form-input form-input-wide" placeholder="民宿/酒店名称" value="{{newStayName}}" bindinput="onStayName"/>
@@ -69,7 +69,7 @@
         <view class="expense-payer">{{item.payerEmoji}} {{item.payerName}} 付</view>
       </view>
       <view class="expense-amount">¥{{item.amount}}</view>
-      <view class="item-del" wx:if="{{item.isMine}}" catchtap="removeExpense" data-expense-id="{{item.id}}">✕</view>
+      <view class="item-del" wx:if="{{item.isMine || isCreator}}" catchtap="removeExpense" data-expense-id="{{item.id}}">✕</view>
     </view>
     <view class="expense-sum">
       <text class="sum-total">总花费 ¥{{total}}</text>

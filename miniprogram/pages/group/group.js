@@ -39,6 +39,7 @@ Page({
       return f ? f.emoji : '🙂'
     }
     const uid = store.currentUid()
+    const isCreator = store.isCreator(activity)
 
     const participants = (activity.signups || []).filter(function (s) { return s.status === 'yes' })
       .map(function (s) {
@@ -69,6 +70,7 @@ Page({
         voted: v.votes.indexOf(uid) >= 0,
         isFinal: group.finalVenueId === v.id,
         isMine: v.creatorId === uid,
+        isCreator: isCreator,
         distanceText: helpers.distanceText(dist),
         distanceKm: dist,
         votersText: v.votes.slice(0, 6).map(emojiOf).join('')
@@ -129,7 +131,8 @@ Page({
       mapLat: center ? center.lat : null,
       mapLng: center ? center.lng : null,
       hasFinal: !!finalVenue,
-      finalName: finalVenue ? finalVenue.name : ''
+      finalName: finalVenue ? finalVenue.name : '',
+      isCreator: isCreator
     })
   },
 

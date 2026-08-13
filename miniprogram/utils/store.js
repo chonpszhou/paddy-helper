@@ -835,7 +835,7 @@ function removeBringItem(activityId, itemId) {
   if (!activity) return
   const dinner = getDinner(activity)
   const item = dinner.bringItems.find(function (x) { return x.id === itemId })
-  if (item && item.friendId === currentUid()) {
+  if (item && (item.friendId === currentUid() || isCreator(activity))) {
     dinner.bringItems = dinner.bringItems.filter(function (x) { return x.id !== itemId })
     save(d, activityId)
   }
@@ -864,7 +864,7 @@ function removeCar(activityId, carId) {
   if (!activity) return
   const outdoor = getOutdoor(activity)
   const car = outdoor.cars.find(function (c) { return c.id === carId })
-  if (car && car.driverId === currentUid()) {
+  if (car && (car.driverId === currentUid() || isCreator(activity))) {
     outdoor.cars = outdoor.cars.filter(function (c) { return c.id !== carId })
     save(d, activityId)
   }
@@ -949,7 +949,7 @@ function removeVenue(activityId, venueId) {
   if (!activity) return
   const group = getGroup(activity)
   const venue = group.venues.find(function (v) { return v.id === venueId })
-  if (venue && venue.creatorId === currentUid()) {
+  if (venue && (venue.creatorId === currentUid() || isCreator(activity))) {
     group.venues = group.venues.filter(function (v) { return v.id !== venueId })
     if (group.finalVenueId === venueId) group.finalVenueId = null
     save(d, activityId)
@@ -1070,7 +1070,7 @@ function removeStay(activityId, stayId) {
   if (!activity) return
   const trip = getTrip(activity)
   const stay = trip.stays.find(function (s) { return s.id === stayId })
-  if (stay && stay.ownerId === currentUid()) {
+  if (stay && (stay.ownerId === currentUid() || isCreator(activity))) {
     trip.stays = trip.stays.filter(function (s) { return s.id !== stayId })
     save(d, activityId)
   }
@@ -1096,7 +1096,7 @@ function removeExpense(activityId, expenseId) {
   if (!activity) return
   const trip = getTrip(activity)
   const expense = trip.expenses.find(function (e) { return e.id === expenseId })
-  if (expense && expense.payerId === currentUid()) {
+  if (expense && (expense.payerId === currentUid() || isCreator(activity))) {
     trip.expenses = trip.expenses.filter(function (e) { return e.id !== expenseId })
     save(d, activityId)
   }
